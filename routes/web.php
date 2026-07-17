@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\referensi\RekeningController;
 use App\Http\Controllers\referensi\BelanjaController;
+use App\Http\Controllers\referensi\MekanismeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeritaAcara;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,10 @@ route::group(['middleware' => ['isLogin']], function () {
     Route::get('/belanja', [BelanjaController::class, 'view'])->name('belanja.view');
     Route::post('/belanja/delete', [BelanjaController::class, 'delete'])->name('belanja.delete');
     Route::post('/belanja/simpan', [BelanjaController::class, 'simpan'])->name('belanja.simpan');
+
+    Route::get('/mekanisme', [MekanismeController::class, 'view'])->name('mekanisme.view');
+    Route::post('/mekanisme/delete', [MekanismeController::class, 'delete'])->name('mekanisme.delete');
+    Route::post('/mekanisme/simpan', [MekanismeController::class, 'simpan'])->name('mekanisme.simpan');
 
     Route::get('/berita-acara', [BeritaAcara::class, 'view'])->name('berita_acara.view');
     Route::get('/berita-acara/new', [BeritaAcara::class, 'new'])->name('berita_acara.new');

@@ -29,6 +29,7 @@
         <a href="{{ route('rekening.view') }}" class="side-link"><i class="bi bi-cash-coin"></i><span>Rekening</span>
         </a>
         <a href="{{ route('belanja.view') }}" class="side-link"><i class="bi bi-basket"></i><span>Belanja</span></a>
+        <a href="{{ route('mekanisme.view') }}" class="side-link"><i class="bi bi-gear"></i><span>Mekanisme</span></a>
 
     </nav>
 

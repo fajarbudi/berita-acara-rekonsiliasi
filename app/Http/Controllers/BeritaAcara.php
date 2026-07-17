@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\berita_acara;
 use App\Models\berita_acara_belanja;
+use App\Models\berita_acara_mekanisme;
 use App\Models\berita_acara_pendapatan;
 use App\Models\ref_belanja;
+use App\Models\ref_mekanisme;
 use App\Models\ref_rekening;
 use Illuminate\Http\Request;
 
@@ -59,6 +61,7 @@ class BeritaAcara extends Controller
         $datas = $request->input('data');
         $rekening = $request->input('rekening');
         $belanja = $request->input('belanja');
+        $mekanisme = $request->input('mekanisme');
 
         $dataPost = [];
         foreach ($datas as $key => $value) {
@@ -110,6 +113,23 @@ class BeritaAcara extends Controller
                 ];
             }
             berita_acara_belanja::upsert($belanjaPost, ['berita_acara_id', 'belanja_uraian']); // Uncomment and replace with actual model
+        }
+
+        $mekanismePost = [];
+        if ($berita_acara && $mekanisme) {
+            foreach ($mekanisme as $item) {
+                $mekanismePost[] = [
+                    'berita_acara_id' => $berita_acara_id ?? $berita_acara->berita_acara_id,
+                    'mekanisme_id' => $item['mekanisme_id'],
+                    'mekanisme_nama' => ref_mekanisme::where('mekanisme_id', $item['mekanisme_id'])->value('mekanisme_nama'),
+                    'mekanisme_uraian' => $item['mekanisme_uraian'],
+                    'skpd' => $item['skpd'],
+                    'bud' => $item['bud'],
+                    'selisih' => $item['selisih'],
+                    'keterangan' => $item['keterangan'],
+                ];
+            }
+            berita_acara_mekanisme::upsert($mekanismePost, ['berita_acara_id', 'mekanisme_uraian']); // Uncomment and replace with actual model
         }
 
         return redirect()->route('berita_acara.view')->with('success', 'Berita Acara berhasil disimpan.');
