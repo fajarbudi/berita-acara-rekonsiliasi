@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('user_nip')->nullable();
             $table->string('user_jabatan')->nullable();
             $table->enum('user_role', ['admin', 'verifikator', 'operator'])->default('operator');
-            $table->enum('user_kewenangan', ['skpd', 'skpkd', 'admin'])->default('skpd');
+            $table->integer('skpd_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

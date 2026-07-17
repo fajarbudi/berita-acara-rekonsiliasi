@@ -151,6 +151,16 @@
                                     placeholder="Masukkan password" required name="password" id="password">
                             </div>
                             <div class="col-md-6">
+                                <label class="form-label req">SKPD</label>
+                                <select class="form-select form-select-sm" name="skpd_id" id="skpd_id">
+                                    <option value="">-- Pilih SKPD --</option>
+                                    @foreach ($ref_skpd as $skpd) 
+                                        <option value="{{$skpd->skpd_id}}">      {{$skpd->skpd_nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
                                 <label class="form-label req">Role</label>
                                 <select class="form-select form-select-sm" name="user_role" id="user_role">
                                     <option value="">-- Pilih Role --</option>

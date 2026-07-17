@@ -1,11 +1,18 @@
 <aside class="sidebar" id="sidebar">
-    <div class="brand">
-        <div class="brand-mark">KT</div>
-        <div class="brand-text">
-            <b>SIPKD</b>
-            <small>BPKAD Kutai Timur</small>
-        </div>
+<div class="brand">
+    <svg width="32" height="32" viewBox="0 0 32 32" style="flex:0 0 32px" aria-hidden="true">
+        <rect width="32" height="32" rx="5" fill="#F0B429"/>
+        <g fill="none" stroke="#1F3864" stroke-width="1.5" stroke-linecap="round">
+            <path d="M8 11 C12.5 7.5 19.5 14.5 24 11"/>
+            <path d="M8 16 C12.5 12.5 19.5 19.5 24 16"/>
+            <path d="M8 21 C12.5 17.5 19.5 24.5 24 21"/>
+        </g>
+    </svg>
+    <div class="brand-text">
+        <b>SIPKD</b>
+        <small>BPKAD Kutai Timur</small>
     </div>
+</div>
 
     <nav class="side-scroll">
         <div class="side-label">Beranda</div>
@@ -15,14 +22,8 @@
                 Acara</span></a>
 
         <div class="side-label">Pengguna</div>
-        <a href="{{ route('user.view', ['kewenangan' => 'skpd']) }}" class="side-link">
-            <i class="bi bi-people"></i><span>SKPD</span>
-        </a>
-        <a href="{{ route('user.view', ['kewenangan' => 'skpkd']) }}" class="side-link">
-            <i class="bi bi-people"></i><span>SKPKD</span>
-        </a>
-        <a href="{{ route('user.view', ['kewenangan' => 'admin']) }}" class="side-link">
-            <i class="bi bi-people"></i><span>Admin</span>
+        <a href="{{ route('user.view') }}" class="side-link">
+            <i class="bi bi-people"></i><span>Users</span>
         </a>
 
         <div class="side-label">Referensi</div>

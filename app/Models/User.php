@@ -24,7 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'user_role',
-        'user_kewenangan'
+        'skpd_id'
     ];
 
     /**

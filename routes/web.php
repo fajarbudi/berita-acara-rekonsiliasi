@@ -30,7 +30,7 @@ route::group(['middleware' => ['isLogin']], function () {
     });
 
 
-    Route::get('/user/{kewenangan}', [UserController::class, 'view'])->name('user.view');
+    Route::get('/user', [UserController::class, 'view'])->name('user.view');
     Route::post('/user/delete', [UserController::class, 'delete'])->name('user.delete');
     Route::post('/user/simpan', [UserController::class, 'simpan'])->name('user.simpan');
 

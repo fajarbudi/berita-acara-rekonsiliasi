@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ref_skpd;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function View($kewenangan = 'skpd')
+    public function View()
     {
-        $load['halaman_judul'] = "Referensi User " . strtoupper($kewenangan);
-        $load['halaman_deskripsi'] = "Data user yang dapat mengakses aplikasi ini dengan kewenangan $kewenangan";
-        $load['users'] = User::where('user_kewenangan', $kewenangan)->orderBy('created_at', 'desc')->get();
+        $load['halaman_judul'] = "Referensi User ";
+        $load['halaman_deskripsi'] = "Data user yang dapat mengakses aplikasi ini";
+        $load['users'] = User::orderBy('created_at', 'desc')->get();
+        $load['ref_skpd'] = ref_skpd::get();
 
         return view('referensi.users',  $load);
     }
@@ -20,7 +22,14 @@ class UserController extends Controller
     public function simpan(Request $request)
     {
 
-        $posData = $request->only(['name', 'username', 'email', 'password', 'user_role']);
+        $posData = [];
+
+        foreach($request->all() as $key => $val){
+            if($val){
+                $posData[$key] = $val;
+            }
+        }
+
 
         if($request->has('password') && !empty($request->input('password'))) {
             $posData['password'] = Hash::make($request->input('password'));
