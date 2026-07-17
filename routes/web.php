@@ -50,4 +50,8 @@ route::group(['middleware' => ['isLogin']], function () {
     Route::get('/berita-acara/detail/{id}', [BeritaAcara::class, 'detail'])->name('berita_acara.detail');
     Route::get('/berita-acara/edit/{id}', [BeritaAcara::class, 'edit'])->name('berita_acara.edit');
     Route::post('/berita-acara/simpan', [BeritaAcara::class, 'simpan'])->name('berita_acara.simpan');
+    Route::get('/berita-acara/{id}/excel', [BeritaAcara::class, 'excel'])->name('berita_acara.excel');
+    Route::get('/cetak-berita-acara/{id}', function ($id) {
+        return view('berita_acara.cetak', compact('id'));
+    })->name('berita_acara.cetak');
 });

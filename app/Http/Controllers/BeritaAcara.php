@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BeritaAcara as ExportsBeritaAcara;
 use App\Models\berita_acara;
 use App\Models\berita_acara_belanja;
 use App\Models\berita_acara_mekanisme;
@@ -10,7 +11,6 @@ use App\Models\berita_acara_saldo_kas;
 use App\Models\ref_belanja;
 use App\Models\ref_mekanisme;
 use App\Models\ref_rekening;
-use App\Exports\BeritaAcaraExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -309,12 +309,8 @@ class BeritaAcara extends Controller
 
     public function excel($id)
     {
-        $data = berita_acara::findOrFail($id);
-
-        $nomor = str_replace('/', '-', $data->berita_acara_no_bud ?: 'DRAFT');
-        $nama  = "BAR_{$nomor}_{$data->berita_acara_periode}_{$data->berita_acara_tahun_anggaran}.xlsx";
-
-        return Excel::download(new BeritaAcaraExport($id), $nama);
+        $export = new ExportsBeritaAcara($id);
+        return Excel::download($export, $export->namaBerkas());
     }
 
 

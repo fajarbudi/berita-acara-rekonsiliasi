@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="id">
 
     <head>
@@ -638,64 +638,6 @@
                 padding-top: 8px;
             }
 
-            /* ---------- CETAK ---------- */
-            @page {
-                size: A4 portrait;
-                margin: 14mm 12mm
-            }
-
-            @media print {
-
-                .sidebar,
-                .topnav,
-                .page-head,
-                .backdrop,
-                .no-print {
-                    display: none !important
-                }
-
-                body {
-                    background: #fff
-                }
-
-                .main {
-                    margin: 0;
-                    padding: 0
-                }
-
-                .content {
-                    padding: 0
-                }
-
-                .sheet {
-                    box-shadow: none;
-                    border: 0;
-                    margin: 0;
-                    max-width: none;
-                    padding: 0
-                }
-
-                table.xl {
-                    page-break-inside: auto
-                }
-
-                table.xl tr {
-                    page-break-inside: avoid
-                }
-
-                thead {
-                    display: table-header-group
-                }
-
-                .ttd {
-                    page-break-inside: avoid
-                }
-
-                .sec {
-                    page-break-after: avoid
-                }
-            }
-
             @media (max-width:991.98px) {
                 .sidebar {
                     transform: translateX(-100%);
@@ -783,9 +725,9 @@
                     <button class="btn btn-sm btn-outline-secondary" onclick="window.print()">
                         <i class="bi bi-printer"></i> Cetak / PDF
                     </button>
-                    <button class="btn btn-sm btn-outline-success" onclick="eksporExcel()">
+                    <a href="{{ route('berita_acara.excel', $berita_acara_id) }}" class="btn btn-sm btn-outline-success">
                         <i class="bi bi-file-earmark-excel"></i> Ekspor Excel
-                    </button>
+                    </a>
                     <button class="btn btn-sm text-white" style="background:var(--bar-navy)">
                         <i class="bi bi-pen"></i> Tanda Tangani
                     </button>
@@ -1151,7 +1093,6 @@
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
         <script>
             /* ---------- SIDEBAR ---------- */
             const MOBILE = () => window.matchMedia('(max-width:991.98px)').matches;
@@ -1174,365 +1115,391 @@
             window.addEventListener('resize', () => {
                 if (!MOBILE()) tutupDrawer();
             });
-
-            /* ---------- EKSPOR EXCEL ---------- */
-            /* Membangun ulang worksheet mengikuti tata letak file asli:
-               A1:G3 judul  ·  A5:A6 nomor  ·  A8 pembuka  ·  A10:G16 para pihak
-               A20:G26 penerimaan  ·  A28:G40 belanja  ·  A42:F48 saldo kas
-               A50:G52 catatan  ·  A55:G72 tanda tangan                            */
-            const NUMFMT = '#,##0.00_ ;[Red]\\-#,##0.00\\ ';
-
-            function eksporExcel() {
-                const T = (t) => ({
-                    v: t,
-                    t: 's'
-                }); // teks
-                const N = (n) => ({
-                    v: n,
-                    t: 'n',
-                    z: NUMFMT
-                }); // angka + format Rupiah
-                const ambil = (id) => {
-                    const tb = document.getElementById(id);
-                    const rows = [];
-                    tb.querySelectorAll('tbody tr, tfoot tr').forEach(tr => {
-                        const sel = [...tr.cells];
-                        rows.push({
-                            tot: tr.classList.contains('tot'),
-                            sel: sel.map(td => ({
-                                txt: td.textContent.trim(),
-                                num: td.dataset.v !== undefined ? Number(td.dataset.v) : null,
-                                span: td.colSpan
-                            }))
-                        });
-                    });
-                    return rows;
-                };
-
-                const ws = {};
-                const merges = [];
-                const put = (addr, cell) => {
-                    ws[addr] = cell;
-                };
-                const kol = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-                const mergeBaris = (r, c1, c2) => merges.push({
-                    s: {
-                        r: r - 1,
-                        c: c1
-                    },
-                    e: {
-                        r: r - 1,
-                        c: c2
-                    }
-                });
-
-                /* --- Judul (A1:G3) --- */
-                put('A1', T('BERITA ACARA REKONSILIASI PENERIMAAN DAN PENGELUARAN'));
-                mergeBaris(1, 0, 6);
-                put('A2', T('ANTARA SKPKD DAN SKPD'));
-                mergeBaris(2, 0, 6);
-                put('A3', T(document.querySelector('.doc-title h3').textContent));
-                mergeBaris(3, 0, 6);
-
-                /* --- Nomor BAR (A5:A6) --- */
-                const no = document.querySelector('.doc-no').innerText.split('\n');
-                put('A5', T(no[0].trim()));
-                mergeBaris(5, 0, 6);
-                put('A6', T(no[1].trim()));
-                mergeBaris(6, 0, 6);
-
-                /* --- Pembuka (A8) --- */
-                const pembuka = document.querySelectorAll('.pembuka');
-                put('A8', T(pembuka[0].innerText.replace(/\s+/g, ' ').trim()));
-                mergeBaris(8, 0, 6);
-
-                /* --- Para pihak (A10:G16) --- */
-                const pihak = document.querySelectorAll('.pihak > li');
-                let r = 10;
-                pihak.forEach((li, i) => {
-                    const b = li.querySelectorAll('.baris');
-                    put('A' + r, T((i + 1) + '.'));
-                    put('B' + r, T('Nama / NIP'));
-                    put('C' + r, T(b[0].querySelector('.val').textContent.trim()));
-                    mergeBaris(r, 2, 6);
-                    r++;
-                    put('B' + r, T('Jabatan'));
-                    put('C' + r, T(b[1].querySelector('.val').textContent.trim()));
-                    mergeBaris(r, 2, 6);
-                    r++;
-                    put('B' + r, T(li.querySelector('.ket-pihak').innerText.replace(/\s+/g, ' ').trim()));
-                    mergeBaris(r, 1, 6);
-                    r += 2;
-                });
-
-                /* --- Paragraf kesepakatan (A18) --- */
-                put('A18', T(pembuka[1].innerText.replace(/\s+/g, ' ').trim()));
-                mergeBaris(18, 0, 6);
-
-                /* --- I. Penerimaan --- */
-                put('A20', T('I. REKONSILIASI PENERIMAAN (PENDAPATAN)'));
-                mergeBaris(20, 0, 6);
-                put('A21', T(document.querySelectorAll('.sec-desc')[0].innerText.replace(/\s+/g, ' ').trim()));
-                mergeBaris(21, 0, 6);
-                const hPend = ['No.', 'Kode Rekening', 'Uraian Pendapatan', 'Catatan SKPD\n(Rp)', 'Catatan BUD\n(Rp)',
-                    'Selisih\n(Rp)', 'Keterangan'
-                ];
-                hPend.forEach((h, i) => put(kol[i] + '22', T(h)));
-                r = 23;
-                ambil('tPend').forEach(row => {
-                    if (row.tot) {
-                        put('A' + r, T('TOTAL PENERIMAAN'));
-                        mergeBaris(r, 0, 2);
-                        put('D' + r, N(row.sel[1].num));
-                        put('E' + r, N(row.sel[2].num));
-                        put('F' + r, {
-                            f: `D${r}-E${r}`,
-                            z: NUMFMT
-                        });
-                        put('G' + r, {
-                            f: `IF(F${r}=0,"Sesuai","Tidak Sesuai")`
-                        });
-                    } else {
-                        put('A' + r, {
-                            v: Number(row.sel[0].txt),
-                            t: 'n'
-                        });
-                        put('B' + r, T(row.sel[1].txt));
-                        put('C' + r, T(row.sel[2].txt));
-                        put('D' + r, N(row.sel[3].num));
-                        put('E' + r, N(row.sel[4].num));
-                        put('F' + r, {
-                            f: `D${r}-E${r}`,
-                            z: NUMFMT
-                        });
-                        put('G' + r, {
-                            f: `IF(F${r}=0,"Cocok","Tidak Cocok")`
-                        });
-                    }
-                    r++;
-                });
-
-                /* --- II. Belanja --- */
-                put('A28', T('II. REKONSILIASI PENGELUARAN (BELANJA)'));
-                mergeBaris(28, 0, 6);
-                put('A29', T(document.querySelectorAll('.sec-desc')[1].innerText.replace(/\s+/g, ' ').trim()));
-                mergeBaris(29, 0, 6);
-                const hBel = ['No.', 'Jenis / Mekanisme Belanja', 'Uraian', 'Catatan SKPD\n(Rp)', 'Catatan BUD\n(Rp)',
-                    'Selisih\n(Rp)', 'Keterangan'
-                ];
-                hBel.forEach((h, i) => put(kol[i] + '30', T(h)));
-                r = 31;
-                ambil('tBel').forEach(row => {
-                    if (row.tot) {
-                        const lbl = row.sel[0].txt;
-                        put('A' + r, T(lbl));
-                        mergeBaris(r, 0, 2);
-                        if (lbl.includes('JENIS')) {
-                            put('D' + r, {
-                                f: 'SUM(D31:D34)',
-                                z: NUMFMT
-                            });
-                            put('E' + r, {
-                                f: 'SUM(E31:E34)',
-                                z: NUMFMT
-                            });
-                        } else if (lbl.includes('MEKANISME')) {
-                            put('D' + r, {
-                                f: 'SUM(D36:D38)',
-                                z: NUMFMT
-                            });
-                            put('E' + r, {
-                                f: 'SUM(E36:E38)',
-                                z: NUMFMT
-                            });
-                        } else { // SELISIH (POTENSI SISA UP/GU/TU)
-                            put('D' + r, {
-                                f: 'D39-D35',
-                                z: NUMFMT
-                            });
-                            put('E' + r, {
-                                f: 'E39-E35',
-                                z: NUMFMT
-                            });
-                        }
-                        put('F' + r, {
-                            f: `E${r}-D${r}`,
-                            z: NUMFMT
-                        });
-                        put('G' + r, {
-                            f: `IF(F${r}=0,"Sesuai","${lbl.includes('JENIS')?'Tidak Sesuai':'Potensi'}")`
-                        });
-                    } else {
-                        put('A' + r, {
-                            v: Number(row.sel[0].txt),
-                            t: 'n'
-                        });
-                        put('B' + r, T(row.sel[1].txt));
-                        put('C' + r, T(row.sel[2].txt));
-                        put('D' + r, N(row.sel[3].num));
-                        put('E' + r, N(row.sel[4].num));
-                        put('F' + r, {
-                            f: `E${r}-D${r}`,
-                            z: NUMFMT
-                        });
-                        put('G' + r, {
-                            f: `IF(F${r}=0,"Cocok","Tidak Cocok")`
-                        });
-                    }
-                    r++;
-                });
-
-                /* --- III. Saldo Kas --- */
-                put('A42', T('III. REKONSILIASI SALDO KAS DAN SISA UP/GU/TU'));
-                mergeBaris(42, 0, 6);
-                put('A43', T('No.'));
-                put('B43', T('Uraian Saldo Kas'));
-                mergeBaris(43, 1, 2);
-                put('E43', T('Jumlah\n(Rp)'));
-                put('F43', T('Keterangan'));
-                mergeBaris(43, 5, 6);
-                r = 44;
-                ambil('tSaldo').forEach(row => {
-                    if (row.tot) {
-                        put('A' + r, T('SALDO AKHIR KAS DI BENDAHARA PENGELUARAN'));
-                        mergeBaris(r, 0, 3);
-                        put('E' + r, {
-                            f: 'SUM(E44:E47)',
-                            z: NUMFMT
-                        });
-                        put('F' + r, {
-                            f: `IF(E${r}=E40,"Sesuai","Nihil")`
-                        });
-                        mergeBaris(r, 5, 6);
-                    } else {
-                        put('A' + r, {
-                            v: Number(row.sel[0].txt),
-                            t: 'n'
-                        });
-                        put('B' + r, T(row.sel[1].txt));
-                        mergeBaris(r, 1, 3);
-                        put('E' + r, N(row.sel[2].num));
-                        put('F' + r, T(row.sel[3].txt));
-                        mergeBaris(r, 5, 6);
-                    }
-                    r++;
-                });
-
-                /* --- IV. Catatan --- */
-                put('A50', T('IV. CATATAN DAN KESIMPULAN'));
-                mergeBaris(50, 0, 6);
-                const cat = document.querySelectorAll('.catatan');
-                put('A51', T(cat[0].innerText.replace(/\s+/g, ' ').trim()));
-                mergeBaris(51, 0, 6);
-                put('A52', T(cat[1].innerText.replace(/\s+/g, ' ').trim()));
-                mergeBaris(52, 0, 6);
-
-                /* --- Tanda tangan --- */
-                const blok = document.querySelectorAll('.ttd');
-                [
-                    [blok[0], 55],
-                    [blok[1], 65]
-                ].forEach(([b, baris]) => {
-                    const kiri = b.children[0].querySelectorAll('div');
-                    const kanan = b.children[1].querySelectorAll('div');
-                    put('A' + baris, T(kiri[0].textContent.trim()));
-                    mergeBaris(baris, 0, 2);
-                    put('E' + baris, T(kanan[0].textContent.trim()));
-                    mergeBaris(baris, 4, 6);
-                    put('A' + (baris + 1), T(kiri[1].textContent.trim()));
-                    mergeBaris(baris + 1, 0, 2);
-                    put('E' + (baris + 1), T(kanan[1].textContent.trim()));
-                    mergeBaris(baris + 1, 4, 6);
-                    const rn = baris + 6;
-                    put('A' + rn, T(kiri[3].textContent.trim()));
-                    mergeBaris(rn, 0, 2);
-                    put('E' + rn, T(kanan[3].textContent.trim()));
-                    mergeBaris(rn, 4, 6);
-                    put('A' + (rn + 1), T(kiri[4].textContent.trim()));
-                    mergeBaris(rn + 1, 0, 2);
-                    put('E' + (rn + 1), T(kanan[4].textContent.trim()));
-                    mergeBaris(rn + 1, 4, 6);
-                });
-
-                /* --- Rakit worksheet --- */
-                ws['!ref'] = 'A1:G72';
-                ws['!merges'] = merges;
-                ws['!cols'] = [{
-                    wch: 5
-                }, {
-                    wch: 13.45
-                }, {
-                    wch: 24
-                }, {
-                    wch: 17
-                }, {
-                    wch: 17
-                }, {
-                    wch: 14.45
-                }, {
-                    wch: 11.54
-                }];
-                ws['!rows'] = [];
-                ws['!rows'][7] = {
-                    hpt: 33
-                }; // A8
-                ws['!rows'][17] = {
-                    hpt: 41
-                }; // A18
-                ws['!rows'][21] = {
-                    hpt: 26
-                }; // header penerimaan
-                ws['!rows'][29] = {
-                    hpt: 39
-                }; // header belanja
-                ws['!rows'][42] = {
-                    hpt: 26
-                }; // header saldo
-
-                /* --- Sheet referensi kode rekening --- */
-                const kodeRek = [
-                    ['PENDAPATAN DAERAH', ''],
-                    ['4.1.01', 'Pajak Daerah'],
-                    ['4.1.02', 'Retribusi Daerah'],
-                    ['4.1.03', 'Hasil Pengelolaan Kekayaan Daerah yang Dipisahkan'],
-                    ['4.1.04', 'Lain-lain PAD yang Sah'],
-                    ['4.2.01.07', 'Dana Bagi Hasil (DBH)'],
-                    ['4.2.01.08', 'Dana Alokasi Umum (DAU)'],
-                    ['4.2.01.09', 'Dana Alokasi Khusus (DAK)'],
-                    ['4.2.01.05', 'Dana Desa'],
-                    ['4.2.02.01', 'Pendapatan Bagi Hasil'],
-                    ['4.2.02.02', 'Bantuan Keuangan'],
-                    ['4.3.03', 'Lain-lain Pendapatan Sesuai dengan Ketentuan Peraturan Perundang-Undangan'],
-                    ['', ''],
-                    ['BELANJA DAERAH', ''],
-                    ['Belanja Operasi', 'Belanja Pegawai'],
-                    ['Belanja Operasi', 'Belanja Barang dan Jasa'],
-                    ['Belanja Operasi', 'Belanja Hibah'],
-                    ['Belanja Modal', 'Belanja Modal Tanah'],
-                    ['Belanja Modal', 'Belanja Modal Peralatan dan Mesin'],
-                    ['Belanja Modal', 'Belanja Modal Gedung dan Bangunan'],
-                    ['Belanja Modal', 'Belanja Modal Jalan, Jaringan, dan Irigasi'],
-                    ['Belanja Modal', 'Belanja Modal Aset Tetap Lainnya'],
-                    ['Belanja Modal', 'Belanja Modal Aset Lainnya'],
-                    ['Belanja Tidak Terduga', 'Belanja Tidak Terduga'],
-                    ['Belanja Transfer', 'Belanja Bantuan Keuangan Kabupaten/Kota ke Daerah Provinsi'],
-                    ['Belanja Transfer', 'Belanja Bantuan Keuangan Daerah Provinsi atau Kabupaten/Kota kepada Desa'],
-                ];
-                const wsKode = XLSX.utils.aoa_to_sheet(kodeRek);
-                wsKode['!cols'] = [{
-                    wch: 27.45
-                }, {
-                    wch: 73.18
-                }];
-
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, 'BAR Penerimaan & Pengeluaran');
-                XLSX.utils.book_append_sheet(wb, wsKode, 'Kode Rek');
-
-                const nomor = 'BAR_900-412-BPKAD-2026';
-                XLSX.writeFile(wb, `${nomor}_Dinas_Pendidikan_Juni_2026.xlsx`);
-            }
         </script>
     </body>
 
-</html>
+</html> --}}
+
+@extends('layout.base_layout')
+
+@section('content')
+            <div class="page-head d-flex align-items-center gap-3 flex-wrap no-print">
+                <div>
+                    <h1>Berita Acara Rekonsiliasi <span class="chip c-wait ms-1"><i class="bi bi-hourglass-split"></i>
+                            Menunggu TTD</span></h1>
+                    <p>Nomor {{ $data->berita_acara_no_bud }} &middot; Periode {{ $data->berita_acara_periode }} TA
+                        {{ $data->berita_acara_tahun_anggaran }}</p>
+                </div>
+                <div class="ms-auto d-flex gap-2 no-print">
+                    <a href="{{ route('berita_acara.view') }}" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Kembali
+                    </a>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="window.print()">
+                        <i class="bi bi-printer"></i> Cetak / PDF
+                    </button>
+                    <a href="{{ route('berita_acara.excel', $berita_acara_id) }}" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-file-earmark-excel"></i> Ekspor Excel
+                    </a>
+                    <button class="btn btn-sm text-white" style="background:var(--bar-navy)">
+                        <i class="bi bi-pen"></i> Tanda Tangani
+                    </button>
+                </div>
+            </div>
+
+            <div class="content">
+                <!-- ============ LEMBAR DOKUMEN ============ -->
+                <article class="sheet" id="lembar">
+
+                    <!-- Baris 1–3 -->
+                    <div class="doc-title">
+                        <h1>BERITA ACARA REKONSILIASI PENERIMAAN DAN PENGELUARAN</h1>
+                        <h2>ANTARA SKPKD DAN SKPD</h2>
+                        <h3>PERIODE {{ $data->berita_acara_periode }} TAHUN ANGGARAN
+                            {{ $data->berita_acara_tahun_anggaran }}</h3>
+                    </div>
+
+                    <!-- Baris 5–6 -->
+                    <div class="doc-no">
+                        Nomor BAR (BUD) : {{ $data->berita_acara_no_bud }}<br>
+                        Nomor BAR (SKPD) : {{ $data->berita_acara_no_skpd }}
+                    </div>
+
+                    <!-- Baris 8 -->
+                    <p class="pembuka">
+                        Pada hari ini, {{$terbilang['hari']}} tanggal {{$terbilang['tanggal']}} bulan {{$terbilang['bulan']}} tahun {{$terbilang['tahun']}},
+                        bertempat di Kantor Badan Pengelolaan Keuangan dan Aset Daerah, kami yang
+                        bertandatangan di bawah ini:
+                    </p>
+
+                    <!-- Baris 10–16 -->
+                    <ol class="pihak">
+                        <li>
+                            <div class="urut">1.</div>
+                            <div class="isi">
+                                <div class="baris"><span class="lbl">Nama / NIP</span><span
+                                        class="sep">:</span><span class="val">Ichtiawan J. Aziz, S.E.I / NIP.
+                                        198506162020121006</span></div>
+                                <div class="baris"><span class="lbl">Jabatan</span><span
+                                        class="sep">:</span><span class="val">Kepala Sub Bidang Penerimaan dan
+                                        Belanja</span></div>
+                                <div class="ket-pihak">
+                                    Dalam hal ini bertindak untuk dan atas nama BPKAD selaku SKPKD Pemerintah
+                                    Kabupaten Kutai Timur, selanjutnya disebut PIHAK KESATU.
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="urut">2.</div>
+                            <div class="isi">
+                                <div class="baris"><span class="lbl">Nama / NIP</span><span
+                                        class="sep">:</span><span class="val">Budi Santoso, S.E. / NIP.
+                                        198203142009011004</span></div>
+                                <div class="baris"><span class="lbl">Jabatan</span><span
+                                        class="sep">:</span><span class="val">Pejabat Penatausahaan Keuangan
+                                        (PPK-SKPD)</span></div>
+                                <div class="ket-pihak">
+                                    Dalam hal ini bertindak untuk dan atas nama Dinas Pendidikan, selanjutnya
+                                    disebut PIHAK KEDUA.
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+
+                    <!-- Baris 18 -->
+                    <p class="pembuka">
+                        PIHAK KESATU dan PIHAK KEDUA secara bersama-sama telah melakukan rekonsiliasi data
+                        Penerimaan (Pendapatan) dan Pengeluaran (Belanja) sampai dengan periode Juni Tahun
+                        Anggaran 2026, dengan hasil kesepakatan sebagai berikut:
+                    </p>
+
+                    <!-- ===== I. PENERIMAAN (baris 20–26) ===== -->
+                    <div class="sec">I. REKONSILIASI PENERIMAAN (PENDAPATAN)</div>
+                    <p class="sec-desc">
+                        Berdasarkan pencatatan pada Buku Kas Umum (BKU) Penerimaan SKPD dan Catatan Kas
+                        Daerah (BUD), realisasi pendapatan adalah sebagai berikut:
+                    </p>
+                    <div class="tbl-scroll">
+                        <table class="xl" id="tPend">
+                            <colgroup>
+                                <col class="cA">
+                                <col class="cB">
+                                <col class="cC">
+                                <col class="cD">
+                                <col class="cE">
+                                <col class="cF">
+                                <col class="cG">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Kode Rekening</th>
+                                    <th>Uraian Pendapatan</th>
+                                    <th>Catatan SKPD<br>(Rp)</th>
+                                    <th>Catatan BUD<br>(Rp)</th>
+                                    <th>Selisih<br>(Rp)</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $totPendapatanSKPD = $data_pendapatan->sum('skpd');
+                                    $totpendapatanBUD = $data_pendapatan->sum('bud');
+                                    $selisihPendapatan = $totPendapatanSKPD - $totpendapatanBUD;
+                                @endphp
+                                @foreach ($data_pendapatan as $index => $pendapatan)
+                                    <tr>
+                                        <td class="c">{{ $index + 1 }}</td>
+                                        <td class="c">{{ $pendapatan->rekening_kode }}</td>
+                                        <td>{{ $pendapatan->rekening_uraian }}</td>
+                                        <td class="num" data-v="{{ $pendapatan->skpd }}">
+                                            {{ number_format($pendapatan->skpd, 2, ',', '.') }}</td>
+                                        <td class="num" data-v="{{ $pendapatan->bud }}">
+                                            {{ number_format($pendapatan->bud, 2, ',', '.') }}</td>
+                                        <td class="num" data-v="{{ $pendapatan->selisih }}">
+                                            {{ number_format($pendapatan->selisih, 2, ',', '.') }}</td>
+                                        <td class="c">{{ $pendapatan->keterangan }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr class="tot">
+                                    <td colspan="3" class="lbl-tot">TOTAL PENERIMAAN</td>
+                                    <td class="num" data-v="{{ $totPendapatanSKPD }}">
+                                        {{ number_format($totPendapatanSKPD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $totpendapatanBUD }}">
+                                        {{ number_format($totpendapatanBUD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $selisihPendapatan }}">
+                                        {{ number_format($selisihPendapatan, 2, ',', '.') }}</td>
+                                    <td class="c">
+                                        {{ $selisihPendapatan == 0 ? 'Sesuai' : 'Tidak Sesuai' }}
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- ===== II. BELANJA (baris 28–40) ===== -->
+                    <div class="sec">II. REKONSILIASI PENGELUARAN (BELANJA)</div>
+                    <p class="sec-desc">
+                        Berdasarkan penerbitan Surat Perintah Pencairan Dana (SP2D) oleh BUD dan Surat
+                        Pertanggungjawaban (SPJ) Pengeluaran oleh SKPD, realisasi belanja adalah sebagai
+                        berikut:
+                    </p>
+                    <div class="tbl-scroll">
+                        <table class="xl" id="tBel">
+                            <colgroup>
+                                <col class="cA">
+                                <col class="cB">
+                                <col class="cC">
+                                <col class="cD">
+                                <col class="cE">
+                                <col class="cF">
+                                <col class="cG">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Jenis / Mekanisme Belanja</th>
+                                    <th>Uraian</th>
+                                    <th>Catatan SKPD<br>(Rp)</th>
+                                    <th>Catatan BUD<br>(Rp)</th>
+                                    <th>Selisih<br>(Rp)</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $totBelanjaSKPD = $data_belanja->sum('skpd');
+                                    $totBelanjaBUD = $data_belanja->sum('bud');
+                                    $selisihBelanja = $totBelanjaSKPD - $totBelanjaBUD;
+                                @endphp
+                                @foreach ($data_belanja as $index => $belanja)
+                                    <tr>
+                                        <td class="c">{{ $index + 1 }}</td>
+                                        <td>{{ $belanja->belanja_nama }}</td>
+                                        <td>{{ $belanja->belanja_uraian }}</td>
+                                        <td class="num" data-v="{{ $belanja->skpd }}">
+                                            {{ number_format($belanja->skpd, 2, ',', '.') }}</td>
+                                        <td class="num" data-v="{{ $belanja->bud }}">
+                                            {{ number_format($belanja->bud, 2, ',', '.') }}</td>
+                                        <td class="num" data-v="{{ $belanja->selisih }}">
+                                            {{ number_format($belanja->selisih, 2, ',', '.') }}</td>
+                                        <td class="c">{{ $belanja->keterangan }}</td>
+                                    </tr>
+                                @endforeach
+                                <tr class="tot">
+                                    <td colspan="3" class="lbl-tot">TOTAL BELANJA (JENIS)</td>
+                                    <td class="num" data-v="{{ $totBelanjaSKPD }}">
+                                        {{ number_format($totBelanjaSKPD, 2, ',', '.') }}</td>
+                                    <td class="num" data-v="{{ $totBelanjaBUD }}">
+                                        {{ number_format($totBelanjaBUD, 2, ',', '.') }}</td>
+                                    <td class="num" data-v="{{ $selisihBelanja }}">
+                                        {{ number_format($selisihBelanja, 2, ',', '.') }}</td>
+                                    <td class="c">
+                                        {{ $selisihBelanja == 0 ? 'Sesuai' : 'Tidak Sesuai' }}</td>
+                                </tr>
+                                @php
+                                    $totMekanismeSKPD = $data_mekanisme->sum('skpd');
+                                    $totMekanismeBUD = $data_mekanisme->sum('bud');
+                                    $selisihMekanisme = $totMekanismeSKPD - $totMekanismeBUD;
+                                @endphp
+                                @foreach ($data_mekanisme as $mekanisme)
+                                    <tr>
+                                        <td class="c">{{ $loop->iteration }}</td>
+                                        <td>{{ $mekanisme->mekanisme_nama }}</td>
+                                        <td>{{ $mekanisme->mekanisme_uraian }}</td>
+                                        <td class="num" data-v="{{ $mekanisme->skpd }}">
+                                            {{ number_format($mekanisme->skpd, 2, ',', '.') }}</td>
+                                        <td class="num" data-v="{{ $mekanisme->bud }}">
+                                            {{ number_format($mekanisme->bud, 2, ',', '.') }}</td>
+                                        <td class="num" data-v="{{ $mekanisme->selisih }}">
+                                            {{ number_format($mekanisme->selisih, 2, ',', '.') }}</td>
+                                        <td class="c">{{ $mekanisme->keterangan }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            @php
+                                $selisihPotensiSKPD = $totMekanismeSKPD - $totBelanjaSKPD;
+                                $selisihPotensiBUD = $totMekanismeBUD - $totBelanjaBUD;
+                                $selisihPotensi = $selisihPotensiBUD - $selisihPotensiSKPD;
+                            @endphp
+                            <tfoot>
+                                <tr class="tot">
+                                    <td colspan="3" class="lbl-tot">TOTAL BELANJA (MEKANISME)</td>
+                                    <td class="num" data-v="{{ $totMekanismeSKPD }}">
+                                        {{ number_format($totMekanismeSKPD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $totMekanismeBUD }}">
+                                        {{ number_format($totMekanismeBUD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $selisihMekanisme }}">
+                                        {{ number_format($selisihMekanisme, 2, ',', '.') }}
+                                    </td>
+                                    <td class="c">{{ $selisihMekanisme == 0 ? 'Sesuai' : 'Potensi' }}</td>
+                                </tr>
+                                <tr class="tot">
+                                    <td colspan="3" class="lbl-tot">SELISIH (POTENSI SISA UP/GU/TU)</td>
+                                    <td class="num" data-v="{{ $selisihPotensiSKPD }}">
+                                        {{ number_format($selisihPotensiSKPD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $selisihPotensiBUD }}">
+                                        {{ number_format($selisihPotensiBUD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $selisihPotensi }}">
+                                        {{ number_format($selisihPotensi, 2, ',', '.') }}
+                                    </td>
+                                    <td class="c">{{ $selisihPotensi == 0 ? 'Sesuai' : 'Potensi' }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- ===== III. SALDO KAS (baris 42–48) ===== -->
+                    <div class="sec">III. REKONSILIASI SALDO KAS DAN SISA UP/GU/TU</div>
+                    <div class="tbl-scroll">
+                        <table class="xl" id="tSaldo">
+                            <colgroup>
+                                <col class="cA">
+                                <col style="width:56.5%">
+                                <col class="cF">
+                                <col style="width:26%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Uraian Saldo Kas</th>
+                                    <th>Jumlah<br>(Rp)</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="c">1</td>
+                                    <td>Saldo Awal Bulan Kas di Bendahara Pengeluaran</td>
+                                    <td class="num" data-v="234840000">234.840.000,00</td>
+                                    <td class="c">Kas Awal Bulan</td>
+                                </tr>
+                                <tr>
+                                    <td class="c">2</td>
+                                    <td>Penerimaan SP2D (UP/GU/TU) Periode Ini</td>
+                                    <td class="num" data-v="224026427">224.026.427,00</td>
+                                    <td class="c">Pencairan UP/GU/TU</td>
+                                </tr>
+                                <tr>
+                                    <td class="c">3</td>
+                                    <td>Pengeluaran BKU (SPJ Belanja UP/GU/TU)</td>
+                                    <td class="num neg" data-v="-224026427">-224.026.427,00</td>
+                                    <td class="c">Realisasi UP/GU/TU</td>
+                                </tr>
+                                <tr>
+                                    <td class="c">4</td>
+                                    <td>Pengembalian Sisa UP/GU/TU (STS/S3UP)</td>
+                                    <td class="num" data-v="0">0,00</td>
+                                    <td class="c">Penyetoran Sisa Kas</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="tot">
+                                    <td colspan="2" class="lbl-tot">SALDO AKHIR KAS DI BENDAHARA PENGELUARAN</td>
+                                    <td class="num" data-v="234840000">234.840.000,00</td>
+                                    <td class="c">Sesuai</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- ===== IV. CATATAN (baris 50–52) ===== -->
+                    <div class="sec">IV. CATATAN DAN KESIMPULAN</div>
+                    <p class="catatan">
+                        1. Data Penerimaan dan Pengeluaran antara BUD dan SKPD untuk periode ini dinyatakan
+                        TELAH SESUAI / COCOK.
+                    </p>
+                    <p class="catatan">
+                        2. Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan
+                        Keuangan Pemerintah Daerah (LKPD).
+                    </p>
+
+                    <!-- ===== TANDA TANGAN (baris 55–72) ===== -->
+                    <div class="ttd">
+                        <div>
+                            <div class="fw-bold">PIHAK KEDUA</div>
+                            <div>Pejabat Penatausahaan Keuangan (PPK-SKPD)</div>
+                            <div class="ruang"></div>
+                            <div class="nm">Budi Santoso, S.E.</div>
+                            <div>NIP. 198203142009011004</div>
+                        </div>
+                        <div>
+                            <div class="fw-bold">PIHAK KESATU</div>
+                            <div>Kepala Sub Bidang Penerimaan dan Belanja</div>
+                            <div class="ruang"></div>
+                            <div class="nm">Ichtiawan J. Aziz, S.E.I</div>
+                            <div>NIP. 198506162020121006</div>
+                        </div>
+                    </div>
+
+                    <div class="ttd">
+                        <div>
+                            <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
+                            <div>Pengguna Anggaran</div>
+                            <div class="ruang"></div>
+                            <div class="nm">Dr. H. Suprihanto, M.Pd.</div>
+                            <div>NIP. 196908121994031008</div>
+                        </div>
+                        <div>
+                            <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
+                            <div>Kepala Bidang Akuntansi</div>
+                            <div class="ruang"></div>
+                            <div class="nm">M. Adnan, S.E., M.Si.</div>
+                            <div>NIP. 197612262007011010</div>
+                        </div>
+                    </div>
+
+                    <div class="doc-foot">
+                        <span>BAR Penerimaan dan Pengeluaran 2026</span>
+                        <span>Halaman 1 dari 2</span>
+                    </div>
+                </article>
+            </div>
+@endsection
