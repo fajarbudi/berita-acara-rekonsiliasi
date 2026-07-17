@@ -820,7 +820,6 @@ table.mini tr.tot td {
     color: #7a2020;
 }
 
-
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 991.98px) {
     .sidebar {
@@ -862,5 +861,27 @@ table.mini tr.tot td {
     }
     .content {
         padding: 0 12px 30px;
+    }
+}
+
+@media print {
+    .sidebar,
+    .topnav,
+    .page-head,
+    .backdrop {
+        display: none !important;
+    }
+    .main {
+        margin: 0;
+        padding: 0;
+    }
+    .content {
+        padding: 0;
+    }
+    .frame-wrap {
+        border: 0;
+        box-shadow: none;
+        margin: 0;
+        max-width: none;
     }
 }

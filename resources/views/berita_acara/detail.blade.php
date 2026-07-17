@@ -1121,6 +1121,9 @@
 </html> --}}
 
 @extends('layout.base_layout')
+@push('cssTambahan')
+    <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
+@endpush
 
 @section('content')
             <div class="page-head d-flex align-items-center gap-3 flex-wrap no-print">

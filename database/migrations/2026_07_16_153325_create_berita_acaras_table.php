@@ -23,6 +23,11 @@ class CreateBeritaAcarasTable extends Migration
             $table->string('berita_acara_hari', 100);
             $table->string('berita_acara_tempat', 100);
             $table->longText('berita_acara_kesimpulan')->nullable();
+            $table->integer('skpd_id');
+            $table->string('berita_acara_nama_ppk')->nullable();
+            $table->string('berita_acara_nip_ppk')->nullable();
+            $table->string('berita_acara_nama_pa')->nullable();
+            $table->string('berita_acara_nip_pa')->nullable();
             $table->timestamps();
         });
     }

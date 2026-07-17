@@ -29,6 +29,15 @@
         <!-- IDENTITAS DOKUMEN -->
         <div class="section-head">A. IDENTITAS DOKUMEN</div>
         <div class="row g-3">
+            <div class="col-md-12">
+                <label class="form-label">SKPD</label>
+                <select class="form-select form-select-sm" id="periode" name="data[skpd_id]">
+                    <option value="" selected>-- Pilih SKPD --</option>
+                    @foreach ($ref_skpd as $skpd)
+                        <option value="{{$skpd->skpd_id}}" {{$skpd->skpd_id == $data->skpd_id ? 'selected' : ''}}>{{$skpd->skpd_nama}}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="col-md-3">
                 <label class="form-label">Nomor BAR (BUD)</label>
                 <input type="text" class="form-control form-control-sm" name="data[berita_acara_no_bud]"
@@ -88,63 +97,6 @@
                 <label class="form-label">Tempat</label>
                 <input type="text" class="form-control form-control-sm" name="data[berita_acara_tempat]"
                     value="{{ $data->berita_acara_tempat ?? 'Kantor Badan Pengelolaan Keuangan dan Aset Daerah' }}" />
-            </div>
-        </div>
-
-        <!-- PIHAK -->
-        <div class="section-head">B. PARA PIHAK</div>
-
-        <div class="border rounded p-3 mb-3" style="background: #f8f9fc">
-            <div class="fw-bold text-uppercase mb-2" style="color: var(--bar-navy)">
-                1. Pihak Kesatu (SKPKD / BUD)
-            </div>
-            <div class="row g-3">
-                <div class="col-md-5">
-                    <label class="form-label">Nama Pejabat SKPKD</label>
-                    <input type="text" class="form-control form-control-sm" name="nama_p1"
-                        placeholder="Nama lengkap dan gelar" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">NIP</label>
-                    <input type="text" class="form-control form-control-sm" name="nip_p1" placeholder="18 digit" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Jabatan</label>
-                    <input type="text" class="form-control form-control-sm" name="jab_p1"
-                        value="Kepala Sub Bidang Penerimaan dan Belanja" />
-                </div>
-                <div class="col-12">
-                    <label class="form-label">Bertindak untuk dan atas nama</label>
-                    <input type="text" class="form-control form-control-sm" name="instansi_p1"
-                        value="BPKAD selaku SKPKD Pemerintah Kabupaten Kutai Timur" />
-                </div>
-            </div>
-        </div>
-
-        <div class="border rounded p-3" style="background: #f8f9fc">
-            <div class="fw-bold text-uppercase mb-2" style="color: var(--bar-navy)">
-                2. Pihak Kedua (SKPD)
-            </div>
-            <div class="row g-3">
-                <div class="col-md-5">
-                    <label class="form-label">Nama Pejabat SKPD</label>
-                    <input type="text" class="form-control form-control-sm" name="nama_p2"
-                        placeholder="Nama lengkap dan gelar" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">NIP</label>
-                    <input type="text" class="form-control form-control-sm" name="nip_p2" placeholder="18 digit" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Jabatan</label>
-                    <input type="text" class="form-control form-control-sm" name="jab_p2"
-                        value="Pejabat Penatausahaan Keuangan (PPK-SKPD)" />
-                </div>
-                <div class="col-12">
-                    <label class="form-label">Nama SKPD</label>
-                    <input type="text" class="form-control form-control-sm" name="nama_skpd"
-                        placeholder="Contoh: Dinas Pendidikan Kabupaten Kutai Timur" />
-                </div>
             </div>
         </div>
 
@@ -583,18 +535,19 @@
                 <div>Pejabat Penatausahaan Keuangan (PPK-SKPD)</div>
                 <div class="sign-space"></div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="ttd_nama_p2"
-                    placeholder="[NAMA PEJABAT/PPK SKPD]" />
+                    placeholder="[NAMA PEJABAT/PPK SKPD]" value="{{$data->berita_acara_nama_ppk}}" readonly/>
                 <input type="text" class="form-control form-control-sm text-center" name="ttd_nip_p2"
-                    placeholder="NIP. ..." />
+                    placeholder="NIP. ..." 
+                    value="NIP. {{$data->berita_acara_nip_ppk}}" readonly/>
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">PIHAK KESATU</div>
                 <div>Kepala Sub Bidang Penerimaan dan Belanja</div>
                 <div class="sign-space"></div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="ttd_nama_p1"
-                    value="Ichtiawan J. Aziz, S.E.I" />
+                    value="Ichtiawan J. Aziz, S.E.I" readonly/>
                 <input type="text" class="form-control form-control-sm text-center" name="ttd_nip_p1"
-                    value="NIP. 198506162020121006" />
+                    value="NIP. 198506162020121006" readonly/>
             </div>
         </div>
 
@@ -604,9 +557,9 @@
                 <div>Pengguna Anggaran</div>
                 <div class="sign-space"></div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="ttd_nama_pa"
-                    placeholder="[NAMA KEPALA SKPD]" />
+                    placeholder="[NAMA KEPALA SKPD]" value="{{$data->berita_acara_nama_pa}}" readonly/>
                 <input type="text" class="form-control form-control-sm text-center" name="ttd_nip_pa"
-                    placeholder="NIP. ..." />
+                    placeholder="NIP. ..." value="NIP. {{$data->berita_acara_nip_pa}}" readonly/>
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
@@ -619,12 +572,9 @@
             </div>
         </div>
 
-        <div class="d-flex gap-2 mt-4 no-print">
+        <div class="d-flex gap-2 mt-4 no-print justify-content-end mt-5">
             <button type="submit" class="btn btn-primary btn-sm">
-                <i class="bi bi-download"></i> Simpan Data (JSON)
-            </button>
-            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
-                <i class="bi bi-printer"></i> Cetak / PDF
+                <i class="bi bi-download"></i> Simpan Data
             </button>
             <button type="reset" class="btn btn-outline-danger btn-sm">
                 <i class="bi bi-arrow-counterclockwise"></i> Reset Form
@@ -739,18 +689,6 @@
                 t || "2026";
         }
 
-        // function tambahBaris(id) {
-        //     const tb = document.querySelector("#" + id + " tbody");
-        //     const nr = tb.rows[tb.rows.length - 1].cloneNode(true);
-        //     nr.querySelectorAll("input").forEach((i) => {
-        //         i.value = i.classList.contains("cell-input") ? "0" : "";
-        //     });
-
-        //     console.log(nr.querySelectorAll("input"));
-        //     // tb.appendChild(nr);
-        //     // bindAll();
-        //     // hitungSemua();
-        // }
         function tambahBaris(id, indexPrefix = "rekening") {
             const tb = document.querySelector("#" + id + " tbody");
 
@@ -806,26 +744,6 @@
                     el.oninput = hitungSemua;
                     el.onchange = hitungSemua;
                 });
-        }
-
-        function simpanJSON() {
-            const data = {};
-            new FormData(document.getElementById("formBAR")).forEach(
-                (v, k) => (data[k] = v),
-            );
-            data.pendapatan = ambil("tblPendapatan");
-            data.belanja_jenis = ambil("tblJenis");
-            data.belanja_mekanisme = ambil("tblMekanisme");
-            data.saldo_kas = [
-                ...document.querySelectorAll("#tblSaldo .saldo"),
-            ].map((i) => parse(i.value));
-            const blob = new Blob([JSON.stringify(data, null, 2)], {
-                type: "application/json",
-            });
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(blob);
-            a.download = "berita-acara-rekonsiliasi.json";
-            a.click();
         }
 
         function ambil(id) {

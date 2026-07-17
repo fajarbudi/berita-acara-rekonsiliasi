@@ -19,6 +19,11 @@ class berita_acara extends Model
         'berita_acara_periode',
         'berita_acara_hari',
         'berita_acara_tempat',
-        'berita_acara_kesimpulan'
+        'berita_acara_kesimpulan',
+        'skpd_id',
+        'berita_acara_nama_ppk',
+        'berita_acara_nip_ppk',
+        'berita_acara_nama_pa',
+        'berita_acara_nip_pa',
     ];
 }

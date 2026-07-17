@@ -11,6 +11,7 @@ use App\Models\berita_acara_saldo_kas;
 use App\Models\ref_belanja;
 use App\Models\ref_mekanisme;
 use App\Models\ref_rekening;
+use App\Models\ref_skpd;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,6 +59,8 @@ class BeritaAcara extends Controller
         ->orderBy('name')->get();
     $load['users_skpd'] = User::where('user_kewenangan', 'skpd')
         ->orderBy('name')->get();
+        $load['ref_skpd'] = ref_skpd::get();
+
         return view('berita_acara.new',  $load);
     }
 
@@ -73,6 +76,7 @@ class BeritaAcara extends Controller
         $load['data_belanja'] = berita_acara_belanja::where('berita_acara_id', $id)->get();
         $load['ref_mekanisme'] = ref_mekanisme::orderBy('mekanisme_nama', 'asc')->get();
         $load['data_mekanisme'] = berita_acara_mekanisme::where('berita_acara_id', $id)->get();
+        $load['ref_skpd'] = ref_skpd::get();
         // $load['data_saldo'] = berita_acara_saldo_kas::where('berita_acara_id', $id)
         //     ->orderBy('urutan')
         //     ->get();
@@ -87,7 +91,7 @@ class BeritaAcara extends Controller
         $rekening = $request->input('rekening');
         $belanja = $request->input('belanja');
         $mekanisme = $request->input('mekanisme');
-        $saldo = $request->input('saldo');
+        $skpd = ref_skpd::findOrFail($datas['skpd_id'] ?? '');
 
         $dataPost = [];
         foreach ($datas as $key => $value) {
@@ -95,6 +99,10 @@ class BeritaAcara extends Controller
                 $dataPost[$key] = $value;
             }
         }
+        $dataPost['berita_acara_nama_ppk'] = $skpd->skpd_nama_ppk;
+        $dataPost['berita_acara_nip_ppk'] = $skpd->skpd_nip_ppk;
+        $dataPost['berita_acara_nama_pa'] = $skpd->skpd_nama_pa;
+        $dataPost['berita_acara_nip_pa'] = $skpd->skpd_nip_pa;
 
         // Seluruh penyimpanan dibungkus transaksi. Bila salah satu rincian
         // gagal, header tidak ikut tersimpan setengah jalan.

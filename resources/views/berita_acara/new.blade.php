@@ -28,6 +28,15 @@
         <!-- IDENTITAS DOKUMEN -->
         <div class="section-head">A. IDENTITAS DOKUMEN</div>
         <div class="row g-3">
+            <div class="col-md-12">
+                <label class="form-label">SKPD</label>
+                <select class="form-select form-select-sm" id="periode" name="data[skpd_id]">
+                    <option value="" selected>-- Pilih SKPD --</option>
+                    @foreach ($ref_skpd as $skpd)
+                        <option value="{{$skpd->skpd_id}}">{{$skpd->skpd_nama}}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="col-md-3">
                 <label class="form-label">Nomor BAR (BUD)</label>
                 <input type="text" class="form-control form-control-sm" name="data[berita_acara_no_bud]"
@@ -86,166 +95,6 @@
                     value="Kantor Badan Pengelolaan Keuangan dan Aset Daerah" />
             </div>
         </div>
-
-        <!-- PIHAK -->
-        {{-- <div class="section-head">B. PARA PIHAK</div>
-
-        <div class="border rounded p-3 mb-3" style="background: #f8f9fc">
-            <div class="fw-bold text-uppercase mb-2" style="color: var(--bar-navy)">
-                1. Pihak Kesatu (SKPKD / BUD)
-            </div>
-            <div class="row g-3">
-                <div class="col-md-5">
-                    <label class="form-label">Nama Pejabat SKPKD</label>
-                    <input type="text" class="form-control form-control-sm" name="nama_p1"
-                        placeholder="Nama lengkap dan gelar" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">NIP</label>
-                    <input type="text" class="form-control form-control-sm" name="nip_p1" placeholder="18 digit" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Jabatan</label>
-                    <input type="text" class="form-control form-control-sm" name="jab_p1"
-                        value="Kepala Sub Bidang Penerimaan dan Belanja" />
-                </div>
-                <div class="col-12">
-                    <label class="form-label">Bertindak untuk dan atas nama</label>
-                    <input type="text" class="form-control form-control-sm" name="instansi_p1"
-                        value="BPKAD selaku SKPKD Pemerintah Kabupaten Kutai Timur" />
-                </div>
-            </div>
-        </div>
-
-        <div class="border rounded p-3" style="background: #f8f9fc">
-            <div class="fw-bold text-uppercase mb-2" style="color: var(--bar-navy)">
-                2. Pihak Kedua (SKPD)
-            </div>
-            <div class="row g-3">
-                <div class="col-md-5">
-                    <label class="form-label">Nama Pejabat SKPD</label>
-                    <input type="text" class="form-control form-control-sm" name="nama_p2"
-                        placeholder="Nama lengkap dan gelar" />
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">NIP</label>
-                    <input type="text" class="form-control form-control-sm" name="nip_p2" placeholder="18 digit" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Jabatan</label>
-                    <input type="text" class="form-control form-control-sm" name="jab_p2"
-                        value="Pejabat Penatausahaan Keuangan (PPK-SKPD)" />
-                </div>
-                <div class="col-12">
-                    <label class="form-label">Nama SKPD</label>
-                    <input type="text" class="form-control form-control-sm" name="nama_skpd"
-                        placeholder="Contoh: Dinas Pendidikan Kabupaten Kutai Timur" />
-                </div>
-            </div>
-        </div> --}}
-
-        <div class="section-head">B. PARA PIHAK</div>
-<p class="hint">Pilih pejabat dari daftar pengguna. Data nama, NIP, dan jabatan disalin saat penyimpanan.</p>
-
-{{-- ===== PIHAK KESATU (SKPKD / BUD) ===== --}}
-<div class="fw-bold text-uppercase mb-2" style="color:var(--bar-navy)">
-    Pihak Kesatu (SKPKD / BUD)
-</div>
-<div id="wrapBud">
-    <div class="border rounded p-3 mb-2 blok-pihak" data-grup="bud" style="background:#f8f9fc">
-        <div class="d-flex align-items-center mb-2">
-            <span class="badge bg-secondary urut">1</span>
-            <button type="button" class="btn btn-sm btn-link text-danger ms-auto p-0 no-print"
-                    onclick="hapusPihak(this)">
-                <i class="bi bi-x-circle"></i> Hapus
-            </button>
-        </div>
-        <div class="row g-3">
-            <div class="col-12">
-                <label class="form-label">Pejabat</label>
-                <select class="form-select form-select-sm sel-user" onchange="isiPihak(this)">
-                    <option value="">-- Pilih Pejabat --</option>
-                    @foreach ($users_skpkd as $u)
-                        <option value="{{ $u->id }}"
-                            data-nama="{{ $u->name }}"
-                            data-nip="{{ $u->user_nip }}"
-                            data-jabatan="{{ $u->user_jabatan }}">
-                            {{ $u->name }}@if($u->user_jabatan) — {{ $u->user_jabatan }}@endif
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">NIP</label>
-                <input type="text" class="form-control form-control-sm f-nip" readonly
-                       style="background:#eef1f6">
-            </div>
-            <div class="col-md-8">
-                <label class="form-label">Jabatan</label>
-                <input type="text" class="form-control form-control-sm f-jabatan" readonly
-                       style="background:#eef1f6">
-            </div>
-            <div class="col-12">
-                <label class="form-label">Bertindak untuk dan atas nama</label>
-                <input type="text" class="form-control form-control-sm f-instansi"
-                       value="BPKAD selaku SKPKD Pemerintah Kabupaten Kutai Timur">
-            </div>
-        </div>
-    </div>
-</div>
-<button type="button" class="btn btn-sm btn-outline-primary mb-3 no-print" onclick="tambahPihak('bud')">
-    <i class="bi bi-plus-lg"></i> Tambah Pihak Kesatu
-</button>
-
-{{-- ===== PIHAK KEDUA (SKPD) ===== --}}
-<div class="fw-bold text-uppercase mb-2" style="color:var(--bar-navy)">
-    Pihak Kedua (SKPD)
-</div>
-<div id="wrapSkpd">
-    <div class="border rounded p-3 mb-2 blok-pihak" data-grup="skpd" style="background:#f8f9fc">
-        <div class="d-flex align-items-center mb-2">
-            <span class="badge bg-secondary urut">1</span>
-            <button type="button" class="btn btn-sm btn-link text-danger ms-auto p-0 no-print"
-                    onclick="hapusPihak(this)">
-                <i class="bi bi-x-circle"></i> Hapus
-            </button>
-        </div>
-        <div class="row g-3">
-            <div class="col-12">
-                <label class="form-label">Pejabat</label>
-                <select class="form-select form-select-sm sel-user" onchange="isiPihak(this)">
-                    <option value="">-- Pilih Pejabat --</option>
-                    @foreach ($users_skpd as $u)
-                        <option value="{{ $u->id }}"
-                            data-nama="{{ $u->name }}"
-                            data-nip="{{ $u->user_nip }}"
-                            data-jabatan="{{ $u->user_jabatan }}">
-                            {{ $u->name }}@if($u->user_jabatan) — {{ $u->user_jabatan }}@endif
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">NIP</label>
-                <input type="text" class="form-control form-control-sm f-nip" readonly
-                       style="background:#eef1f6">
-            </div>
-            <div class="col-md-8">
-                <label class="form-label">Jabatan</label>
-                <input type="text" class="form-control form-control-sm f-jabatan" readonly
-                       style="background:#eef1f6">
-            </div>
-            <div class="col-12">
-                <label class="form-label">Nama SKPD</label>
-                <input type="text" class="form-control form-control-sm f-instansi"
-                       placeholder="Contoh: Dinas Pendidikan Kabupaten Kutai Timur">
-            </div>
-        </div>
-    </div>
-</div>
-<button type="button" class="btn btn-sm btn-outline-primary mb-3 no-print" onclick="tambahPihak('skpd')">
-    <i class="bi bi-plus-lg"></i> Tambah Pihak Kedua
-</button>
 
         <!-- I. PENERIMAAN -->
         <div class="section-head">

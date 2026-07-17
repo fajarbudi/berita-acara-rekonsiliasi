@@ -1,0 +1,689 @@
+            :root {
+                --bar-navy: #1F3864;
+                --bar-navy-soft: #2E4E8F;
+                --xl-navy: #1B365D;
+                /* warna header tabel persis dari file Excel */
+                --xl-tot: #F0F4F8;
+                /* warna fill baris total dari file Excel */
+                --bar-gold: #F0B429;
+                --bar-line: #c9d2e3;
+                --bar-bg: #eef1f6;
+                --side-w: 262px;
+                --side-w-mini: 68px;
+                --nav-h: 56px;
+            }
+
+            html,
+            body {
+                height: 100%
+            }
+
+            body {
+                background: var(--bar-bg);
+                font-family: "Segoe UI", system-ui, Arial, sans-serif;
+                font-size: 14px;
+                color: #1b1b1b;
+                overflow-x: hidden
+            }
+
+            /* ---------- SIDEBAR ---------- */
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--side-w);
+                background: linear-gradient(180deg, #1F3864 0%, #152647 100%);
+                color: #cdd8ee;
+                display: flex;
+                flex-direction: column;
+                z-index: 1040;
+                transition: width .22s ease, transform .22s ease;
+                overflow: hidden
+            }
+
+            .sidebar .brand {
+                height: var(--nav-h);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 0 18px;
+                border-bottom: 1px solid rgba(255, 255, 255, .10);
+                flex: 0 0 auto;
+                white-space: nowrap
+            }
+
+            .brand-mark {
+                width: 32px;
+                height: 32px;
+                flex: 0 0 32px;
+                border-radius: 6px;
+                background: var(--bar-gold);
+                color: var(--bar-navy);
+                display: grid;
+                place-items: center;
+                font-weight: 800;
+                font-size: 13px;
+                letter-spacing: -.5px
+            }
+
+            .brand-text b {
+                color: #fff;
+                font-size: 15px;
+                letter-spacing: .4px;
+                display: block;
+                line-height: 1.1
+            }
+
+            .brand-text small {
+                color: #8fa4cc;
+                font-size: 10.5px;
+                letter-spacing: .5px;
+                text-transform: uppercase
+            }
+
+            .side-scroll {
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: 12px 0 20px;
+                flex: 1 1 auto
+            }
+
+            .side-scroll::-webkit-scrollbar {
+                width: 6px
+            }
+
+            .side-scroll::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, .16);
+                border-radius: 3px
+            }
+
+            .side-label {
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 1.2px;
+                text-transform: uppercase;
+                color: #7b90b8;
+                padding: 14px 20px 6px;
+                white-space: nowrap
+            }
+
+            .side-link {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 9px 20px;
+                color: #cdd8ee;
+                text-decoration: none;
+                font-size: 13.5px;
+                border-left: 3px solid transparent;
+                white-space: nowrap;
+                transition: background .14s, color .14s
+            }
+
+            .side-link i {
+                font-size: 16px;
+                flex: 0 0 18px;
+                text-align: center
+            }
+
+            .side-link:hover {
+                background: rgba(255, 255, 255, .07);
+                color: #fff
+            }
+
+            .side-link.active {
+                background: rgba(240, 180, 41, .14);
+                color: #fff;
+                font-weight: 600;
+                border-left-color: var(--bar-gold)
+            }
+
+            .side-link .badge {
+                margin-left: auto;
+                font-size: 10px
+            }
+
+            .side-link .chev {
+                margin-left: auto;
+                font-size: 11px;
+                transition: transform .18s
+            }
+
+            .side-link[aria-expanded="true"] .chev {
+                transform: rotate(90deg)
+            }
+
+            .side-sub .side-link {
+                padding-left: 50px;
+                font-size: 13px;
+                color: #a9bad9
+            }
+
+            .side-foot {
+                flex: 0 0 auto;
+                border-top: 1px solid rgba(255, 255, 255, .10);
+                padding: 12px 18px;
+                font-size: 11.5px;
+                color: #8fa4cc;
+                white-space: nowrap
+            }
+
+            body.mini .sidebar {
+                width: var(--side-w-mini)
+            }
+
+            body.mini .brand-text,
+            body.mini .side-label,
+            body.mini .side-link span,
+            body.mini .side-link .badge,
+            body.mini .side-link .chev,
+            body.mini .side-foot,
+            body.mini .side-sub {
+                display: none
+            }
+
+            body.mini .side-link {
+                justify-content: center;
+                padding: 11px 0
+            }
+
+            body.mini .brand {
+                justify-content: center;
+                padding: 0
+            }
+
+            body.mini .main {
+                margin-left: var(--side-w-mini)
+            }
+
+            body.mini .topnav {
+                left: var(--side-w-mini)
+            }
+
+            /* ---------- NAVBAR ---------- */
+            .topnav {
+                position: fixed;
+                top: 0;
+                right: 0;
+                left: var(--side-w);
+                height: var(--nav-h);
+                background: #fff;
+                border-bottom: 1px solid #dfe4ec;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 0 18px;
+                z-index: 1030;
+                transition: left .22s ease
+            }
+
+            .nav-toggle {
+                border: 0;
+                background: transparent;
+                font-size: 20px;
+                color: var(--bar-navy);
+                width: 36px;
+                height: 36px;
+                border-radius: 6px;
+                display: grid;
+                place-items: center
+            }
+
+            .nav-toggle:hover {
+                background: #eef1f6
+            }
+
+            .crumb {
+                font-size: 12.5px;
+                color: #5b6474
+            }
+
+            .crumb b {
+                color: var(--bar-navy)
+            }
+
+            .crumb a {
+                color: #5b6474;
+                text-decoration: none
+            }
+
+            .crumb a:hover {
+                color: var(--bar-navy)
+            }
+
+            .nav-right {
+                margin-left: auto;
+                display: flex;
+                align-items: center;
+                gap: 6px
+            }
+
+            .nav-icon {
+                position: relative;
+                border: 0;
+                background: transparent;
+                width: 36px;
+                height: 36px;
+                border-radius: 6px;
+                color: #4a5567;
+                font-size: 16px;
+                display: grid;
+                place-items: center
+            }
+
+            .nav-icon:hover {
+                background: #eef1f6;
+                color: var(--bar-navy)
+            }
+
+            .nav-dot {
+                position: absolute;
+                top: 7px;
+                right: 8px;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #d93025;
+                border: 1.5px solid #fff
+            }
+
+            .avatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: var(--bar-navy-soft);
+                color: #fff;
+                display: grid;
+                place-items: center;
+                font-size: 12px;
+                font-weight: 700
+            }
+
+            .user-btn {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                border: 0;
+                background: transparent;
+                padding: 4px 6px;
+                border-radius: 6px
+            }
+
+            .user-btn:hover {
+                background: #eef1f6
+            }
+
+            .user-meta {
+                text-align: left;
+                line-height: 1.2
+            }
+
+            .user-meta b {
+                font-size: 12.5px;
+                color: #1b1b1b;
+                display: block
+            }
+
+            .user-meta small {
+                font-size: 10.5px;
+                color: #7b8494
+            }
+
+            /* ---------- MAIN ---------- */
+            .main {
+                margin-left: var(--side-w);
+                padding-top: var(--nav-h);
+                min-height: 100vh;
+                transition: margin-left .22s ease
+            }
+
+            .page-head {
+                background: #fff;
+                border-bottom: 1px solid #dfe4ec;
+                padding: 14px 24px
+            }
+
+            .page-head h1 {
+                font-size: 17px;
+                font-weight: 700;
+                margin: 0;
+                color: var(--bar-navy)
+            }
+
+            .page-head p {
+                margin: 2px 0 0;
+                font-size: 12.5px;
+                color: #6b7482
+            }
+
+            .content {
+                padding: 20px 24px 44px
+            }
+
+            .backdrop {
+                position: fixed;
+                inset: 0;
+                background: rgba(15, 25, 45, .5);
+                z-index: 1035;
+                display: none
+            }
+
+            body.drawer .backdrop {
+                display: block
+            }
+
+            .chip {
+                font-size: 10.5px;
+                font-weight: 600;
+                padding: 3px 9px;
+                border-radius: 20px;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                white-space: nowrap;
+                border: 1px solid
+            }
+
+            .c-wait {
+                background: #fff6e0;
+                color: #8a5a00;
+                border-color: #f0d38a
+            }
+
+            /* ---------- LEMBAR DOKUMEN (meniru worksheet) ---------- */
+            .sheet {
+                background: #fff;
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 38px 46px 46px;
+                border: 1px solid #dfe4ec;
+                box-shadow: 0 2px 14px rgba(20, 35, 70, .10);
+            }
+
+            /* Excel memakai Arial 10pt untuk badan dokumen */
+            .sheet,
+            .sheet table {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 10pt
+            }
+
+            .doc-title {
+                text-align: center;
+                line-height: 1.45;
+                margin-bottom: 18px
+            }
+
+            .doc-title h1 {
+                font-size: 14pt;
+                font-weight: 700;
+                margin: 0
+            }
+
+            /* A1: bold 14pt */
+            .doc-title h2,
+            .doc-title h3 {
+                font-size: 11pt;
+                font-weight: 700;
+                margin: 0
+            }
+
+            /* A2,A3: bold 11pt */
+            .doc-no {
+                text-align: center;
+                font-style: italic;
+                font-size: 10pt;
+                line-height: 1.5;
+                margin-bottom: 20px
+            }
+
+            .pembuka {
+                text-align: justify;
+                line-height: 1.5;
+                margin-bottom: 14px
+            }
+
+            /* blok para pihak — meniru kolom A(No) B(Label) C(Isi) */
+            .pihak {
+                margin: 0 0 12px;
+                padding: 0;
+                list-style: none
+            }
+
+            .pihak>li {
+                display: flex;
+                gap: 8px;
+                margin-bottom: 12px
+            }
+
+            .pihak .urut {
+                flex: 0 0 22px;
+                text-align: right
+            }
+
+            .pihak .isi {
+                flex: 1 1 auto
+            }
+
+            .baris {
+                display: flex;
+                gap: 6px;
+                line-height: 1.55
+            }
+
+            .baris .lbl {
+                flex: 0 0 96px
+            }
+
+            /* kolom B = 13.45 char */
+            .baris .sep {
+                flex: 0 0 8px
+            }
+
+            .baris .val {
+                flex: 1 1 auto
+            }
+
+            .ket-pihak {
+                margin-top: 4px;
+                text-align: justify;
+                line-height: 1.5
+            }
+
+            .sec {
+                color: var(--xl-navy);
+                font-weight: 700;
+                font-size: 11pt;
+                margin: 24px 0 6px;
+            }
+
+            .sec-desc {
+                text-align: justify;
+                line-height: 1.5;
+                margin-bottom: 8px
+            }
+
+            /* ---------- TABEL (persis kisi Excel) ---------- */
+            table.xl {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed
+            }
+
+            table.xl th,
+            table.xl td {
+                border: 1px solid #7f7f7f;
+                /* garis kisi tipis seperti Excel */
+                padding: 4px 6px;
+                vertical-align: middle;
+                word-wrap: break-word;
+            }
+
+            table.xl thead th {
+                background: var(--xl-navy);
+                color: #fff;
+                font-weight: 700;
+                font-size: 10pt;
+                text-align: center;
+                line-height: 1.25;
+            }
+
+            table.xl tbody td {
+                font-size: 10pt
+            }
+
+            table.xl tr.tot td {
+                background: var(--xl-tot);
+                font-weight: 700
+            }
+
+            .c {
+                text-align: center
+            }
+
+            .r {
+                text-align: right
+            }
+
+            .num {
+                text-align: right;
+                font-variant-numeric: tabular-nums;
+                white-space: nowrap
+            }
+
+            .neg {
+                color: #FF0000
+            }
+
+            /* format [Red]-#,##0.00 dari Excel */
+            .lbl-tot {
+                text-align: right;
+                font-weight: 700;
+                background: #fff
+            }
+
+            /* lebar kolom mengikuti column width Excel (A5 B13.45 C24 D17 E17 F14.45 G11.54) */
+            col.cA {
+                width: 4.5%
+            }
+
+            col.cB {
+                width: 12.5%
+            }
+
+            col.cC {
+                width: 22.5%
+            }
+
+            col.cD {
+                width: 15.5%
+            }
+
+            col.cE {
+                width: 15.5%
+            }
+
+            col.cF {
+                width: 13.5%
+            }
+
+            col.cG {
+                width: 16%
+            }
+
+            .catatan {
+                font-style: italic;
+                line-height: 1.6;
+                margin: 6px 0 0
+            }
+
+            /* tanda tangan */
+            .ttd {
+                display: flex;
+                gap: 24px;
+                margin-top: 26px
+            }
+
+            .ttd>div {
+                flex: 1 1 50%;
+                text-align: center;
+                line-height: 1.5
+            }
+
+            .ttd .ruang {
+                height: 64px
+            }
+
+            .ttd .nm {
+                font-weight: 700
+            }
+
+            .doc-foot {
+                display: flex;
+                justify-content: space-between;
+                font-size: 8pt;
+                color: #666;
+                border-top: 1px solid #dfe4ec;
+                margin-top: 30px;
+                padding-top: 8px;
+            }
+
+            @media (max-width:991.98px) {
+                .sidebar {
+                    transform: translateX(-100%);
+                    width: var(--side-w)
+                }
+
+                body.drawer .sidebar {
+                    transform: translateX(0)
+                }
+
+                body.mini .sidebar {
+                    width: var(--side-w)
+                }
+
+                body.mini .brand-text,
+                body.mini .side-label,
+                body.mini .side-link span,
+                body.mini .side-link .chev,
+                body.mini .side-foot,
+                body.mini .side-sub {
+                    display: revert
+                }
+
+                body.mini .side-link {
+                    justify-content: flex-start;
+                    padding: 9px 20px
+                }
+
+                body.mini .brand {
+                    justify-content: flex-start;
+                    padding: 0 18px
+                }
+
+                .main,
+                body.mini .main {
+                    margin-left: 0
+                }
+
+                .topnav,
+                body.mini .topnav {
+                    left: 0
+                }
+
+                .content {
+                    padding: 12px 8px 30px
+                }
+
+                .sheet {
+                    padding: 20px 14px
+                }
+
+                .tbl-scroll {
+                    overflow-x: auto
+                }
+
+                table.xl {
+                    min-width: 660px
+                }
+            }
