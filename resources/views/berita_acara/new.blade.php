@@ -242,114 +242,38 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-center no">1</td>
-                    <td>
-                        <select class="cell-text">
-                            <option selected>Belanja Operasi</option>
-                            <option>Belanja Modal</option>
-                            <option>Belanja Tidak Terduga</option>
-                            <option>Belanja Transfer</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="cell-text" value="Belanja Pegawai" />
-                    </td>
-                    <td>
-                        <input class="cell-input skpd" type="text" inputmode="numeric" value="14102977706" />
-                    </td>
-                    <td>
-                        <input class="cell-input bud" type="text" inputmode="numeric" value="14102977706" />
-                    </td>
-                    <td class="num selisih">0,00</td>
-                    <td class="text-center ket"></td>
-                    <td class="text-center row-tools no-print">
-                        <button type="button" onclick="hapusBaris(this)">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center no">2</td>
-                    <td>
-                        <select class="cell-text">
-                            <option selected>Belanja Operasi</option>
-                            <option>Belanja Modal</option>
-                            <option>Belanja Tidak Terduga</option>
-                            <option>Belanja Transfer</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="cell-text" value="Belanja Barang dan Jasa" />
-                    </td>
-                    <td>
-                        <input class="cell-input skpd" type="text" inputmode="numeric" value="1372444318" />
-                    </td>
-                    <td>
-                        <input class="cell-input bud" type="text" inputmode="numeric" value="1372444318" />
-                    </td>
-                    <td class="num selisih">0,00</td>
-                    <td class="text-center ket"></td>
-                    <td class="text-center row-tools no-print">
-                        <button type="button" onclick="hapusBaris(this)">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center no">3</td>
-                    <td>
-                        <select class="cell-text">
-                            <option selected>Belanja Operasi</option>
-                            <option>Belanja Modal</option>
-                            <option>Belanja Tidak Terduga</option>
-                            <option>Belanja Transfer</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="cell-text" value="Belanja Hibah" />
-                    </td>
-                    <td>
-                        <input class="cell-input skpd" type="text" inputmode="numeric" value="0" />
-                    </td>
-                    <td>
-                        <input class="cell-input bud" type="text" inputmode="numeric" value="0" />
-                    </td>
-                    <td class="num selisih">0,00</td>
-                    <td class="text-center ket"></td>
-                    <td class="text-center row-tools no-print">
-                        <button type="button" onclick="hapusBaris(this)">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center no">4</td>
-                    <td>
-                        <select class="cell-text">
-                            <option>Belanja Operasi</option>
-                            <option selected>Belanja Modal</option>
-                            <option>Belanja Tidak Terduga</option>
-                            <option>Belanja Transfer</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="cell-text" value="Belanja Modal Peralatan dan Mesin" />
-                    </td>
-                    <td>
-                        <input class="cell-input skpd" type="text" inputmode="numeric" value="0" />
-                    </td>
-                    <td>
-                        <input class="cell-input bud" type="text" inputmode="numeric" value="0" />
-                    </td>
-                    <td class="num selisih">0,00</td>
-                    <td class="text-center ket"></td>
-                    <td class="text-center row-tools no-print">
-                        <button type="button" onclick="hapusBaris(this)">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="text-center no">1</td>
+                        <td>
+                            <select class="cell-text" name="belanja[0][belanja_id]">
+                                <option selected>--Pilih Belanja--</option>
+                                @foreach ($ref_belanja as $belanja)
+                                    <option value="{{ $belanja->belanja_id }}">{{ $belanja->belanja_nama }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+
+                        <td>
+                            <input class="cell-text" name="belanja[0][belanja_uraian]" />
+                        </td>
+                        <td>
+                            <input class="cell-input skpd" type="text" inputmode="numeric" name="belanja[0][skpd]" />
+                        </td>
+                        <td>
+                            <input class="cell-input bud" type="text" inputmode="numeric" name="belanja[0][bud]" />
+                        </td>
+                        <td>
+                            <input class="cell-input num selisih" type="text" name="belanja[0][selisih]" />
+                        </td>
+                        <input class="cell-text ketInput" type="hidden" name="belanja[0][keterangan]" />
+                        <td class="text-center ket">
+                        </td>
+                        <td class="text-center row-tools no-print">
+                            <button type="button" onclick="hapusBaris(this)">
+                                <i class="bi bi-x-circle"></i>
+                            </button>
+                        </td>
+                    </tr>
             </tbody>
             <tfoot>
                 <tr class="total">
@@ -364,7 +288,7 @@
                 </tr>
             </tfoot>
         </table>
-        <button type="button" class="btn btn-sm btn-outline-primary mt-2 no-print" onclick="tambahBaris('tblJenis')">
+        <button type="button" class="btn btn-sm btn-outline-primary mt-2 no-print" onclick="tambahBaris('tblJenis', 'belanja')">
             <i class="bi bi-plus-lg"></i> Tambah Baris Jenis Belanja
         </button>
 
@@ -388,86 +312,38 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-center no">1</td>
-                    <td>
-                        <select class="cell-text">
-                            <option selected>Mekanisme SP2D-LS</option>
-                            <option>Mekanisme SP2D-UP/GU/TU</option>
-                            <option>STS</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="cell-text" value="Langsung ke Pihak Ketiga / Gaji" />
-                    </td>
-                    <td>
-                        <input class="cell-input skpd" type="text" inputmode="numeric" value="14107456768" />
-                    </td>
-                    <td>
-                        <input class="cell-input bud" type="text" inputmode="numeric" value="14107456768" />
-                    </td>
-                    <td class="num selisih">0,00</td>
-                    <td class="text-center ket"></td>
-                    <td class="text-center row-tools no-print">
-                        <button type="button" onclick="hapusBaris(this)">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center no">2</td>
-                    <td>
-                        <select class="cell-text">
-                            <option>Mekanisme SP2D-LS</option>
-                            <option selected>
-                                Mekanisme SP2D-UP/GU/TU
-                            </option>
-                            <option>STS</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="cell-text" value="Uang Persediaan / Ganti Uang" />
-                    </td>
-                    <td>
-                        <input class="cell-input skpd" type="text" inputmode="numeric" value="1372444318" />
-                    </td>
-                    <td>
-                        <input class="cell-input bud" type="text" inputmode="numeric" value="1607284318" />
-                    </td>
-                    <td class="num selisih">0,00</td>
-                    <td class="text-center ket"></td>
-                    <td class="text-center row-tools no-print">
-                        <button type="button" onclick="hapusBaris(this)">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center no">3</td>
-                    <td>
-                        <select class="cell-text">
-                            <option>Mekanisme SP2D-LS</option>
-                            <option>Mekanisme SP2D-UP/GU/TU</option>
-                            <option selected>STS</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="cell-text" value="Pengembalian ke Kasda (-)" />
-                    </td>
-                    <td>
-                        <input class="cell-input skpd" type="text" inputmode="numeric" value="-4479062" />
-                    </td>
-                    <td>
-                        <input class="cell-input bud" type="text" inputmode="numeric" value="-4479062" />
-                    </td>
-                    <td class="num selisih">0,00</td>
-                    <td class="text-center ket"></td>
-                    <td class="text-center row-tools no-print">
-                        <button type="button" onclick="hapusBaris(this)">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="text-center no">1</td>
+                        <td>
+                            <select class="cell-text" name="mekanisme[0][mekanisme_id]">
+                                <option selected>--Pilih mekanisme--</option>
+                                @foreach ($ref_mekanisme as $mekanisme)
+                                    <option value="{{ $mekanisme->mekanisme_id }}">{{ $mekanisme->mekanisme_nama }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+
+                        <td>
+                            <input class="cell-text" name="mekanisme[0][mekanisme_uraian]" />
+                        </td>
+                        <td>
+                            <input class="cell-input skpd" type="text" inputmode="numeric" name="mekanisme[0][skpd]" />
+                        </td>
+                        <td>
+                            <input class="cell-input bud" type="text" inputmode="numeric" name="mekanisme[0][bud]" />
+                        </td>
+                        <td>
+                            <input class="cell-input num selisih" type="text" name="mekanisme[0][selisih]" />
+                        </td>
+                        <input class="cell-text ketInput" type="hidden" name="mekanisme[0][keterangan]" />
+                        <td class="text-center ket">
+                        </td>
+                        <td class="text-center row-tools no-print">
+                            <button type="button" onclick="hapusBaris(this)">
+                                <i class="bi bi-x-circle"></i>
+                            </button>
+                        </td>
+                    </tr>
             </tbody>
             <tfoot>
                 <tr class="total">
@@ -493,7 +369,7 @@
             </tfoot>
         </table>
         <button type="button" class="btn btn-sm btn-outline-primary mt-2 no-print"
-            onclick="tambahBaris('tblMekanisme')">
+            onclick="tambahBaris('tblMekanisme', 'mekanisme')">
             <i class="bi bi-plus-lg"></i> Tambah Baris Mekanisme
         </button>
 

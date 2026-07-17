@@ -812,7 +812,7 @@
 
                     <!-- Baris 8 -->
                     <p class="pembuka">
-                        Pada hari ini, Jumat tanggal Lima bulan Juni tahun Dua Ribu Dua Puluh Enam,
+                        Pada hari ini, {{$terbilang['hari']}} tanggal {{$terbilang['tanggal']}} bulan {{$terbilang['bulan']}} tahun {{$terbilang['tahun']}},
                         bertempat di Kantor Badan Pengelolaan Keuangan dan Aset Daerah, kami yang
                         bertandatangan di bawah ini:
                     </p>
@@ -888,14 +888,11 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $totPendapatanSKPD = 0;
-                                    $totpendapatanBUD = 0;
+                                    $totPendapatanSKPD = $data_pendapatan->sum('skpd');
+                                    $totpendapatanBUD = $data_pendapatan->sum('bud');
+                                    $selisihPendapatan = $totPendapatanSKPD - $totpendapatanBUD;
                                 @endphp
                                 @foreach ($data_pendapatan as $index => $pendapatan)
-                                    @php
-                                        $totPendapatanSKPD += $pendapatan->skpd;
-                                        $totpendapatanBUD += $pendapatan->bud;
-                                    @endphp
                                     <tr>
                                         <td class="c">{{ $index + 1 }}</td>
                                         <td class="c">{{ $pendapatan->rekening_kode }}</td>
@@ -919,10 +916,10 @@
                                     <td class="num" data-v="{{ $totpendapatanBUD }}">
                                         {{ number_format($totpendapatanBUD, 2, ',', '.') }}
                                     </td>
-                                    <td class="num" data-v="{{ $totPendapatanSKPD - $totpendapatanBUD }}">
-                                        {{ number_format($totPendapatanSKPD - $totpendapatanBUD, 2, ',', '.') }}</td>
+                                    <td class="num" data-v="{{ $selisihPendapatan }}">
+                                        {{ number_format($selisihPendapatan, 2, ',', '.') }}</td>
                                     <td class="c">
-                                        {{ $totPendapatanSKPD - $totpendapatanBUD == 0 ? 'Sesuai' : 'Tidak Sesuai' }}
+                                        {{ $selisihPendapatan == 0 ? 'Sesuai' : 'Tidak Sesuai' }}
                                     </td>
                                 </tr>
                             </tfoot>
@@ -960,14 +957,11 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $totBelanjaSKPD = 0;
-                                    $totBelanjaBUD = 0;
+                                    $totBelanjaSKPD = $data_belanja->sum('skpd');
+                                    $totBelanjaBUD = $data_belanja->sum('bud');
+                                    $selisihBelanja = $totBelanjaSKPD - $totBelanjaBUD;
                                 @endphp
                                 @foreach ($data_belanja as $index => $belanja)
-                                    @php
-                                        $totBelanjaSKPD += $belanja->skpd;
-                                        $totBelanjaBUD += $belanja->bud;
-                                    @endphp
                                     <tr>
                                         <td class="c">{{ $index + 1 }}</td>
                                         <td>{{ $belanja->belanja_nama }}</td>
@@ -987,53 +981,62 @@
                                         {{ number_format($totBelanjaSKPD, 2, ',', '.') }}</td>
                                     <td class="num" data-v="{{ $totBelanjaBUD }}">
                                         {{ number_format($totBelanjaBUD, 2, ',', '.') }}</td>
-                                    <td class="num" data-v="{{ $totBelanjaSKPD - $totBelanjaBUD }}">
-                                        {{ number_format($totBelanjaSKPD - $totBelanjaBUD, 2, ',', '.') }}</td>
+                                    <td class="num" data-v="{{ $selisihBelanja }}">
+                                        {{ number_format($selisihBelanja, 2, ',', '.') }}</td>
                                     <td class="c">
-                                        {{ $totBelanjaSKPD - $totBelanjaBUD == 0 ? 'Sesuai' : 'Tidak Sesuai' }}</td>
+                                        {{ $selisihBelanja == 0 ? 'Sesuai' : 'Tidak Sesuai' }}</td>
                                 </tr>
-                                <tr>
-                                    <td class="c">1</td>
-                                    <td>Mekanisme SP2D-LS</td>
-                                    <td>Langsung ke Pihak Ketiga / Gaji</td>
-                                    <td class="num" data-v="14107456768">14.107.456.768,00</td>
-                                    <td class="num" data-v="14107456768">14.107.456.768,00</td>
-                                    <td class="num" data-v="0">0,00</td>
-                                    <td class="c">Cocok</td>
-                                </tr>
-                                <tr>
-                                    <td class="c">2</td>
-                                    <td>Mekanisme SP2D-UP/GU/TU</td>
-                                    <td>Uang Persediaan / Ganti Uang</td>
-                                    <td class="num" data-v="1372444318">1.372.444.318,00</td>
-                                    <td class="num" data-v="1607284318">1.607.284.318,00</td>
-                                    <td class="num" data-v="234840000">234.840.000,00</td>
-                                    <td class="c">Tidak Cocok</td>
-                                </tr>
-                                <tr>
-                                    <td class="c">3</td>
-                                    <td>STS</td>
-                                    <td>Pengembalian ke Kasda (-)</td>
-                                    <td class="num neg" data-v="-4479062">-4.479.062,00</td>
-                                    <td class="num neg" data-v="-4479062">-4.479.062,00</td>
-                                    <td class="num" data-v="0">0,00</td>
-                                    <td class="c">Cocok</td>
-                                </tr>
+                                @php
+                                    $totMekanismeSKPD = $data_mekanisme->sum('skpd');
+                                    $totMekanismeBUD = $data_mekanisme->sum('bud');
+                                    $selisihMekanisme = $totMekanismeSKPD - $totMekanismeBUD;
+                                @endphp
+                                @foreach ($data_mekanisme as $mekanisme)
+                                    <tr>
+                                        <td class="c">{{ $loop->iteration }}</td>
+                                        <td>{{ $mekanisme->mekanisme_nama }}</td>
+                                        <td>{{ $mekanisme->mekanisme_uraian }}</td>
+                                        <td class="num" data-v="{{ $mekanisme->skpd }}">
+                                            {{ number_format($mekanisme->skpd, 2, ',', '.') }}</td>
+                                        <td class="num" data-v="{{ $mekanisme->bud }}">
+                                            {{ number_format($mekanisme->bud, 2, ',', '.') }}</td>
+                                        <td class="num" data-v="{{ $mekanisme->selisih }}">
+                                            {{ number_format($mekanisme->selisih, 2, ',', '.') }}</td>
+                                        <td class="c">{{ $mekanisme->keterangan }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
+                            @php
+                                $selisihPotensiSKPD = $totMekanismeSKPD - $totBelanjaSKPD;
+                                $selisihPotensiBUD = $totMekanismeBUD - $totBelanjaBUD;
+                                $selisihPotensi = $selisihPotensiBUD - $selisihPotensiSKPD;
+                            @endphp
                             <tfoot>
                                 <tr class="tot">
                                     <td colspan="3" class="lbl-tot">TOTAL BELANJA (MEKANISME)</td>
-                                    <td class="num" data-v="15475422024">15.475.422.024,00</td>
-                                    <td class="num" data-v="15710262024">15.710.262.024,00</td>
-                                    <td class="num" data-v="234840000">234.840.000,00</td>
-                                    <td class="c">Potensi</td>
+                                    <td class="num" data-v="{{ $totMekanismeSKPD }}">
+                                        {{ number_format($totMekanismeSKPD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $totMekanismeBUD }}">
+                                        {{ number_format($totMekanismeBUD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $selisihMekanisme }}">
+                                        {{ number_format($selisihMekanisme, 2, ',', '.') }}
+                                    </td>
+                                    <td class="c">{{ $selisihMekanisme == 0 ? 'Sesuai' : 'Potensi' }}</td>
                                 </tr>
                                 <tr class="tot">
                                     <td colspan="3" class="lbl-tot">SELISIH (POTENSI SISA UP/GU/TU)</td>
-                                    <td class="num" data-v="0">0,00</td>
-                                    <td class="num" data-v="234840000">234.840.000,00</td>
-                                    <td class="num" data-v="234840000">234.840.000,00</td>
-                                    <td class="c">Potensi</td>
+                                    <td class="num" data-v="{{ $selisihPotensiSKPD }}">
+                                        {{ number_format($selisihPotensiSKPD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $selisihPotensiBUD }}">
+                                        {{ number_format($selisihPotensiBUD, 2, ',', '.') }}
+                                    </td>
+                                    <td class="num" data-v="{{ $selisihPotensi }}">
+                                        {{ number_format($selisihPotensi, 2, ',', '.') }}
+                                    </td>
+                                    <td class="c">{{ $selisihPotensi == 0 ? 'Sesuai' : 'Potensi' }}</td>
                                 </tr>
                             </tfoot>
                         </table>
