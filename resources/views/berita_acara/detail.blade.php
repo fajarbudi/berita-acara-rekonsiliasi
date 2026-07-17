@@ -1452,14 +1452,14 @@
 
                     <!-- ===== IV. CATATAN (baris 50–52) ===== -->
                     <div class="sec">IV. CATATAN DAN KESIMPULAN</div>
-                    <p class="catatan">
-                        1. Data Penerimaan dan Pengeluaran antara BUD dan SKPD untuk periode ini dinyatakan
-                        TELAH SESUAI / COCOK.
-                    </p>
-                    <p class="catatan">
-                        2. Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan
-                        Keuangan Pemerintah Daerah (LKPD).
-                    </p>
+                    @php
+                        $catatans = explode("\n", $data->berita_acara_kesimpulan)
+                    @endphp
+                    @foreach ($catatans as $index => $catatan)
+                     <p class="catatan">
+                        <span>{{$index + 1}}. </span> {{$catatan}}
+                     </p>
+                    @endforeach
 
                     <!-- ===== TANDA TANGAN (baris 55–72) ===== -->
                     <div class="ttd">

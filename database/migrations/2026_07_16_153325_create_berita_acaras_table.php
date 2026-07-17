@@ -22,6 +22,7 @@ class CreateBeritaAcarasTable extends Migration
             $table->string('berita_acara_periode', 100);
             $table->string('berita_acara_hari', 100);
             $table->string('berita_acara_tempat', 100);
+            $table->longText('berita_acara_kesimpulan')->nullable();
             $table->timestamps();
         });
     }

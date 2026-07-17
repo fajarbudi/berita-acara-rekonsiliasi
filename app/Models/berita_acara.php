@@ -18,6 +18,7 @@ class berita_acara extends Model
         'berita_acara_tahun_anggaran',
         'berita_acara_periode',
         'berita_acara_hari',
-        'berita_acara_tempat'
+        'berita_acara_tempat',
+        'berita_acara_kesimpulan'
     ];
 }

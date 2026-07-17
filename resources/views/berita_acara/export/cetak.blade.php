@@ -401,19 +401,16 @@
             IV. CATATAN DAN KESIMPULAN
         </td>
     </tr>
-    <tr>
-        <td style="font-style:italic;" colspan="7">
-            1. Data Penerimaan dan Pengeluaran antara BUD dan SKPD untuk periode ini
-            dinyatakan {{ $data->berita_acara_kesimpulan ?? 'TELAH SESUAI / COCOK' }}.
-        </td>
-    </tr>
-    <tr>
-        <td style="font-style:italic;" colspan="7">
-            2. Berita Acara ini dibuat dalam rangkap
-            {{ $data->berita_acara_rangkap ?? 2 }} (dua) sebagai bahan penyusunan
-            Laporan Keuangan Pemerintah Daerah (LKPD).
-        </td>
-    </tr>
+    @php
+        $catatans = explode("\n", $data->berita_acara_kesimpulan)
+    @endphp
+    @foreach ($catatans as $index => $catatan)
+        <tr>
+            <td style="font-style:italic;" colspan="7">
+                <span>{{$index + 1}}. </span> {{$catatan}}
+            </td>
+        </tr>
+    @endforeach
     <tr>
         <td colspan="7" height="14"></td>
     </tr>

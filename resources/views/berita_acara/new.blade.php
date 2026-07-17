@@ -88,7 +88,7 @@
         </div>
 
         <!-- PIHAK -->
-        <div class="section-head">B. PARA PIHAK</div>
+        {{-- <div class="section-head">B. PARA PIHAK</div>
 
         <div class="border rounded p-3 mb-3" style="background: #f8f9fc">
             <div class="fw-bold text-uppercase mb-2" style="color: var(--bar-navy)">
@@ -142,7 +142,110 @@
                         placeholder="Contoh: Dinas Pendidikan Kabupaten Kutai Timur" />
                 </div>
             </div>
+        </div> --}}
+
+        <div class="section-head">B. PARA PIHAK</div>
+<p class="hint">Pilih pejabat dari daftar pengguna. Data nama, NIP, dan jabatan disalin saat penyimpanan.</p>
+
+{{-- ===== PIHAK KESATU (SKPKD / BUD) ===== --}}
+<div class="fw-bold text-uppercase mb-2" style="color:var(--bar-navy)">
+    Pihak Kesatu (SKPKD / BUD)
+</div>
+<div id="wrapBud">
+    <div class="border rounded p-3 mb-2 blok-pihak" data-grup="bud" style="background:#f8f9fc">
+        <div class="d-flex align-items-center mb-2">
+            <span class="badge bg-secondary urut">1</span>
+            <button type="button" class="btn btn-sm btn-link text-danger ms-auto p-0 no-print"
+                    onclick="hapusPihak(this)">
+                <i class="bi bi-x-circle"></i> Hapus
+            </button>
         </div>
+        <div class="row g-3">
+            <div class="col-12">
+                <label class="form-label">Pejabat</label>
+                <select class="form-select form-select-sm sel-user" onchange="isiPihak(this)">
+                    <option value="">-- Pilih Pejabat --</option>
+                    @foreach ($users_skpkd as $u)
+                        <option value="{{ $u->id }}"
+                            data-nama="{{ $u->name }}"
+                            data-nip="{{ $u->user_nip }}"
+                            data-jabatan="{{ $u->user_jabatan }}">
+                            {{ $u->name }}@if($u->user_jabatan) — {{ $u->user_jabatan }}@endif
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">NIP</label>
+                <input type="text" class="form-control form-control-sm f-nip" readonly
+                       style="background:#eef1f6">
+            </div>
+            <div class="col-md-8">
+                <label class="form-label">Jabatan</label>
+                <input type="text" class="form-control form-control-sm f-jabatan" readonly
+                       style="background:#eef1f6">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Bertindak untuk dan atas nama</label>
+                <input type="text" class="form-control form-control-sm f-instansi"
+                       value="BPKAD selaku SKPKD Pemerintah Kabupaten Kutai Timur">
+            </div>
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-sm btn-outline-primary mb-3 no-print" onclick="tambahPihak('bud')">
+    <i class="bi bi-plus-lg"></i> Tambah Pihak Kesatu
+</button>
+
+{{-- ===== PIHAK KEDUA (SKPD) ===== --}}
+<div class="fw-bold text-uppercase mb-2" style="color:var(--bar-navy)">
+    Pihak Kedua (SKPD)
+</div>
+<div id="wrapSkpd">
+    <div class="border rounded p-3 mb-2 blok-pihak" data-grup="skpd" style="background:#f8f9fc">
+        <div class="d-flex align-items-center mb-2">
+            <span class="badge bg-secondary urut">1</span>
+            <button type="button" class="btn btn-sm btn-link text-danger ms-auto p-0 no-print"
+                    onclick="hapusPihak(this)">
+                <i class="bi bi-x-circle"></i> Hapus
+            </button>
+        </div>
+        <div class="row g-3">
+            <div class="col-12">
+                <label class="form-label">Pejabat</label>
+                <select class="form-select form-select-sm sel-user" onchange="isiPihak(this)">
+                    <option value="">-- Pilih Pejabat --</option>
+                    @foreach ($users_skpd as $u)
+                        <option value="{{ $u->id }}"
+                            data-nama="{{ $u->name }}"
+                            data-nip="{{ $u->user_nip }}"
+                            data-jabatan="{{ $u->user_jabatan }}">
+                            {{ $u->name }}@if($u->user_jabatan) — {{ $u->user_jabatan }}@endif
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">NIP</label>
+                <input type="text" class="form-control form-control-sm f-nip" readonly
+                       style="background:#eef1f6">
+            </div>
+            <div class="col-md-8">
+                <label class="form-label">Jabatan</label>
+                <input type="text" class="form-control form-control-sm f-jabatan" readonly
+                       style="background:#eef1f6">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Nama SKPD</label>
+                <input type="text" class="form-control form-control-sm f-instansi"
+                       placeholder="Contoh: Dinas Pendidikan Kabupaten Kutai Timur">
+            </div>
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-sm btn-outline-primary mb-3 no-print" onclick="tambahPihak('skpd')">
+    <i class="bi bi-plus-lg"></i> Tambah Pihak Kedua
+</button>
 
         <!-- I. PENERIMAAN -->
         <div class="section-head">
@@ -434,27 +537,9 @@
         <!-- IV. CATATAN -->
         <div class="section-head">IV. CATATAN DAN KESIMPULAN</div>
         <div class="row g-3">
-            <div class="col-md-4">
-                <label class="form-label">Status Kesimpulan</label>
-                <select class="form-select form-select-sm" name="status_simpul">
-                    <option selected>TELAH SESUAI / COCOK</option>
-                    <option>SESUAI DENGAN CATATAN</option>
-                    <option>TIDAK SESUAI — PERLU TINDAK LANJUT</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">Dibuat Rangkap</label>
-                <input type="number" class="form-control form-control-sm" name="rangkap" value="2"
-                    min="1" />
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Peruntukan</label>
-                <input type="text" class="form-control form-control-sm" name="peruntukan"
-                    value="Bahan penyusunan Laporan Keuangan Pemerintah Daerah (LKPD)" />
-            </div>
             <div class="col-12">
                 <label class="form-label">Catatan Tambahan / Tindak Lanjut</label>
-                <textarea class="form-control form-control-sm" name="catatan" rows="3"
+                <textarea class="form-control form-control-sm" name="data[berita_acara_kesimpulan]" rows="5"
                     placeholder="Contoh: Terdapat selisih UP/GU/TU sebesar Rp234.840.000,00 yang merupakan sisa uang persediaan di bendahara pengeluaran dan akan disetorkan paling lambat ..."></textarea>
             </div>
         </div>
@@ -729,5 +814,63 @@
 
         bindAll();
         hitungSemua();
+
+
+        function tambahPihak(grup) {
+    const wrap = document.getElementById(grup === 'bud' ? 'wrapBud' : 'wrapSkpd');
+    const blok = wrap.querySelector('.blok-pihak').cloneNode(true);
+
+    blok.querySelectorAll('input').forEach(i => {
+        if (!i.classList.contains('f-instansi')) i.value = '';
+    });
+    blok.querySelector('select').selectedIndex = 0;
+
+    wrap.appendChild(blok);
+    nomoriPihak();
+}
+
+function hapusPihak(btn) {
+    const wrap = btn.closest('#wrapBud, #wrapSkpd');
+    if (wrap.querySelectorAll('.blok-pihak').length <= 1) {
+        alert('Minimal satu pejabat harus ada.');
+        return;
+    }
+    btn.closest('.blok-pihak').remove();
+    nomoriPihak();
+}
+
+function isiPihak(sel) {
+    const blok = sel.closest('.blok-pihak');
+    const opt  = sel.options[sel.selectedIndex];
+
+    blok.querySelector('.f-nip').value     = opt.dataset.nip     || '';
+    blok.querySelector('.f-jabatan').value = opt.dataset.jabatan || '';
+}
+
+// Penomoran ulang wajib: indeks name harus rapat 0,1,2...
+// Kalau ada lompatan (0,2,3), PHP menerimanya sebagai array asosiatif.
+function nomoriPihak() {
+    ['bud', 'skpd'].forEach(grup => {
+        const wrap = document.getElementById(grup === 'bud' ? 'wrapBud' : 'wrapSkpd');
+
+        wrap.querySelectorAll('.blok-pihak').forEach((blok, i) => {
+            blok.querySelector('.urut').textContent = i + 1;
+
+            const set = (cls, field) => {
+                const el = blok.querySelector('.' + cls);
+                if (el) el.name = `pihak[${grup}][${i}][${field}]`;
+            };
+
+            const sel = blok.querySelector('.sel-user');
+            sel.name = `pihak[${grup}][${i}][user_id]`;
+
+            set('f-nip',      'nip');
+            set('f-jabatan',  'jabatan');
+            set('f-instansi', 'instansi');
+        });
+    });
+}
+
+nomoriPihak();
     </script>
 @endpush

@@ -11,6 +11,7 @@ use App\Models\berita_acara_saldo_kas;
 use App\Models\ref_belanja;
 use App\Models\ref_mekanisme;
 use App\Models\ref_rekening;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -53,6 +54,10 @@ class BeritaAcara extends Controller
         $load['rekenings'] = ref_rekening::orderBy('rekening_kode', 'asc')->get();
         $load['ref_belanja'] = ref_belanja::orderBy('belanja_nama', 'asc')->get();
         $load['ref_mekanisme'] = ref_mekanisme::orderBy('mekanisme_nama', 'asc')->get();
+            $load['users_skpkd'] = User::where('user_kewenangan', 'skpkd')
+        ->orderBy('name')->get();
+    $load['users_skpd'] = User::where('user_kewenangan', 'skpd')
+        ->orderBy('name')->get();
         return view('berita_acara.new',  $load);
     }
 

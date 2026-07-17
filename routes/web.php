@@ -6,6 +6,7 @@ use App\Http\Controllers\referensi\BelanjaController;
 use App\Http\Controllers\referensi\MekanismeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeritaAcara;
+use App\Http\Controllers\referensi\SKPDController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,10 @@ route::group(['middleware' => ['isLogin']], function () {
     Route::get('/rekening', [RekeningController::class, 'view'])->name('rekening.view');
     Route::post('/rekening/delete', [RekeningController::class, 'delete'])->name('rekening.delete');
     Route::post('/rekening/simpan', [RekeningController::class, 'simpan'])->name('rekening.simpan');
+
+    Route::get('/skpd', [SKPDController::class, 'view'])->name('skpd.view');
+    Route::post('/skpd/delete', [SKPDController::class, 'delete'])->name('skpd.delete');
+    Route::post('/skpd/simpan', [SKPDController::class, 'simpan'])->name('skpd.simpan');
 
     Route::get('/belanja', [BelanjaController::class, 'view'])->name('belanja.view');
     Route::post('/belanja/delete', [BelanjaController::class, 'delete'])->name('belanja.delete');

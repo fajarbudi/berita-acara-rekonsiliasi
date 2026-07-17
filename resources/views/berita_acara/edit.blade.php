@@ -568,27 +568,9 @@
         <!-- IV. CATATAN -->
         <div class="section-head">IV. CATATAN DAN KESIMPULAN</div>
         <div class="row g-3">
-            <div class="col-md-4">
-                <label class="form-label">Status Kesimpulan</label>
-                <select class="form-select form-select-sm" name="status_simpul">
-                    <option selected>TELAH SESUAI / COCOK</option>
-                    <option>SESUAI DENGAN CATATAN</option>
-                    <option>TIDAK SESUAI — PERLU TINDAK LANJUT</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">Dibuat Rangkap</label>
-                <input type="number" class="form-control form-control-sm" name="rangkap" value="2"
-                    min="1" />
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Peruntukan</label>
-                <input type="text" class="form-control form-control-sm" name="peruntukan"
-                    value="Bahan penyusunan Laporan Keuangan Pemerintah Daerah (LKPD)" />
-            </div>
             <div class="col-12">
                 <label class="form-label">Catatan Tambahan / Tindak Lanjut</label>
-                <textarea class="form-control form-control-sm" name="catatan" rows="3"
+                <textarea class="form-control form-control-sm" name="data[berita_acara_kesimpulan]" rows="5"
                     placeholder="Contoh: Terdapat selisih UP/GU/TU sebesar Rp234.840.000,00 yang merupakan sisa uang persediaan di bendahara pengeluaran dan akan disetorkan paling lambat ..."></textarea>
             </div>
         </div>
