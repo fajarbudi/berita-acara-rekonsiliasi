@@ -29,6 +29,7 @@ route::group(['middleware' => ['isLogin']], function () {
         return view('welcome');
     });
 
+    Route::get('/berita-acara/detailKonten/{id}',[BeritaAcara::class, 'kontenDetail'])->name('getKontenDetail');
 
     Route::get('/user', [UserController::class, 'view'])->name('user.view');
     Route::post('/user/delete', [UserController::class, 'delete'])->name('user.delete');

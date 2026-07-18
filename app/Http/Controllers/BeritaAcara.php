@@ -48,6 +48,26 @@ class BeritaAcara extends Controller
         return view('berita_acara.detail',  $load);
     }
 
+    public function kontenDetail($id){
+        $data = berita_acara::findOrFail($id);
+
+        $load['halaman_judul'] = "Detail Berita Acara";
+        $load['halaman_deskripsi'] = "Detail berita acara";
+        $load['berita_acara_id'] = $id;
+        $load['data'] = $data;
+        $load['data_pendapatan'] = berita_acara_pendapatan::where('berita_acara_id', $id)->get();
+        $load['data_belanja'] = berita_acara_belanja::where('berita_acara_id', $id)->get();
+        $load['data_mekanisme'] = berita_acara_mekanisme::where('berita_acara_id', $id)->get();
+        // $load['data_saldo'] = berita_acara_saldo_kas::where('berita_acara_id', $id)
+        //     ->orderBy('urutan')
+        //     ->get();
+
+        // Dipakai paragraf pembuka: "Pada hari ini, Jumat tanggal Lima bulan Juni ..."
+        $load['terbilang'] = $this->terbilangTanggal($data->berita_acara_tanggal);
+
+        return view('berita_acara.export.cetak',  $load);  
+    }
+
     public function new()
     {
         $load['halaman_judul'] = "Berita Acara Baru";
@@ -99,6 +119,13 @@ class BeritaAcara extends Controller
         $dataPost['berita_acara_nip_ppk'] = $skpd->skpd_nip_ppk;
         $dataPost['berita_acara_nama_pa'] = $skpd->skpd_nama_pa;
         $dataPost['berita_acara_nip_pa'] = $skpd->skpd_nip_pa;
+        //hitung selisih
+        $dataPost['berita_acara_sts_selisih'] = ($dataPost['berita_acara_sts_bud'] ?? 0)  - ($dataPost['berita_acara_sts_skpd'] ?? 0);
+        $dataPost['berita_acara_sts_ket'] = $dataPost['berita_acara_sts_selisih'] == 0 ? 'Cocok' : 'Tidak Cocok';
+        $dataPost['berita_acara_sp2dLS_selisih'] = ($dataPost['berita_acara_sp2dLS_bud'] ?? 0)  - ($dataPost['berita_acara_sp2dLS_skpd'] ?? 0);
+        $dataPost['berita_acara_sp2dLS_ket'] = $dataPost['berita_acara_sp2dLS_selisih'] == 0 ? 'Cocok' : 'Tidak Cocok';
+        $dataPost['berita_acara_sp2dUP_selisih'] = ($dataPost['berita_acara_sp2dUP_bud'] ?? 0)  - ($dataPost['berita_acara_sp2dUP_skpd'] ?? 0);
+        $dataPost['berita_acara_sp2dUP_ket'] = $dataPost['berita_acara_sp2dUP_selisih'] == 0 ? 'Cocok' : 'Tidak Cocok';
 
         // Seluruh penyimpanan dibungkus transaksi. Bila salah satu rincian
         // gagal, header tidak ikut tersimpan setengah jalan.
@@ -159,7 +186,7 @@ class BeritaAcara extends Controller
             $skpd = $this->angka($item['skpd'] ?? 0);
             $bud  = $this->angka($item['bud'] ?? 0);
 
-            // Penerimaan memakai rumus SKPD dikurangi BUD
+            // menghitung selisih
             $selisih = $skpd - $bud;
 
             $post[] = [
@@ -200,7 +227,7 @@ class BeritaAcara extends Controller
             $skpd = $this->angka($item['skpd'] ?? 0);
             $bud  = $this->angka($item['bud'] ?? 0);
 
-            // Belanja memakai rumus BUD dikurangi SKPD, kebalikan dari penerimaan
+            // menghitung selisih
             $selisih = $bud - $skpd;
 
             $post[] = [

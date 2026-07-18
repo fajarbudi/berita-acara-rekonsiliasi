@@ -157,8 +157,6 @@
                                 name="rekening[{{ $index }}][selisih]"
                                 value="{{ number_format($pendapatan->selisih, 0, ',', '') }}" />
                         </td>
-                        <input class="cell-text ketInput" type="hidden"
-                            name="rekening[{{ $index }}][keterangan]" value="{{ $pendapatan->keterangan }}" />
                         <td class="text-center ket"></td>
                         <td class="text-center row-tools no-print">
                             <button type="button" onclick="hapusBaris(this)">
@@ -192,7 +190,6 @@
                         <td>
                             <input class="cell-input num selisih" type="text" name="rekening[0][selisih]" />
                         </td>
-                        <input class="cell-text ketInput" type="hidden" name="rekening[0][keterangan]" />
                         <td class="text-center ket">
                         </td>
                         <td class="text-center row-tools no-print">
@@ -273,8 +270,6 @@
                         </td>
                         <td class="num selisih"><input class="cell-input num selisih" type="text"
                                 name="belanja[{{ $index }}][selisih]" value="{{ $belanja->selisih }}" /></td>
-                        <input class="cell-text ketInput" type="hidden" name="belanja[{{ $index }}][keterangan]"
-                            value="{{ $belanja->keterangan }}" />
                         <td class="text-center ket"></td>
                         <td class="text-center row-tools no-print">
                             <button type="button" onclick="hapusBaris(this)">
@@ -308,7 +303,6 @@
                         <td>
                             <input class="cell-input num selisih" type="text" name="belanja[0][selisih]" />
                         </td>
-                        <input class="cell-text ketInput" type="hidden" name="belanja[0][keterangan]" />
                         <td class="text-center ket">
                         </td>
                         <td class="text-center row-tools no-print">
@@ -448,6 +442,7 @@
                                 inputmode="numeric"
                                 placeholder="-4479062"
                                 value="{{$data->berita_acara_sts_skpd}}"
+                                onkeyup="ubahKeMinus(this)"
                             />
                         </td>
                         <td>
@@ -458,6 +453,8 @@
                                 inputmode="numeric"
                                 placeholder="-4479062"
                                 value="{{$data->berita_acara_sts_bud}}"
+                                onkeyup="ubahKeMinus(this)"
+                               
                             />
                         </td>
                         <td class="num selisih">{{$data->berita_acara_sts_selisih}}</td>
@@ -623,6 +620,18 @@
 
 @push('script')
     <script>
+        const ubahKeMinus = (element) =>{
+            let nilai = parseFloat(element.value)
+
+            if(nilai > 0){
+                element.value = -nilai
+            }
+
+            if(nilai == 0 ){
+                element.value = 0
+            }
+        }
+
         const fmt = (n) =>
             (n < 0 ? "-" : "") +
             Math.abs(n).toLocaleString("id-ID", {
@@ -662,7 +671,7 @@
                 // setSel(r.querySelector(".selisih"), d);
                 r.querySelector(".selisih").value = d;
                 r.querySelector(".ket").innerHTML = badge(d === 0);
-                r.querySelector(".ketInput").value = d === 0 ? "Cocok" : "Tidak Cocok";
+                // r.querySelector(".ketInput")?.value = d === 0 ? "Cocok" : "Tidak Cocok";
             });
             document.getElementById(pfx + "SKPD").textContent = fmt(ts);
             document.getElementById(pfx + "BUD").textContent = fmt(tb2);

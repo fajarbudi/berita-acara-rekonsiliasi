@@ -1,4 +1,13 @@
-<table style="font-family:Arial, sans-serif; font-size:10pt;" border="0" cellspacing="0" cellpadding="0">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body style="margin: 0; display: flex; justify-content: center;">
+    <table style="font-family:Arial, sans-serif; font-size:10pt; margin: 0" border="0" cellspacing="0" cellpadding="0">
     <colgroup>
         <col width="45"> {{-- A: No.            --}}
         <col width="105"> {{-- B: Kode Rekening  --}}
@@ -65,8 +74,8 @@
         <td align="right">1.</td>
         <td>Nama / NIP</td>
         <td colspan="5">
-            : {{ $data->berita_acara_bud_nama ?? '[Nama Pejabat SKPKD]' }}
-            / NIP. {{ $data->berita_acara_bud_nip ?? '[NIP]' }}
+            : Ichtiawan J. Aziz, S.E.I
+            / NIP. 198506162020121006
         </td>
     </tr>
     <tr>
@@ -89,8 +98,8 @@
         <td align="right">2.</td>
         <td>Nama / NIP</td>
         <td colspan="5">
-            : {{ $data->berita_acara_skpd_nama ?? '[Nama Pejabat SKPD]' }}
-            / NIP. {{ $data->berita_acara_skpd_nip ?? '[NIP]' }}
+            : {{ $data->berita_acara_nama_ppk ?? '[Nama Pejabat SKPD]' }}
+            / NIP. {{ $data->berita_acara_nip_ppk ?? '[NIP]' }}
         </td>
     </tr>
     <tr>
@@ -301,6 +310,66 @@
             </td>
         </tr>
     @endforeach
+        <tr>
+            <td style="{{ $tdGrid }}" align="center">1</td>
+            <td style="{{ $tdGrid }}">Mekanisme SP2D-LS</td>
+            <td style="{{ $tdGrid }}">Langsung ke Pihak Ketiga / Gaji</td>
+            <td data-num-fmt="{{ $fmtRp }}"
+                style="{{ $tdGrid }} @if ($data->berita_acara_sp2dLS_skpd < 0) color:#FF0000; @endif" align="right">
+                {{ $data->berita_acara_sp2dLS_skpd }}
+            </td>
+            <td data-num-fmt="{{ $fmtRp }}"
+                style="{{ $tdGrid }} @if ($data->berita_acara_sp2dLS_bud < 0) color:#FF0000; @endif" align="right">
+                {{ $data->berita_acara_sp2dLS_bud }}
+            </td>
+            <td data-num-fmt="{{ $fmtRp }}"
+                style="{{ $tdGrid }} @if ($data->berita_acara_sp2dLS_selisih < 0) color:#FF0000; @endif" align="right">
+                {{ $data->berita_acara_sp2dLS_selisih }}
+            </td>
+            <td style="{{ $tdGrid }}" align="center">
+                {{ abs($data->berita_acara_sp2dLS_selisih) < 0.001 ? 'Cocok' : 'Tidak Cocok' }}
+            </td>
+        </tr>
+        <tr>
+            <td style="{{ $tdGrid }}" align="center">2</td>
+            <td style="{{ $tdGrid }}">Mekanisme SP2D-UP/GU/TU</td>
+            <td style="{{ $tdGrid }}">Uang Persediaan / Ganti Uang</td>
+            <td data-num-fmt="{{ $fmtRp }}"
+                style="{{ $tdGrid }} @if ($data->berita_acara_sp2dUP_skpd < 0) color:#FF0000; @endif" align="right">
+                {{ $data->berita_acara_sp2dUP_skpd }}
+            </td>
+            <td data-num-fmt="{{ $fmtRp }}"
+                style="{{ $tdGrid }} @if ($data->berita_acara_sp2dUP_bud < 0) color:#FF0000; @endif" align="right">
+                {{ $data->berita_acara_sp2dUP_bud }}
+            </td>
+            <td data-num-fmt="{{ $fmtRp }}"
+                style="{{ $tdGrid }} @if ($data->berita_acara_sp2dUP_selisih < 0) color:#FF0000; @endif" align="right">
+                {{ $data->berita_acara_sp2dUP_selisih }}
+            </td>
+            <td style="{{ $tdGrid }}" align="center">
+                {{ abs($data->berita_acara_sp2dUP_selisih) < 0.001 ? 'Cocok' : 'Tidak Cocok' }}
+            </td>
+        </tr>
+        <tr>
+            <td style="{{ $tdGrid }}" align="center">3</td>
+            <td style="{{ $tdGrid }}">SKS</td>
+            <td style="{{ $tdGrid }}">Pengembalian ke Kasda (-)</td>
+            <td data-num-fmt="{{ $fmtRp }}"
+                style="{{ $tdGrid }} @if ($data->berita_acara_sts_skpd < 0) color:#FF0000; @endif" align="right">
+                {{ $data->berita_acara_sts_skpd }}
+            </td>
+            <td data-num-fmt="{{ $fmtRp }}"
+                style="{{ $tdGrid }} @if ($data->berita_acara_sts_bud < 0) color:#FF0000; @endif" align="right">
+                {{ $data->berita_acara_sts_bud }}
+            </td>
+            <td data-num-fmt="{{ $fmtRp }}"
+                style="{{ $tdGrid }} @if ($data->berita_acara_sts_selisih < 0) color:#FF0000; @endif" align="right">
+                {{ $data->berita_acara_sts_selisih }}
+            </td>
+            <td style="{{ $tdGrid }}" align="center">
+                {{ abs($data->berita_acara_sts_selisih) < 0.001 ? 'Cocok' : 'Tidak Cocok' }}
+            </td>
+        </tr>
 
     @php $selMek = $totMekBud - $totMekSkpd; @endphp
     <tr>
@@ -360,10 +429,10 @@
         // Bila tabel saldo kas belum tersedia, keempat baris ini
         // dibentuk dari kolom di tabel berita_acara.
         $saldo = [
-            ['Saldo Awal Bulan Kas di Bendahara Pengeluaran', $data->berita_acara_saldo_awal ?? 0, 'Kas Awal Bulan'],
-            ['Penerimaan SP2D (UP/GU/TU) Periode Ini', $data->berita_acara_sp2d_upgutu ?? 0, 'Pencairan UP/GU/TU'],
-            ['Pengeluaran BKU (SPJ Belanja UP/GU/TU)', $data->berita_acara_bku_upgutu ?? 0, 'Realisasi UP/GU/TU'],
-            ['Pengembalian Sisa UP/GU/TU (STS/S3UP)', $data->berita_acara_sts_upgutu ?? 0, 'Penyetoran Sisa Kas'],
+            ['Saldo Awal Bulan Kas di Bendahara Pengeluaran', $data->berita_acara_saldo_awal_bulan ?? 0, 'Kas Awal Bulan'],
+            ['Penerimaan SP2D (UP/GU/TU) Periode Ini', $data->berita_acara_penerimaan_sp2d ?? 0, 'Pencairan UP/GU/TU'],
+            ['Pengeluaran BKU (SPJ Belanja UP/GU/TU)', $data->berita_acara_pengeluaran_bku ?? 0, 'Realisasi UP/GU/TU'],
+            ['Pengembalian Sisa UP/GU/TU (STS/S3UP)', $data->berita_acara_pengembalian ?? 0, 'Penyetoran Sisa Kas'],
         ];
         $saldoAkhir = 0;
     @endphp
@@ -434,20 +503,20 @@
     @endfor
     <tr>
         <td style="font-weight:bold;" colspan="3" align="center">
-            {{ $data->berita_acara_skpd_nama ?? '[NAMA PEJABAT/PPK SKPD]' }}
+            {{ $data->berita_acara_nama_ppk ?? '[NAMA PEJABAT/PPK SKPD]' }}
         </td>
         <td></td>
         <td style="font-weight:bold;" colspan="3" align="center">
-            {{ $data->berita_acara_bud_nama ?? '[NAMA PEJABAT BUD]' }}
+            Ichtiawan J. Aziz, S.E.I
         </td>
     </tr>
     <tr>
         <td colspan="3" align="center">
-            NIP. {{ $data->berita_acara_skpd_nip ?? '[---------------------]' }}
+            NIP. {{ $data->berita_acara_nip_ppk ?? '[---------------------]' }}
         </td>
         <td></td>
         <td colspan="3" align="center">
-            NIP. {{ $data->berita_acara_bud_nip ?? '[---------------------]' }}
+            NIP. 198506162020121006
         </td>
     </tr>
     <tr>
@@ -471,20 +540,23 @@
     @endfor
     <tr>
         <td style="font-weight:bold;" colspan="3" align="center">
-            {{ $data->berita_acara_pa_nama ?? '[NAMA KEPALA SKPD]' }}
+            {{ $data->berita_acara_nama_pa ?? '[NAMA KEPALA SKPD]' }}
         </td>
         <td></td>
         <td style="font-weight:bold;" colspan="3" align="center">
-            {{ $data->berita_acara_kabid_nama ?? '[NAMA KABID AKUNTANSI]' }}
+            M. Adnan, S.E., M.Si.
         </td>
     </tr>
     <tr>
         <td colspan="3" align="center">
-            NIP. {{ $data->berita_acara_pa_nip ?? '[---------------------]' }}
+            NIP. {{ $data->berita_acara_nip_pa ?? '[---------------------]' }}
         </td>
         <td></td>
         <td colspan="3" align="center">
-            NIP. {{ $data->berita_acara_kabid_nip ?? '[---------------------]' }}
+            NIP. 197612262007011010
         </td>
     </tr>
 </table>
+
+</body>
+</html>
