@@ -1,11 +1,15 @@
 <aside class="sidebar" id="sidebar">
 <div class="brand">
-    <svg width="32" height="32" viewBox="0 0 32 32" style="flex:0 0 32px" aria-hidden="true">
-        <rect width="32" height="32" rx="5" fill="#F0B429"/>
-        <g fill="none" stroke="#1F3864" stroke-width="1.5" stroke-linecap="round">
-            <path d="M8 11 C12.5 7.5 19.5 14.5 24 11"/>
-            <path d="M8 16 C12.5 12.5 19.5 19.5 24 16"/>
-            <path d="M8 21 C12.5 17.5 19.5 24.5 24 21"/>
+    <svg width="60" height="60" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(0,-19)" fill="#F5B740">
+            <rect x="48" y="86" width="160" height="12" rx="6"/>
+            <rect x="122" y="92" width="12" height="104" rx="6"/>
+            <rect x="98" y="196" width="60" height="12" rx="6"/>
+            <rect x="51.5" y="92" width="5" height="40" rx="2.5"/>
+            <rect x="199.5" y="92" width="5" height="40" rx="2.5"/>
+            <path d="M32 132 Q54 156 76 132 Z"/>
+            <path d="M180 132 Q202 156 224 132 Z"/>
+            <circle cx="128" cy="92" r="9"/>
         </g>
     </svg>
     <div class="brand-text">
@@ -40,7 +44,7 @@
 
     </nav>
 
-    <div class="side-foot">
+     <a href="https://web.anauri.id" target="_blank" class="side-foot text-center" style="text-decoration: none">
         <i class="bi bi-shield-check"></i> Powered By Anauri
-    </div>
+    </a>
 </aside>

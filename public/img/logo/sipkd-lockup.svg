@@ -1,0 +1,17 @@
+<svg width="560" height="150" viewBox="0 0 560 150" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(4,20) scale(0.4297)">
+    <g fill="#F5B740">
+      <rect x="48" y="86" width="160" height="12" rx="6"/>
+      <rect x="122" y="92" width="12" height="104" rx="6"/>
+      <rect x="98" y="196" width="60" height="12" rx="6"/>
+      <rect x="51.5" y="92" width="5" height="40" rx="2.5"/>
+      <rect x="199.5" y="92" width="5" height="40" rx="2.5"/>
+      <path d="M32 132 Q54 156 76 132 Z"/>
+      <path d="M180 132 Q202 156 224 132 Z"/>
+    </g>
+    <circle cx="128" cy="92" r="9" fill="#17233F"/>
+  </g>
+  <text x="126" y="58" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3" fill="#C79320">BPKAD KUTAI TIMUR</text>
+  <text x="124" y="104" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="2" fill="#17233F">SIPKD</text>
+  <text x="126" y="130" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6577">Sistem Informasi Pengelolaan Keuangan Daerah</text>
+</svg>

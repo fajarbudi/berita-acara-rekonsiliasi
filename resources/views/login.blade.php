@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Masuk — SIPKD BPKAD Kutai Timur</title>
+        <link rel="icon" href="{{ asset('img/logo/sipkd-mark.svg') }}" sizes="200px">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
         <style>
@@ -496,13 +497,26 @@
 
             <!-- ============ PANEL BRANDING ============ -->
             <section class="brand-panel">
-                <div class="bp-top">
-                    <div class="brand-mark">KT</div>
-                    <div>
-                        <b>SIPKD</b>
-                        <small>BPKAD Kutai Timur</small>
-                    </div>
-                </div>
+                <div class="d-flex align-items-center">
+                    <svg width="100" height="100" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(0,-19)" fill="#F5B740">
+                                <rect x="48" y="86" width="160" height="12" rx="6"/>
+                                <rect x="122" y="92" width="12" height="104" rx="6"/>
+                                <rect x="98" y="196" width="60" height="12" rx="6"/>
+                                <rect x="51.5" y="92" width="5" height="40" rx="2.5"/>
+                                <rect x="199.5" y="92" width="5" height="40" rx="2.5"/>
+                                <path d="M32 132 Q54 156 76 132 Z"/>
+                                <path d="M180 132 Q202 156 224 132 Z"/>
+                                <circle cx="128" cy="92" r="9"/>
+                            </g>
+                    </svg>
+                    <p >
+                        <strong >BPKAD Kutai Timur</strong>
+                        <br>
+                        Sistem Informasi Pengelolaan Keuangan
+                    </p>
+                </div>           
+                
 
                 <div class="bp-mid">
                     <h1>Sistem Informasi<br>Pengelolaan <span>Keuangan Daerah</span></h1>
@@ -537,9 +551,9 @@
 
                 <div class="bp-foot">
                     <span>&copy; 2026 Pemerintah Kabupaten Kutai Timur</span>
-                    <a href="#">Panduan</a>
-                    <a href="#">Kebijakan Privasi</a>
-                    <span class="ms-auto"><i class="bi bi-shield-check"></i> Versi 2.4.1</span>
+                    <a href="https://web.anauri.id" target="_blank" class="ms-auto">
+                        <i class="bi bi-shield-check"></i> Powered By Anauri
+                    </a>
                 </div>
             </section>
 
@@ -548,13 +562,25 @@
                 <div class="form-box">
 
                     <!-- logo untuk layar kecil -->
-                    <div class="fp-logo">
-                        <div class="brand-mark">KT</div>
-                        <div>
-                            <b>SIPKD</b>
-                            <small>BPKAD Kutai Timur</small>
-                        </div>
-                    </div>
+                <div class="d-flex align-items-center m-0">
+                    <svg width="70" height="70" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(0,-19)" fill="#F5B740">
+                                <rect x="48" y="86" width="160" height="12" rx="6"/>
+                                <rect x="122" y="92" width="12" height="104" rx="6"/>
+                                <rect x="98" y="196" width="60" height="12" rx="6"/>
+                                <rect x="51.5" y="92" width="5" height="40" rx="2.5"/>
+                                <rect x="199.5" y="92" width="5" height="40" rx="2.5"/>
+                                <path d="M32 132 Q54 156 76 132 Z"/>
+                                <path d="M180 132 Q202 156 224 132 Z"/>
+                                <circle cx="128" cy="92" r="9"/>
+                            </g>
+                    </svg>
+                    <p>
+                        <strong style="color: #1F3864">BPKAD Kutai Timur</strong>
+                        <br>
+                        Sistem Informasi Pengelolaan Keuangan
+                    </p>
+                </div>
 
                     <div class="fp-head">
                         <h2>Masuk ke Akun Anda</h2>
