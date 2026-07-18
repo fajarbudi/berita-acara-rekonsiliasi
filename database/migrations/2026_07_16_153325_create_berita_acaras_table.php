@@ -28,6 +28,22 @@ class CreateBeritaAcarasTable extends Migration
             $table->string('berita_acara_nip_ppk')->nullable();
             $table->string('berita_acara_nama_pa')->nullable();
             $table->string('berita_acara_nip_pa')->nullable();
+            $table->string('berita_acara_sp2dLS_skpd')->nullable();
+            $table->string('berita_acara_sp2dLS_bud')->nullable();
+            $table->string('berita_acara_sp2dLS_selisih')->nullable();
+            $table->string('berita_acara_sp2dLS_ket')->nullable();
+            $table->string('berita_acara_sp2dUP_skpd')->nullable();
+            $table->string('berita_acara_sp2dUP_bud')->nullable();
+            $table->string('berita_acara_sp2dUP_selisih')->nullable();
+            $table->string('berita_acara_sp2dUP_ket')->nullable();
+            $table->string('berita_acara_sts_skpd')->nullable();
+            $table->string('berita_acara_sts_bud')->nullable();
+            $table->string('berita_acara_sts_selisih')->nullable();
+            $table->string('berita_acara_sts_ket')->nullable();
+            $table->string('berita_acara_saldo_awal_bulan')->nullable();
+            $table->string('berita_acara_penerimaan_sp2d')->nullable();
+            $table->string('berita_acara_pengeluaran_bku')->nullable();
+            $table->string('berita_acara_pengembalian')->nullable();
             $table->timestamps();
         });
     }

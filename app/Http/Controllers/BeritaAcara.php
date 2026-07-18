@@ -55,10 +55,6 @@ class BeritaAcara extends Controller
         $load['rekenings'] = ref_rekening::orderBy('rekening_kode', 'asc')->get();
         $load['ref_belanja'] = ref_belanja::orderBy('belanja_nama', 'asc')->get();
         $load['ref_mekanisme'] = ref_mekanisme::orderBy('mekanisme_nama', 'asc')->get();
-            $load['users_skpkd'] = User::where('user_kewenangan', 'skpkd')
-        ->orderBy('name')->get();
-    $load['users_skpd'] = User::where('user_kewenangan', 'skpd')
-        ->orderBy('name')->get();
         $load['ref_skpd'] = ref_skpd::get();
 
         return view('berita_acara.new',  $load);

@@ -353,83 +353,116 @@
                     <th style="width: 140px">Catatan BUD (Rp)</th>
                     <th style="width: 120px">Selisih (Rp)</th>
                     <th style="width: 100px">Keterangan</th>
-                    <th style="width: 40px" class="no-print"></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data_mekanisme as $index => $mekanisme)
-                    <tr>
+                        <tr>
                         <td class="text-center no">1</td>
                         <td>
-                            <select class="cell-text" name="mekanisme[{{ $index }}][mekanisme_id]">
-                                <option selected>--Pilih Mekanisme--</option>
-                                @foreach ($ref_mekanisme as $mekanismeOption)
-                                    <option value="{{ $mekanismeOption->mekanisme_id }}"
-                                        {{ $mekanisme->mekanisme_id == $mekanismeOption->mekanisme_id ? 'selected' : '' }}>
-                                        {{ $mekanismeOption->mekanisme_nama }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            Mekanisme SP2D-LS
                         </td>
                         <td>
-                            <input class="cell-text" value="{{ $mekanisme->mekanisme_uraian }}"
-                                name="mekanisme[{{ $index }}][mekanisme_uraian]" />
+                            <input
+                                class="cell-text"
+                                value="Langsung ke Pihak Ketiga / Gaji"
+                                readonly
+                            />
                         </td>
                         <td>
-                            <input class="cell-input skpd" type="text" inputmode="numeric"
-                                value="{{ $mekanisme->skpd }}" name="mekanisme[{{ $index }}][skpd]" />
+                            <input
+                                name="data[berita_acara_sp2dLS_skpd]"
+                                class="cell-input skpd"
+                                type="text"
+                                inputmode="numeric"
+                                placeholder="14107456768"
+                                value="{{$data->berita_acara_sp2dLS_skpd}}"
+                            />
                         </td>
                         <td>
-                            <input class="cell-input bud" type="text" inputmode="numeric"
-                                value="{{ $mekanisme->bud }}" name="mekanisme[{{ $index }}][bud]" />
+                            <input
+                                name="data[berita_acara_sp2dLS_bud]"
+                                class="cell-input bud"
+                                type="text"
+                                inputmode="numeric"
+                                placeholder="14107456768"
+                                value="{{$data->berita_acara_sp2dLS_bud}}"
+                            />
                         </td>
-                        <td class="num selisih"><input class="cell-input num selisih" type="text"
-                                name="mekanisme[{{ $index }}][selisih]" value="{{ $mekanisme->selisih }}" /></td>
-                        <input class="cell-text ketInput" type="hidden" name="mekanisme[{{ $index }}][keterangan]"
-                            value="{{ $mekanisme->keterangan }}" />
-                        <td class="text-center ket"></td>
-                        <td class="text-center row-tools no-print">
-                            <button type="button" onclick="hapusBaris(this)">
-                                <i class="bi bi-x-circle"></i>
-                            </button>
+                        <td class="num selisih">                    {{$data->berita_acara_sp2dLS_selisih}}
                         </td>
+                        <td class="text-center ket">{{$data->berita_acara_sp2dLS_ket}}</td>
                     </tr>
-                @endforeach
-
-                @if (!$data_mekanisme || $data_mekanisme->isEmpty())
                     <tr>
-                        <td class="text-center no">1</td>
+                        <td class="text-center no">2</td>
                         <td>
-                            <select class="cell-text" name="mekanisme[0][mekanisme_id]">
-                                <option selected>--Pilih mekanisme--</option>
-                                @foreach ($ref_mekanisme as $mekanisme)
-                                    <option value="{{ $mekanisme->mekanisme_id }}">{{ $mekanisme->mekanisme_nama }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-
-                        <td>
-                            <input class="cell-text" name="mekanisme[0][mekanisme_uraian]" />
+                            Mekanisme SP2D-UP/GU/TU
                         </td>
                         <td>
-                            <input class="cell-input skpd" type="text" inputmode="numeric" name="mekanisme[0][skpd]" />
+                            <input
+                                class="cell-text"
+                                value="Uang Persediaan / Ganti Uang"
+                                readonly
+                            />
                         </td>
                         <td>
-                            <input class="cell-input bud" type="text" inputmode="numeric" name="mekanisme[0][bud]" />
+                            <input
+                                name="data[berita_acara_sp2dUP_skpd]"
+                                class="cell-input skpd"
+                                type="text"
+                                inputmode="numeric"
+                                placeholder="1372444318"
+                                value="{{$data->berita_acara_sp2dUP_skpd}}"
+                            />
                         </td>
                         <td>
-                            <input class="cell-input num selisih" type="text" name="mekanisme[0][selisih]" />
+                            <input
+                                name="data[berita_acara_sp2dUP_bud]"
+                                class="cell-input bud"
+                                type="text"
+                                inputmode="numeric"
+                                placeholder="1607284318"
+                                value="{{$data->berita_acara_sp2dUP_bud}}"
+                            />
                         </td>
-                        <input class="cell-text ketInput" type="hidden" name="mekanisme[0][keterangan]" />
-                        <td class="text-center ket">
-                        </td>
-                        <td class="text-center row-tools no-print">
-                            <button type="button" onclick="hapusBaris(this)">
-                                <i class="bi bi-x-circle"></i>
-                            </button>
-                        </td>
+                        <td class="num selisih">{{$data->berita_acara_sp2dUP_selisih}}</td>
+                        <td class="text-center ket">{{$data->berita_acara_sp2dUP_keterangan}}</td>
                     </tr>
-                @endif
+                    <tr>
+                        <td class="text-center no">3</td>
+                        <td>
+                            STS
+                        </td>
+                        <td>
+                            <input
+                                name="data[berita_acara_sts_uraian]"
+                                class="cell-text"
+                                value="Pengembalian ke Kasda (-)"
+                                readonly
+                            />
+                        </td>
+                        <td>
+                            <input
+                                name="data[berita_acara_sts_skpd]"
+                                class="cell-input skpd"
+                                type="text"
+                                inputmode="numeric"
+                                placeholder="-4479062"
+                                value="{{$data->berita_acara_sts_skpd}}"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                name="data[berita_acara_sts_bud]"
+                                class="cell-input bud"
+                                type="text"
+                                inputmode="numeric"
+                                placeholder="-4479062"
+                                value="{{$data->berita_acara_sts_bud}}"
+                            />
+                        </td>
+                        <td class="num selisih">{{$data->berita_acara_sts_selisih}}</td>
+                        <td class="text-center ket">{{$data->berita_acara_sts_keterangan}}</td>
+                    </tr>
             </tbody>
             <tfoot>
                 <tr class="total">
@@ -440,7 +473,6 @@
                     <td class="num" id="totMekBUD">0,00</td>
                     <td class="num" id="totMekSelisih">0,00</td>
                     <td class="text-center" id="totMekKet"></td>
-                    <td class="no-print"></td>
                 </tr>
                 <tr class="grand">
                     <td colspan="3" class="text-end">
@@ -450,14 +482,9 @@
                     <td class="num" id="gapBUD">0,00</td>
                     <td class="num" id="gapSelisih">0,00</td>
                     <td class="text-center" id="gapKet"></td>
-                    <td class="no-print"></td>
                 </tr>
             </tfoot>
         </table>
-        <button type="button" class="btn btn-sm btn-outline-primary mt-2 no-print"
-            onclick="tambahBaris('tblMekanisme', 'mekanisme')">
-            <i class="bi bi-plus-lg"></i> Tambah Baris Mekanisme
-        </button>
 
         <!-- III. SALDO KAS -->
         <div class="section-head">
@@ -477,7 +504,7 @@
                     <td class="text-center">1</td>
                     <td>Saldo Awal Bulan Kas di Bendahara Pengeluaran</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" value="234840000" />
+                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="234840000" name="data[berita_acara_saldo_awal_bulan]" value="{{$data->berita_acara_saldo_awal_bulan}}"/>
                     </td>
                     <td>Kas Awal Bulan</td>
                 </tr>
@@ -485,7 +512,7 @@
                     <td class="text-center">2</td>
                     <td>Penerimaan SP2D (UP/GU/TU) Periode Ini</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" value="224026427" />
+                        <input class="cell-input saldo" type="text" inputmode="numeric" name="data[berita_acara_penerimaan_sp2d]" value="{{$data->berita_acara_penerimaan_sp2d}}"/>
                     </td>
                     <td>Pencairan UP/GU/TU</td>
                 </tr>
@@ -493,7 +520,7 @@
                     <td class="text-center">3</td>
                     <td>Pengeluaran BKU (SPJ Belanja UP/GU/TU)</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" value="-224026427" />
+                        <input class="cell-input saldo" type="text" inputmode="numeric" name="data[berita_acara_pengeluaran_bku]" value="{{$data->berita_acara_pengeluaran_bku}}"/>
                     </td>
                     <td>Realisasi UP/GU/TU</td>
                 </tr>
@@ -501,7 +528,7 @@
                     <td class="text-center">4</td>
                     <td>Pengembalian Sisa UP/GU/TU (STS/S3UP)</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" value="0" />
+                        <input class="cell-input saldo" type="text" inputmode="numeric" name="data[berita_acara_pengembalian]" value="{{$data->berita_acara_pengembalian}}"/>
                     </td>
                     <td>Penyetoran Sisa Kas</td>
                 </tr>

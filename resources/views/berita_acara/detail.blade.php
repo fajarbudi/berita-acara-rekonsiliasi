@@ -1421,25 +1421,25 @@
                                 <tr>
                                     <td class="c">1</td>
                                     <td>Saldo Awal Bulan Kas di Bendahara Pengeluaran</td>
-                                    <td class="num" data-v="234840000">234.840.000,00</td>
+                                    <td class="num" data-v="234840000">{{$data->berita_acara_saldo_awal_bulan}}</td>
                                     <td class="c">Kas Awal Bulan</td>
                                 </tr>
                                 <tr>
                                     <td class="c">2</td>
                                     <td>Penerimaan SP2D (UP/GU/TU) Periode Ini</td>
-                                    <td class="num" data-v="224026427">224.026.427,00</td>
+                                    <td class="num" data-v="224026427">{{$data->berita_acara_penerimaan_sp2d}}</td>
                                     <td class="c">Pencairan UP/GU/TU</td>
                                 </tr>
                                 <tr>
                                     <td class="c">3</td>
                                     <td>Pengeluaran BKU (SPJ Belanja UP/GU/TU)</td>
-                                    <td class="num neg" data-v="-224026427">-224.026.427,00</td>
+                                    <td class="num neg" data-v="-224026427">-{{$data->berita_acara_pengeluaran_bku}}</td>
                                     <td class="c">Realisasi UP/GU/TU</td>
                                 </tr>
                                 <tr>
                                     <td class="c">4</td>
                                     <td>Pengembalian Sisa UP/GU/TU (STS/S3UP)</td>
-                                    <td class="num" data-v="0">0,00</td>
+                                    <td class="num" data-v="0">{{$data->berita_acara_pengembalian}}</td>
                                     <td class="c">Penyetoran Sisa Kas</td>
                                 </tr>
                             </tbody>
