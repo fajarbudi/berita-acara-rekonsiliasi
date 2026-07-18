@@ -16,7 +16,7 @@
 
     <nav class="side-scroll">
         <div class="side-label">Beranda</div>
-        <a href="/" class="side-link"><i class="bi bi-grid-1x2"></i><span>Dashboard</span></a>
+        <a href="{{route('dashboard')}}" class="side-link"><i class="bi bi-grid-1x2"></i><span>Dashboard</span></a>
         <a href="{{ route('berita_acara.view') }}" class="side-link"><i
                 class="bi bi-file-earmark-check"></i><span>Berita
                 Acara</span></a>

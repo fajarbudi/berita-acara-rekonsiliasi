@@ -600,9 +600,9 @@
             <button type="submit" class="btn btn-primary btn-sm">
                 <i class="bi bi-download"></i> Simpan Data
             </button>
-            <button type="reset" class="btn btn-outline-danger btn-sm">
+            {{-- <button type="reset" class="btn btn-outline-danger btn-sm">
                 <i class="bi bi-arrow-counterclockwise"></i> Reset Form
-            </button>
+            </button> --}}
         </div>
 
         <div class="text-center mt-4"

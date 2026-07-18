@@ -183,8 +183,8 @@
         }
 
         function bukaHapus(data) {
-            document.getElementById('hapusTarget').value = data.rekening_id;
-            document.getElementById('hapusTeks').innerHTML = `Data <b>${data.rekening_kode}</b> akan dihapus.`;
+            document.getElementById('hapusTarget').value = data.berita_acara_id;
+            document.getElementById('hapusTeks').innerHTML = `Data <b>${data.berita_acara_no_bud}</b> akan dihapus.`;
             new bootstrap.Modal('#mdlHapus').show();
         }
     </script>

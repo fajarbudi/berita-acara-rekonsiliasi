@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('logout');
 
 route::group(['middleware' => ['isLogin']], function () {
-    Route::get('/', [Dashboard::class, 'view']);
+    Route::get('/', [Dashboard::class, 'view'])->name('dashboard');
 
     Route::get('/berita-acara/detailKonten/{id}',[BeritaAcara::class, 'kontenDetail'])->name('getKontenDetail');
 

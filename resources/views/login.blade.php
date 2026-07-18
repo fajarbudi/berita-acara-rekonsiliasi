@@ -512,7 +512,7 @@
                         penandatanganan berita acara.
                     </p>
 
-                    <div class="feat">
+                    {{-- <div class="feat">
                         <i class="bi bi-file-earmark-check"></i>
                         <div>
                             <b>Berita Acara Otomatis</b>
@@ -532,7 +532,7 @@
                             <b>Tanda Tangan Elektronik</b>
                             <small>Alur persetujuan berjenjang dengan jejak audit yang terekam penuh.</small>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="bp-foot">

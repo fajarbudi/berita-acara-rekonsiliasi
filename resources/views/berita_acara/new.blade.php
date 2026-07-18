@@ -503,16 +503,13 @@
             </div>
         </div>
 
-        <div class="d-flex gap-2 mt-4 no-print">
+        <div class="d-flex gap-2 mt-4 no-print justify-content-end mt-5">
             <button type="submit" class="btn btn-primary btn-sm">
-                <i class="bi bi-download"></i> Simpan Data (JSON)
+                <i class="bi bi-download"></i> Simpan Data
             </button>
-            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
-                <i class="bi bi-printer"></i> Cetak / PDF
-            </button>
-            <button type="reset" class="btn btn-outline-danger btn-sm">
+            {{-- <button type="reset" class="btn btn-outline-danger btn-sm">
                 <i class="bi bi-arrow-counterclockwise"></i> Reset Form
-            </button>
+            </button> --}}
         </div>
 
         <div class="text-center mt-4"
