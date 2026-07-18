@@ -3,8 +3,7 @@
 @section('content')
             <div class="page-head d-flex align-items-center gap-3 flex-wrap no-print">
                 <div>
-                    <h1>Berita Acara Rekonsiliasi <span class="chip c-wait ms-1"><i class="bi bi-hourglass-split"></i>
-                            Menunggu TTD</span></h1>
+                    <h1>Berita Acara Rekonsiliasi</h1>
                     <p>Nomor {{ $data->berita_acara_no_bud }} &middot; Periode {{ $data->berita_acara_periode }} TA
                         {{ $data->berita_acara_tahun_anggaran }}</p>
                 </div>
@@ -18,9 +17,9 @@
                     <a href="{{ route('berita_acara.excel', $berita_acara_id) }}" class="btn btn-sm btn-outline-success">
                         <i class="bi bi-file-earmark-excel"></i> Ekspor Excel
                     </a>
-                    <button class="btn btn-sm text-white" style="background:var(--bar-navy)">
+                    {{-- <button class="btn btn-sm text-white" style="background:var(--bar-navy)">
                         <i class="bi bi-pen"></i> Tanda Tangani
-                    </button>
+                    </button> --}}
                 </div>
             </div>
 

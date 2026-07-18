@@ -16,7 +16,7 @@
 
     <nav class="side-scroll">
         <div class="side-label">Beranda</div>
-        <a href="#" class="side-link"><i class="bi bi-grid-1x2"></i><span>Dashboard</span></a>
+        <a href="/" class="side-link"><i class="bi bi-grid-1x2"></i><span>Dashboard</span></a>
         <a href="{{ route('berita_acara.view') }}" class="side-link"><i
                 class="bi bi-file-earmark-check"></i><span>Berita
                 Acara</span></a>
@@ -27,16 +27,18 @@
         </a>
 
         <div class="side-label">Referensi</div>
-        <a href="{{ route('rekening.view') }}" class="side-link"><i class="bi bi-cash-coin"></i><span>Rekening</span>
+        <a href="{{ route('skpd.view') }}" class="side-link">
+            <i class="bi bi-cash-coin"></i><span>SKPD</span>
         </a>
-        <a href="{{ route('skpd.view') }}" class="side-link"><i class="bi bi-cash-coin"></i><span>SKPD</span>
+        <a href="{{ route('rekening.view') }}" class="side-link">
+            <i class="bi bi-cash-coin"></i><span>Rekening</span>
         </a>
         <a href="{{ route('belanja.view') }}" class="side-link"><i class="bi bi-basket"></i><span>Belanja</span></a>
-        <a href="{{ route('mekanisme.view') }}" class="side-link"><i class="bi bi-gear"></i><span>Mekanisme</span></a>
+        {{-- <a href="{{ route('mekanisme.view') }}" class="side-link"><i class="bi bi-gear"></i><span>Mekanisme</span></a> --}}
 
     </nav>
 
     <div class="side-foot">
-        <i class="bi bi-shield-check"></i> Versi 2.4.1 &middot; TA 2026
+        <i class="bi bi-shield-check"></i> Powered By Anauri
     </div>
 </aside>

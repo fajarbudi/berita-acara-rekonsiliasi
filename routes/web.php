@@ -6,6 +6,7 @@ use App\Http\Controllers\referensi\BelanjaController;
 use App\Http\Controllers\referensi\MekanismeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeritaAcara;
+use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\referensi\SKPDController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +26,7 @@ use Illuminate\Support\Facades\Route;
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('logout');
 
 route::group(['middleware' => ['isLogin']], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', [Dashboard::class, 'view']);
 
     Route::get('/berita-acara/detailKonten/{id}',[BeritaAcara::class, 'kontenDetail'])->name('getKontenDetail');
 
