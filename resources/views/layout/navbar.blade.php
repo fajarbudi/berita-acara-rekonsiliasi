@@ -8,9 +8,9 @@
                 <i class="bi bi-list"></i>
             </button>
 
-            <div class="crumb d-none d-md-block">
+            {{-- <div class="crumb d-none d-md-block">
                 Rekonsiliasi <i class="bi bi-chevron-right" style="font-size:9px"></i> <b>Berita Acara</b>
-            </div>
+            </div> --}}
 
             {{-- <div class="nav-search">
     <i class="bi bi-search"></i>

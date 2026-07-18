@@ -73,18 +73,10 @@
             </div>
 
             <!-- FOOT -->
-            <div class="table-foot">
-                <span>Menampilkan <b id="infoTampil">0</b> dari <b id="infoTotal">0</b> berita acara</span>
-                <nav class="ms-auto">
-                    <ul class="pagination pagination-sm">
-                        <li class="page-item disabled"><a class="page-link" href="#"><i
-                                    class="bi bi-chevron-left"></i></a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a>
-                        </li>
-                    </ul>
-                </nav>
+            <div style="min-height: 50px">
+                <div class="ms-auto">
+                    {!! $datas->appends(Request::all())->links() !!}
+                </div>
             </div>
         </div>
     </div>

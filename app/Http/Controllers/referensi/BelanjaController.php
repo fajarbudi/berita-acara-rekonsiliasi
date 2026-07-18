@@ -12,7 +12,7 @@ class BelanjaController extends Controller
     {
         $load['halaman_judul'] = "Referensi Belanja";
         $load['halaman_deskripsi'] = "Data belanja yang dapat digunakan dalam aplikasi ini";
-        $load['belanjas'] = ref_belanja::orderBy('created_at', 'desc')->get();
+        $load['belanjas'] = ref_belanja::orderBy('created_at', 'desc')->paginate(25);
 
         return view('referensi.belanja',  $load);
     }

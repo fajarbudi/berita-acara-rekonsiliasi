@@ -23,7 +23,7 @@ class BeritaAcara extends Controller
     {
         $load['halaman_judul'] = "Berita Acara";
         $load['halaman_deskripsi'] = "Data berita acara yang dapat digunakan dalam aplikasi ini";
-        $load['datas'] = berita_acara::orderBy('created_at', 'desc')->get();
+        $load['datas'] = berita_acara::orderBy('created_at', 'desc')->paginate(12);
         return view('berita_acara.berita_acara',  $load);
     }
 

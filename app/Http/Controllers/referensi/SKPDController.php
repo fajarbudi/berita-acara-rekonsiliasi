@@ -12,7 +12,7 @@ class SKPDController extends Controller
     {
         $load['halaman_judul'] = "Referensi SKPD";
         $load['halaman_deskripsi'] = "Data skpd yang dapat digunakan dalam aplikasi ini";
-        $load['skpds'] = ref_skpd::orderBy('created_at', 'desc')->get();
+        $load['skpds'] = ref_skpd::orderBy('created_at', 'desc')->paginate(25);
 
         return view('referensi.skpd',  $load);
     }

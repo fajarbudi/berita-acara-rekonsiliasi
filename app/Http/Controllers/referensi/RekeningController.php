@@ -12,7 +12,7 @@ class RekeningController extends Controller
     {
         $load['halaman_judul'] = "Referensi Rekening";
         $load['halaman_deskripsi'] = "Data rekening yang dapat digunakan dalam aplikasi ini";
-        $load['rekenings'] = ref_rekening::orderBy('created_at', 'desc')->get();
+        $load['rekenings'] = ref_rekening::orderBy('created_at', 'desc')->paginate(25);
 
         return view('referensi.rekening',  $load);
     }

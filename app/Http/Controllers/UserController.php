@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $load['halaman_judul'] = "Referensi User ";
         $load['halaman_deskripsi'] = "Data user yang dapat mengakses aplikasi ini";
-        $load['users'] = User::orderBy('created_at', 'desc')->get();
+        $load['users'] = User::orderBy('created_at', 'desc')->paginate(25);
         $load['ref_skpd'] = ref_skpd::get();
 
         return view('referensi.users',  $load);
