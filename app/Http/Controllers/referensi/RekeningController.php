@@ -5,11 +5,13 @@ namespace App\Http\Controllers\referensi;
 use App\Http\Controllers\Controller;
 use App\Models\ref_rekening;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RekeningController extends Controller
 {
-        public function View()
+    public function View()
     {
+        Gate::authorize('isVerifikator');
         $load['halaman_judul'] = "Referensi Rekening";
         $load['halaman_deskripsi'] = "Data rekening yang dapat digunakan dalam aplikasi ini";
         $load['rekenings'] = ref_rekening::orderBy('created_at', 'desc')->paginate(25);

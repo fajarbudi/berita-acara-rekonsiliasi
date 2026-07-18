@@ -5,11 +5,13 @@ namespace App\Http\Controllers\referensi;
 use App\Http\Controllers\Controller;
 use App\Models\ref_belanja;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class BelanjaController extends Controller
 {
-            public function View()
+    public function View()
     {
+        Gate::authorize('isVerifikator');
         $load['halaman_judul'] = "Referensi Belanja";
         $load['halaman_deskripsi'] = "Data belanja yang dapat digunakan dalam aplikasi ini";
         $load['belanjas'] = ref_belanja::orderBy('created_at', 'desc')->paginate(25);

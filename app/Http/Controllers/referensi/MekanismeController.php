@@ -5,11 +5,13 @@ namespace App\Http\Controllers\referensi;
 use App\Http\Controllers\Controller;
 use App\Models\ref_mekanisme;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class MekanismeController extends Controller
 {
     public function View()
     {
+        Gate::authorize('isVerifikator');
         $load['halaman_judul'] = "Referensi Mekanisme";
         $load['halaman_deskripsi'] = "Data mekanisme yang dapat digunakan dalam aplikasi ini";
         $load['mekanismes'] = ref_mekanisme::orderBy('created_at', 'desc')->get();

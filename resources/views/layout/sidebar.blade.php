@@ -26,7 +26,8 @@
             <i class="bi bi-people"></i><span>Users</span>
         </a>
 
-        <div class="side-label">Referensi</div>
+        @can('isVerifikator')
+                    <div class="side-label">Referensi</div>
         <a href="{{ route('skpd.view') }}" class="side-link">
             <i class="bi bi-cash-coin"></i><span>SKPD</span>
         </a>
@@ -34,6 +35,7 @@
             <i class="bi bi-cash-coin"></i><span>Rekening</span>
         </a>
         <a href="{{ route('belanja.view') }}" class="side-link"><i class="bi bi-basket"></i><span>Belanja</span></a>
+        @endcan
         {{-- <a href="{{ route('mekanisme.view') }}" class="side-link"><i class="bi bi-gear"></i><span>Mekanisme</span></a> --}}
 
     </nav>

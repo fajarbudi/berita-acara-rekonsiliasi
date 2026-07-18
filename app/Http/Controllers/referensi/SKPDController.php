@@ -5,11 +5,13 @@ namespace App\Http\Controllers\referensi;
 use App\Http\Controllers\Controller;
 use App\Models\ref_skpd;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SKPDController extends Controller
 {
     public function View()
     {
+        Gate::authorize('isVerifikator');
         $load['halaman_judul'] = "Referensi SKPD";
         $load['halaman_deskripsi'] = "Data skpd yang dapat digunakan dalam aplikasi ini";
         $load['skpds'] = ref_skpd::orderBy('created_at', 'desc')->paginate(25);
@@ -19,7 +21,6 @@ class SKPDController extends Controller
 
     public function simpan(Request $request)
     {
-
         $posData = $request->only([        'skpd_nama',
         'skpd_singkatan',
         'skpd_nama_ppk',

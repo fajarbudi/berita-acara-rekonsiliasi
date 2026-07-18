@@ -25,9 +25,11 @@
                     {{-- <button class="btn btn-sm btn-outline-secondary" onclick="resetFilter()">
                         <i class="bi bi-arrow-counterclockwise"></i> Reset
                     </button> --}}
+                    @can('isAdmin')
                     <button class="btn btn-sm text-white" style="background:var(--bar-navy)" onclick="bukaNew()">
                         <i class="bi bi-plus-lg"></i> Tambah Data
                     </button>
+                    @endcan
                 </div>
             </div>
             <!-- TABLE -->
@@ -39,7 +41,9 @@
                             <th data-col="1" onclick="urut(this)">Nama</th>
                             <th data-col="2" onclick="urut(this)">Email</th>
                             <th data-col="3" onclick="urut(this)">Role</th>
-                            <th style="width:120px">Aksi</th>
+                            @can('isAdmin')
+                                <th style="width:120px">Aksi</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody id="tbody">
@@ -49,6 +53,7 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->user_role }}</td>
+                                @can('isAdmin')
                                 <td>
                                     <button class="btn btn-sm btn-outline-info" onclick="bukaEdit({{ $item }})">
                                         <i class="bi bi-pencil"></i>
@@ -56,6 +61,7 @@
                                     <button class="btn-ico danger" title="Hapus"
                                         onclick='bukaHapus({{ $item }})'><i class="bi bi-trash"></i></button>
                                 </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

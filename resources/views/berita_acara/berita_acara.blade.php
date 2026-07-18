@@ -25,9 +25,11 @@
                     {{-- <button class="btn btn-sm btn-outline-secondary" onclick="resetFilter()">
                         <i class="bi bi-arrow-counterclockwise"></i> Reset
                     </button> --}}
+                    @can('isVerifikator')
                     <a href="{{ route('berita_acara.new') }}" class="btn btn-sm text-white" style="background:var(--bar-navy)">
                         <i class="bi bi-plus-lg"></i> Tambah Data
                     </a>
+                    @endcan
                 </div>
             </div>
             <!-- TABLE -->
@@ -58,8 +60,11 @@
                                         class="btn btn-sm btn-outline-secondary">
                                         <i class="bi bi-eye"></i>
                                     </a>
+                                    @can('isVerifikator')
                                     <button class="btn-ico danger" title="Hapus"
-                                        onclick='bukaHapus({{ $item }})'><i class="bi bi-trash"></i></button>
+                                        onclick='bukaHapus({{ $item }})'><i class="bi bi-trash"></i>
+                                    </button>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

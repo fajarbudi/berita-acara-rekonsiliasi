@@ -14,16 +14,26 @@ use App\Models\ref_rekening;
 use App\Models\ref_skpd;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BeritaAcara extends Controller
 {
     public function view()
     {
+        $userLogin = Auth::user();
         $load['halaman_judul'] = "Berita Acara";
         $load['halaman_deskripsi'] = "Data berita acara yang dapat digunakan dalam aplikasi ini";
-        $load['datas'] = berita_acara::orderBy('created_at', 'desc')->paginate(12);
+        $query = berita_acara::orderBy('created_at', 'desc');
+
+        if($userLogin->user_role == 'operator'){
+            $query->where('skpd_id', $userLogin->skpd_id);
+        }
+
+        $load['datas'] = $query->paginate(12);
+
         return view('berita_acara.berita_acara',  $load);
     }
 
@@ -38,11 +48,6 @@ class BeritaAcara extends Controller
         $load['data_pendapatan'] = berita_acara_pendapatan::where('berita_acara_id', $id)->get();
         $load['data_belanja'] = berita_acara_belanja::where('berita_acara_id', $id)->get();
         $load['data_mekanisme'] = berita_acara_mekanisme::where('berita_acara_id', $id)->get();
-        // $load['data_saldo'] = berita_acara_saldo_kas::where('berita_acara_id', $id)
-        //     ->orderBy('urutan')
-        //     ->get();
-
-        // Dipakai paragraf pembuka: "Pada hari ini, Jumat tanggal Lima bulan Juni ..."
         $load['terbilang'] = $this->terbilangTanggal($data->berita_acara_tanggal);
 
         return view('berita_acara.detail',  $load);
@@ -58,11 +63,6 @@ class BeritaAcara extends Controller
         $load['data_pendapatan'] = berita_acara_pendapatan::where('berita_acara_id', $id)->get();
         $load['data_belanja'] = berita_acara_belanja::where('berita_acara_id', $id)->get();
         $load['data_mekanisme'] = berita_acara_mekanisme::where('berita_acara_id', $id)->get();
-        // $load['data_saldo'] = berita_acara_saldo_kas::where('berita_acara_id', $id)
-        //     ->orderBy('urutan')
-        //     ->get();
-
-        // Dipakai paragraf pembuka: "Pada hari ini, Jumat tanggal Lima bulan Juni ..."
         $load['terbilang'] = $this->terbilangTanggal($data->berita_acara_tanggal);
 
         return view('berita_acara.export.cetak',  $load);  
@@ -70,6 +70,8 @@ class BeritaAcara extends Controller
 
     public function new()
     {
+        Gate::authorize('isVerifikator');
+
         $load['halaman_judul'] = "Berita Acara Baru";
         $load['halaman_deskripsi'] = "Form untuk membuat berita acara baru";
         $load['rekenings'] = ref_rekening::orderBy('rekening_kode', 'asc')->get();
@@ -93,9 +95,6 @@ class BeritaAcara extends Controller
         $load['ref_mekanisme'] = ref_mekanisme::orderBy('mekanisme_nama', 'asc')->get();
         $load['data_mekanisme'] = berita_acara_mekanisme::where('berita_acara_id', $id)->get();
         $load['ref_skpd'] = ref_skpd::get();
-        // $load['data_saldo'] = berita_acara_saldo_kas::where('berita_acara_id', $id)
-        //     ->orderBy('urutan')
-        //     ->get();
 
         return view('berita_acara.edit',  $load);
     }
@@ -127,8 +126,7 @@ class BeritaAcara extends Controller
         $dataPost['berita_acara_sp2dUP_selisih'] = ($dataPost['berita_acara_sp2dUP_bud'] ?? 0)  - ($dataPost['berita_acara_sp2dUP_skpd'] ?? 0);
         $dataPost['berita_acara_sp2dUP_ket'] = $dataPost['berita_acara_sp2dUP_selisih'] == 0 ? 'Cocok' : 'Tidak Cocok';
 
-        // Seluruh penyimpanan dibungkus transaksi. Bila salah satu rincian
-        // gagal, header tidak ikut tersimpan setengah jalan.
+        //simpan aksi database sementara
         DB::beginTransaction();
 
         try {
@@ -173,7 +171,7 @@ class BeritaAcara extends Controller
             return;
         }
 
-        // Ambil seluruh kode rekening sekali jalan, bukan query di dalam perulangan
+        // Ambil kode rekening
         $kodeRekening = ref_rekening::whereIn('rekening_id', array_column($rekening, 'rekening_id'))
             ->pluck('rekening_kode', 'rekening_id');
 
@@ -285,36 +283,6 @@ class BeritaAcara extends Controller
             berita_acara_mekanisme::insert($post);
         }
     }
-
-    // private function simpanSaldoKas($berita_acara_id, $saldo)
-    // {
-    //     berita_acara_saldo_kas::where('berita_acara_id', $berita_acara_id)->delete();
-
-    //     if (!is_array($saldo)) {
-    //         return;
-    //     }
-
-    //     $post = [];
-    //     foreach ($saldo as $urutan => $item) {
-    //         if (empty($item['uraian'])) {
-    //             continue;
-    //         }
-
-    //         $post[] = [
-    //             'berita_acara_id' => $berita_acara_id,
-    //             'urutan'          => $urutan + 1,
-    //             'uraian'          => $item['uraian'],
-    //             'jumlah'          => $this->angka($item['jumlah'] ?? 0),
-    //             'keterangan'      => $item['keterangan'] ?? null,
-    //             'created_at'      => now(),
-    //             'updated_at'      => now(),
-    //         ];
-    //     }
-
-    //     if ($post) {
-    //         berita_acara_saldo_kas::insert($post);
-    //     }
-    // }
 
     //hapus berita acara
     public function hapus($id)
