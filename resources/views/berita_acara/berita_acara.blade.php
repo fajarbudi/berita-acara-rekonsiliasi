@@ -93,7 +93,7 @@
     <!-- ============ MODAL: HAPUS ============ -->
     <div class="modal" id="mdlHapus" tabindex="1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
-            <form id="frmHapus" method="POST" action="{{ route('rekening.delete') }}">
+            <form id="frmHapus" method="POST" action="{{ route('berita_acara.delete') }}">
                 @csrf
                 <input type="hidden" id="hapusTarget" name='hapusTarget'>
                 <div class="modal-content">

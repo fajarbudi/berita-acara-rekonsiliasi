@@ -54,6 +54,7 @@ route::group(['middleware' => ['isLogin']], function () {
 
     Route::get('/berita-acara', [BeritaAcara::class, 'view'])->name('berita_acara.view');
     Route::get('/berita-acara/new', [BeritaAcara::class, 'new'])->name('berita_acara.new');
+    Route::post('/berita-acara/delete', [BeritaAcara::class, 'hapus'])->name('berita_acara.delete');
     Route::get('/berita-acara/detail/{id}', [BeritaAcara::class, 'detail'])->name('berita_acara.detail');
     Route::get('/berita-acara/edit/{id}', [BeritaAcara::class, 'edit'])->name('berita_acara.edit');
     Route::post('/berita-acara/simpan', [BeritaAcara::class, 'simpan'])->name('berita_acara.simpan');

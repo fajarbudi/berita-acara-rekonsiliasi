@@ -160,7 +160,7 @@ class BeritaAcara extends Controller
 
             $this->simpanPendapatan($berita_acara_id, $rekening);
             $this->simpanBelanja($berita_acara_id, $belanja);
-            $this->simpanMekanisme($berita_acara_id, $mekanisme);
+            // $this->simpanMekanisme($berita_acara_id, $mekanisme);
             // $this->simpanSaldoKas($berita_acara_id, $saldo);
 
             DB::commit();
@@ -298,8 +298,9 @@ class BeritaAcara extends Controller
     }
 
     //hapus berita acara
-    public function hapus($id)
+    public function hapus(Request $request)
     {
+        $id = $request->input('hapusTarget');
         $data = berita_acara::find($id);
 
         if (!$data) {
@@ -309,9 +310,15 @@ class BeritaAcara extends Controller
         DB::beginTransaction();
 
         try {
-            berita_acara_pendapatan::where('berita_acara_id', $id)->delete();
-            berita_acara_belanja::where('berita_acara_id', $id)->delete();
-            berita_acara_mekanisme::where('berita_acara_id', $id)->delete();
+            $pendatan = berita_acara_pendapatan::where('berita_acara_id', $id);
+            if($pendatan){
+                $pendatan->delete();
+            }
+            $belanja = berita_acara_belanja::where('berita_acara_id', $id);
+            if($belanja){
+                $belanja->delete();
+            }
+            //  berita_acara_mekanisme::where('berita_acara_id', $id);
             // berita_acara_saldo_kas::where('berita_acara_id', $id)->delete();
             $data->delete();
 
