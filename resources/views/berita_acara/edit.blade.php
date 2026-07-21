@@ -27,6 +27,7 @@
         </div>
 
         <!-- IDENTITAS DOKUMEN -->
+        @can('isVerifikator')
         <div class="section-head">A. IDENTITAS DOKUMEN</div>
         <div class="row g-3">
             <div class="col-md-12">
@@ -99,6 +100,7 @@
                     value="{{ $data->berita_acara_tempat ?? 'Kantor Badan Pengelolaan Keuangan dan Aset Daerah' }}" />
             </div>
         </div>
+        @endcan
 
         <!-- I. PENERIMAAN -->
         <div class="section-head">
@@ -117,7 +119,9 @@
                     <th style="width: 110px">Kode Rekening</th>
                     <th>Uraian Pendapatan</th>
                     <th style="width: 140px">Catatan SKPD (Rp)</th>
-                    <th style="width: 140px">Catatan BUD (Rp)</th>
+                    @can('isVerifikator')
+                        <th style="width: 140px">Catatan BUD (Rp)</th>
+                    @endcan
                     <th style="width: 120px">Selisih (Rp)</th>
                     <th style="width: 100px">Keterangan</th>
                     <th style="width: 40px" class="no-print"></th>
@@ -147,11 +151,13 @@
                                 name="rekening[{{ $index }}][skpd]"
                                 value="{{ number_format($pendapatan->skpd, 0, ',', '') }}" />
                         </td>
+                        @can('isVerifikator')
                         <td>
                             <input class="cell-input bud" type="text" inputmode="numeric"
                                 name="rekening[{{ $index }}][bud]"
                                 value="{{ number_format($pendapatan->bud, 0, ',', '') }}" />
                         </td>
+                        @endcan
                         <td>
                             <input class="cell-input num selisih" type="text"
                                 name="rekening[{{ $index }}][selisih]"
@@ -184,9 +190,11 @@
                             <input class="cell-input skpd" type="text" inputmode="numeric"
                                 name="rekening[0][skpd]" />
                         </td>
+                        @can('isVerifikator')
                         <td>
                             <input class="cell-input bud" type="text" inputmode="numeric" name="rekening[0][bud]" />
                         </td>
+                        @endcan
                         <td>
                             <input class="cell-input num selisih" type="text" name="rekening[0][selisih]" />
                         </td>
@@ -204,7 +212,9 @@
                 <tr class="total">
                     <td colspan="3" class="text-end">TOTAL PENERIMAAN</td>
                     <td class="num" id="totPendSKPD">0,00</td>
-                    <td class="num" id="totPendBUD">0,00</td>
+                    @can('isVerifikator')
+                        <td class="num" id="totPendBUD">0,00</td>
+                    @endcan
                     <td class="num" id="totPendSelisih">0,00</td>
                     <td class="text-center" id="totPendKet"></td>
                     <td class="no-print"></td>
@@ -235,7 +245,9 @@
                     <th style="width: 130px">Jenis / Mekanisme Belanja</th>
                     <th>Uraian</th>
                     <th style="width: 140px">Catatan SKPD (Rp)</th>
+                    @can('isVerifikator')                
                     <th style="width: 140px">Catatan BUD (Rp)</th>
+                    @endcan
                     <th style="width: 120px">Selisih (Rp)</th>
                     <th style="width: 100px">Keterangan</th>
                     <th style="width: 40px" class="no-print"></th>
@@ -264,10 +276,12 @@
                             <input class="cell-input skpd" type="text" inputmode="numeric"
                                 value="{{ $belanja->skpd }}" name="belanja[{{ $index }}][skpd]" />
                         </td>
+                        @can('isVerifikator')
                         <td>
                             <input class="cell-input bud" type="text" inputmode="numeric"
                                 value="{{ $belanja->bud }}" name="belanja[{{ $index }}][bud]" />
                         </td>
+                        @endcan
                         <td class="num selisih"><input class="cell-input num selisih" type="text"
                                 name="belanja[{{ $index }}][selisih]" value="{{ $belanja->selisih }}" /></td>
                         <td class="text-center ket"></td>
@@ -297,9 +311,11 @@
                         <td>
                             <input class="cell-input skpd" type="text" inputmode="numeric" name="belanja[0][skpd]" />
                         </td>
+                        @can('isVerifikator')
                         <td>
                             <input class="cell-input bud" type="text" inputmode="numeric" name="belanja[0][bud]" />
                         </td>
+                        @endcan
                         <td>
                             <input class="cell-input num selisih" type="text" name="belanja[0][selisih]" />
                         </td>
@@ -319,7 +335,9 @@
                         TOTAL BELANJA (JENIS)
                     </td>
                     <td class="num" id="totJenisSKPD">0,00</td>
-                    <td class="num" id="totJenisBUD">0,00</td>
+                    @can('isVerifikator')
+                        <td class="num" id="totJenisBUD">0,00</td>
+                    @endcan
                     <td class="num" id="totJenisSelisih">0,00</td>
                     <td class="text-center" id="totJenisKet"></td>
                     <td class="no-print"></td>
@@ -344,7 +362,9 @@
                     <th style="width: 130px">Mekanisme</th>
                     <th>Uraian</th>
                     <th style="width: 140px">Catatan SKPD (Rp)</th>
-                    <th style="width: 140px">Catatan BUD (Rp)</th>
+                    @can('isVerifikator')
+                        <th style="width: 140px">Catatan BUD (Rp)</th>
+                    @endcan
                     <th style="width: 120px">Selisih (Rp)</th>
                     <th style="width: 100px">Keterangan</th>
                 </tr>
@@ -372,6 +392,7 @@
                                 value="{{$data->berita_acara_sp2dLS_skpd}}"
                             />
                         </td>
+                        @can('isVerifikator')
                         <td>
                             <input
                                 name="data[berita_acara_sp2dLS_bud]"
@@ -382,6 +403,7 @@
                                 value="{{$data->berita_acara_sp2dLS_bud}}"
                             />
                         </td>
+                        @endcan
                         <td class="num selisih">                    {{$data->berita_acara_sp2dLS_selisih}}
                         </td>
                         <td class="text-center ket">{{$data->berita_acara_sp2dLS_ket}}</td>
@@ -408,6 +430,7 @@
                                 value="{{$data->berita_acara_sp2dUP_skpd}}"
                             />
                         </td>
+                        @can('isVerifikator')
                         <td>
                             <input
                                 name="data[berita_acara_sp2dUP_bud]"
@@ -418,6 +441,7 @@
                                 value="{{$data->berita_acara_sp2dUP_bud}}"
                             />
                         </td>
+                        @endcan
                         <td class="num selisih">{{$data->berita_acara_sp2dUP_selisih}}</td>
                         <td class="text-center ket">{{$data->berita_acara_sp2dUP_keterangan}}</td>
                     </tr>
@@ -445,6 +469,7 @@
                                 onkeyup="ubahKeMinus(this)"
                             />
                         </td>
+                        @can('isVerifikator')
                         <td>
                             <input
                                 name="data[berita_acara_sts_bud]"
@@ -457,6 +482,7 @@
                                
                             />
                         </td>
+                        @endcan
                         <td class="num selisih">{{$data->berita_acara_sts_selisih}}</td>
                         <td class="text-center ket">{{$data->berita_acara_sts_keterangan}}</td>
                     </tr>
@@ -467,7 +493,9 @@
                         TOTAL BELANJA (MEKANISME)
                     </td>
                     <td class="num" id="totMekSKPD">0,00</td>
-                    <td class="num" id="totMekBUD">0,00</td>
+                    @can('isVerifikator')
+                        <td class="num" id="totMekBUD">0,00</td>
+                    @endcan
                     <td class="num" id="totMekSelisih">0,00</td>
                     <td class="text-center" id="totMekKet"></td>
                 </tr>
@@ -476,7 +504,9 @@
                         SELISIH (POTENSI SISA UP/GU/TU)
                     </td>
                     <td class="num" id="gapSKPD">0,00</td>
-                    <td class="num" id="gapBUD">0,00</td>
+                    @can('isVerifikator')
+                        <td class="num" id="gapBUD">0,00</td>
+                    @endcan
                     <td class="num" id="gapSelisih">0,00</td>
                     <td class="text-center" id="gapKet"></td>
                 </tr>

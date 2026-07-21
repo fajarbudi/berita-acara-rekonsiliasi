@@ -25,12 +25,14 @@
                 class="bi bi-file-earmark-check"></i><span>Berita
                 Acara</span></a>
 
+        @can('isAdmin')
         <div class="side-label">Pengguna</div>
         <a href="{{ route('user.view') }}" class="side-link">
             <i class="bi bi-people"></i><span>Users</span>
         </a>
+        @endcan
 
-        @can('isVerifikator')
+        @can('isAdmin')
                     <div class="side-label">Referensi</div>
         <a href="{{ route('skpd.view') }}" class="side-link">
             <i class="bi bi-cash-coin"></i><span>SKPD</span>

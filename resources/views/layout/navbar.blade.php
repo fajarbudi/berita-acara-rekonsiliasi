@@ -25,15 +25,15 @@
 
                 <div class="dropdown">
                     <button class="user-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="avatar">{{ substr($user->name, 0, 2) }}</div>
+                        <div class="avatar">{{ substr($user->username, 0, 2) }}</div>
                         <div class="user-meta d-none d-sm-block">
-                            <b>{{ $user->name }}</b>
+                            <b>{{ $user->username }}</b>
                             <small>{{ $user->user_role }}</small>
                         </div>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm">
                         <li>
-                            <h6 class="dropdown-header">{{ $user->name }}</h6>
+                            <h6 class="dropdown-header">{{ $user->username }}</h6>
                         </li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profil Saya</a>
                         </li>
