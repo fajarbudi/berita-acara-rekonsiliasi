@@ -40,7 +40,7 @@
                             <th style="width:42px">No.</th>
                             <th data-col="0">No BUD</th>
                             <th data-col="1">Tanggal</th>
-                            <th data-col="2">Uraian</th>
+                            <th data-col="2">File</th>
                             <th style="width:120px">Aksi</th>
                         </tr>
                     </thead>
@@ -50,14 +50,18 @@
                                 <td>{{ $datas->firstItem() + $index }}</td>
                                 <td>{{ $item->berita_acara_no_skpd }}</td>
                                 <td>{{ $item->berita_acara_tanggal }}</td>
-                                <td>{{ $item->berita_acara_uraian }}</td>
+                                <td>
+                                    <button class="btn btn-success" title="Hapus" {{ $item->berita_acara_file ? '' : 'disabled'}}
+                                        onclick='bukaFile("{{ Storage::url($item->berita_acara_file) }}")'>Show File
+                                    </button>
+                                </td>
                                 <td>
                                     <a href="{{ route('berita_acara.edit', ['id' => $item->berita_acara_id]) }}"
                                         class="btn btn-sm btn-outline-info">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                     <a href="{{ route('berita_acara.detail', ['id' => $item->berita_acara_id]) }}"
-                                        class="btn btn-sm btn-outline-secondary">
+                                        class="btn btn-sm btn-outline-warning">
                                         <i class="bi bi-eye"></i>
                                     </a>
                                     @can('isVerifikator')
@@ -110,6 +114,25 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mdlFile" tabindex="-1">
+        <div class="modal-dialog" style="max-width: 70vw">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <div class="modal-title"><i class="bi bi-file-earmark-plus"></i> <span id="judulModal">File Berita Acara</span>
+                        </div>
+                        <div class="modal-sub" id="deskripsiModal">
+                        </div>
+                    </div>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div>
+                    <iframe id="print-frame" style="width: 100%; border: none; height: 80vh;" style="background-color: #1B365D"></iframe>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -191,6 +214,13 @@
             document.getElementById('hapusTarget').value = data.berita_acara_id;
             document.getElementById('hapusTeks').innerHTML = `Data <b>${data.berita_acara_no_bud}</b> akan dihapus.`;
             new bootstrap.Modal('#mdlHapus').show();
+        }
+
+        const bukaFile = (path) => {
+            const iframe = document.getElementById('print-frame');
+            iframe.src = path;
+
+            new bootstrap.Modal('#mdlFile').show();
         }
     </script>
 @endpush

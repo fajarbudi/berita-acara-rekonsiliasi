@@ -110,7 +110,7 @@ class BeritaAcara extends Controller
 
         $dataPost = [];
         foreach ($datas as $key => $value) {
-            if ($value) {
+            if ($value && $key != 'berita_acara_file') {
                 $dataPost[$key] = $value;
             }
         }
@@ -143,6 +143,19 @@ class BeritaAcara extends Controller
 
                 $data->update($dataPost);
                 $berita_acara = $data;
+            }
+
+            if ($request->hasFile('berita_acara_file')) {
+                $file = $request->file('berita_acara_file');
+                $namaAsli = $file->getClientOriginalName();
+        
+                // Simpan file
+                $folderPath = "uploads/berita-acara/{$berita_acara_id}";
+                $path = $file->storeAs($folderPath, $namaAsli, 'public');
+
+                $berita_acara->update([
+                    'berita_acara_file' => $path
+                ]);
             }
 
             $this->simpanPendapatan($berita_acara_id, $rekening);

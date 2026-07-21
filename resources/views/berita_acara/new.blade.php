@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <form class="sheet" id="formBAR" method="POST" action="{{ route('berita_acara.simpan') }}">
+    <form class="sheet" id="formBAR" method="POST" action="{{ route('berita_acara.simpan') }}" enctype="multipart/form-data">
         @csrf
         <!-- JUDUL -->
         <div class="doc-title">
@@ -93,6 +93,11 @@
                 <label class="form-label">Tempat</label>
                 <input type="text" class="form-control form-control-sm" name="data[berita_acara_tempat]"
                     value="Kantor Badan Pengelolaan Keuangan dan Aset Daerah" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">File</label>
+                <input type="file" class="form-control form-control-sm" name="berita_acara_file"
+                    value="{{ $data->berita_acara_file ?? '' }}" />
             </div>
         </div>
 

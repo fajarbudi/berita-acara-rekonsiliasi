@@ -20,6 +20,7 @@ class berita_acara extends Model
         'berita_acara_hari',
         'berita_acara_tempat',
         'berita_acara_kesimpulan',
+        'berita_acara_file',
         'skpd_id',
         'berita_acara_nama_ppk',
         'berita_acara_nip_ppk',
