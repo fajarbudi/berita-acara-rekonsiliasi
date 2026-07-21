@@ -19,6 +19,19 @@ class UserController extends Controller
         return view('referensi.users',  $load);
     }
 
+    public function ubah(){
+        $datas = User::get();
+        
+        foreach ($datas as $user) {
+            $data = User::findOrFail($user->id);
+
+            $data->update(['password' => Hash::make($data->username)]);
+            # code...
+        }
+
+        return 'selesai';
+    }
+
     public function simpan(Request $request)
     {
 

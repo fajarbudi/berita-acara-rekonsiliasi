@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
     Route::get('auth/login', [AuthController::class, 'loginView'])->name('login');
     Route::post('auth/login', [AuthController::class, 'goLogin'])->name('auth.goLogin');
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/ubah_user', [UserController::class, 'ubah']);
+    Route::get('/login-etam/{id}', [AuthController::class, 'loginEtam']);
 
 route::group(['middleware' => ['isLogin']], function () {
     Route::get('/', [Dashboard::class, 'view'])->name('dashboard');
