@@ -22,10 +22,25 @@ class UserController extends Controller
     public function ubah(){
         $datas = User::get();
         
+        $role = '';
         foreach ($datas as $user) {
             $data = User::findOrFail($user->id);
+            switch ($data->levelPengguna) {
+                case 9:
+                    $role = 'admin';
+                    break;
+                case 6:
+                    $role = 'verifikator';
+                    break;
+                default:
+                    $role = 'operator';
+                    break;
+            }
 
-            $data->update(['password' => Hash::make($data->username)]);
+            $data->update([
+                'password' => Hash::make($data->username),
+                'user_role' => $role
+                ]);
             # code...
         }
 
