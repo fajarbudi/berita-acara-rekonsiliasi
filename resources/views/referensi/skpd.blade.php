@@ -43,9 +43,9 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        @foreach ($skpds as $item)
+                        @foreach ($skpds as $index => $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $skpds->firstItem() + $index}}</td>
                                 <td>
                                     {{ $item->skpd_nama }}
                                     <br>
@@ -80,8 +80,8 @@
             </div>
 
             <!-- FOOT -->
-            <div style="min-height: 50px">
-                <div class="ms-auto">
+            <div style="min-height: 50px" class="ms-auto p-2 d-flex justify-content-end">
+                <div>
                     {!! $skpds->appends(Request::all())->links() !!}
                 </div>
             </div>

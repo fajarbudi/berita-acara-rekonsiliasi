@@ -47,9 +47,9 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        @foreach ($users as $item)
+                        @foreach ($users as $index => $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $users->firstItem() + $index }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->user_role }}</td>
@@ -74,8 +74,8 @@
             </div>
 
             <!-- FOOT -->
-            <div style="min-height: 50px">
-                <div class="ms-auto">
+            <div style="min-height: 50px" class="ms-auto p-2 d-flex justify-content-end">
+                <div>
                     {!! $users->appends(Request::all())->links() !!}
                 </div>
             </div>

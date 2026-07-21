@@ -43,9 +43,9 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        @foreach ($rekenings as $item)
+                        @foreach ($rekenings as $index => $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $rekenings->firstItem() + $index }}</td>
                                 <td>{{ $item->rekening_nama }}</td>
                                 <td>{{ $item->rekening_kode }}</td>
                                 <td>{{ $item->rekening_uraian }}</td>
@@ -68,8 +68,8 @@
             </div>
 
             <!-- FOOT -->
-            <div style="min-height: 50px">
-                <div class="ms-auto">
+            <div style="min-height: 50px" class="ms-auto p-2 d-flex justify-content-end">
+                <div>
                     {!! $rekenings->appends(Request::all())->links() !!}
                 </div>
             </div>

@@ -42,9 +42,9 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        @foreach ($belanjas as $item)
+                        @foreach ($belanjas as $index => $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $belanjas->firstItem() + $index }}</td>
                                 <td>{{ $item->belanja_nama }}</td>
                                 <td>{{ $item->belanja_uraian }}</td>
                                 <td>
@@ -66,8 +66,8 @@
             </div>
 
             <!-- FOOT -->
-            <div style="min-height: 50px">
-                <div class="ms-auto">
+            <div style="min-height: 50px" class="ms-auto p-2 d-flex justify-content-end">
+                <div>
                     {!! $belanjas->appends(Request::all())->links() !!}
                 </div>
             </div>
