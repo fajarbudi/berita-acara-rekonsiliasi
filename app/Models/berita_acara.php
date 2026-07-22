@@ -43,4 +43,9 @@ class berita_acara extends Model
         'berita_acara_pengeluaran_bku',
         'berita_acara_pengembalian',
     ];
+
+    public function skpd()
+    {
+        return $this->hasOne(ref_skpd::class, 'skpd_id', 'skpd_id');
+    }
 }

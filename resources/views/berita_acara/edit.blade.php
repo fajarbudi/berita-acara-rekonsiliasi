@@ -40,21 +40,21 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <label class="form-label">Nomor BAR (BUD)</label>
+                <label class="form-label">Nomor BAR (SKPKD)</label>
                 <input type="text" class="form-control form-control-sm" name="data[berita_acara_no_bud]"
-                    placeholder="900/____/BPKAD/2026" value="{{ $data->berita_acara_no_bud }}" />
+                    placeholder="" value="{{ $data->berita_acara_no_bud }}" />
             </div>
             <div class="col-md-3">
                 <label class="form-label">Nomor BAR (SKPD)</label>
                 <input type="text" class="form-control form-control-sm" name="data[berita_acara_no_skpd]"
-                    placeholder="900/____/SKPD/2026" value="{{ $data->berita_acara_no_skpd }}" />
+                    placeholder="" value="{{ $data->berita_acara_no_skpd }}" />
             </div>
             <div class="col-md-3">
                 <label class="form-label">Periode Rekonsiliasi</label>
                 <select class="form-select form-select-sm" id="periode" name="data[berita_acara_periode]">
                     <option value="" selected>-- Pilih Periode --</option>
                     <optgroup label="Bulanan">
-                        <option {{ $data->berita_acara_periode === 'Januari' ? 'selected' : '' }}>Januari</option>
+                        <option {{ $data->berita_acara_periode === 'Januari' ? 'selected' : '' }} value='Januari'>Januari</option>
                         <option {{ $data->berita_acara_periode === 'Februari' ? 'selected' : '' }}>Februari</option>
                         <option {{ $data->berita_acara_periode === 'Maret' ? 'selected' : '' }}>Maret</option>
                         <option {{ $data->berita_acara_periode === 'April' ? 'selected' : '' }}>April</option>
@@ -76,7 +76,7 @@
                     min="2020" max="2100" />
             </div>
 
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                 <label class="form-label">Hari</label>
                 <select class="form-select form-select-sm" name="data[berita_acara_hari]"
                     value="{{ $data->berita_acara_hari }}">
@@ -88,13 +88,13 @@
                     <option {{ $data->berita_acara_hari === 'Jumat' ? 'selected' : '' }}>Jumat</option>
                     <option {{ $data->berita_acara_hari === 'Sabtu' ? 'selected' : '' }}>Sabtu</option>
                 </select>
-            </div>
+            </div> --}}
             <div class="col-md-3">
                 <label class="form-label">Tanggal Berita Acara</label>
                 <input type="date" class="form-control form-control-sm" name="data[berita_acara_tanggal]"
                     value="{{ $data->berita_acara_tanggal }}" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-9">
                 <label class="form-label">Tempat</label>
                 <input type="text" class="form-control form-control-sm" name="data[berita_acara_tempat]"
                     value="{{ $data->berita_acara_tempat ?? 'Kantor Badan Pengelolaan Keuangan dan Aset Daerah' }}" />
@@ -137,12 +137,12 @@
                     <tr>
                         <td class="text-center no">{{ $index + 1 }}</td>
                         <td>
-                            <select class="cell-text" name="rekening[{{ $index }}][rekening_id]">
+                            <select class="cell-text" name="rekening[{{ $index }}][rekening_id]" style="width: 250px;">
                                 <option selected>--Pilih Rekening--</option>
                                 @foreach ($rekenings as $rekening)
                                     <option value="{{ $rekening->rekening_id }}"
                                         {{ $pendapatan->rekening_id == $rekening->rekening_id ? 'selected' : '' }}>
-                                        {{ $rekening->rekening_kode }}
+                                        {{ $rekening->rekening_kode }} - {{$rekening->rekening_uraian}}
                                     </option>
                                 @endforeach
                             </select>
@@ -181,10 +181,10 @@
                     <tr>
                         <td class="text-center no">1</td>
                         <td>
-                            <select class="cell-text" name="rekening[0][rekening_id]">
+                            <select class="cell-text" name="rekening[0][rekening_id]" style="width: 250px;">
                                 <option selected>--Pilih Rekening--</option>
                                 @foreach ($rekenings as $rekening)
-                                    <option value="{{ $rekening->rekening_id }}">{{ $rekening->rekening_kode }}</option>
+                                    <option value="{{ $rekening->rekening_id }}">{{ $rekening->rekening_kode }} - {{$rekening->rekening_uraian}}</option>
                                 @endforeach
                             </select>
 
@@ -193,11 +193,11 @@
                         </td>
                         <td>
                             <input class="cell-input skpd" type="text" inputmode="numeric"
-                                name="rekening[0][skpd]" />
+                                name="rekening[0][skpd]" placeholder="0,00"/>
                         </td>
                         @can('isVerifikator')
                         <td>
-                            <input class="cell-input bud" type="text" inputmode="numeric" name="rekening[0][bud]" />
+                            <input class="cell-input bud" type="text" inputmode="numeric" name="rekening[0][bud]" placeholder="0,00"/>
                         </td>
                         @endcan
                         <td>
@@ -247,7 +247,7 @@
             <thead>
                 <tr>
                     <th style="width: 38px">No.</th>
-                    <th style="width: 130px">Jenis / Mekanisme Belanja</th>
+                    <th style="width: 130px">Jenis Belanja</th>
                     <th>Uraian</th>
                     <th style="width: 140px">Catatan SKPD (Rp)</th>
                     @can('isVerifikator')                
@@ -263,12 +263,12 @@
                     <tr>
                         <td class="text-center no">1</td>
                         <td>
-                            <select class="cell-text" name="belanja[{{ $index }}][belanja_id]">
+                            <select class="cell-text" name="belanja[{{ $index }}][belanja_id]" style="width: 250px;">
                                 <option selected>Belanja Operasi</option>
                                 @foreach ($ref_belanja as $belanjaOption)
                                     <option value="{{ $belanjaOption->belanja_id }}"
                                         {{ $belanja->belanja_id == $belanjaOption->belanja_id ? 'selected' : '' }}>
-                                        {{ $belanjaOption->belanja_nama }}
+                                        {{ $belanjaOption->belanja_nama }} - {{$belanjaOption->belanja_uraian}}
                                     </option>
                                 @endforeach
                             </select>
@@ -302,10 +302,10 @@
                     <tr>
                         <td class="text-center no">1</td>
                         <td>
-                            <select class="cell-text" name="belanja[0][belanja_id]">
+                            <select class="cell-text" name="belanja[0][belanja_id]" style="width: 250px;">
                                 <option selected>--Pilih Belanja--</option>
                                 @foreach ($ref_belanja as $belanja)
-                                    <option value="{{ $belanja->belanja_id }}">{{ $belanja->belanja_nama }}</option>
+                                    <option value="{{ $belanja->belanja_id }}">{{ $belanja->belanja_nama }} - {{$belanja->belanja_uraian}}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -314,15 +314,15 @@
                             <input class="cell-text" name="belanja[0][belanja_uraian]" />
                         </td>
                         <td>
-                            <input class="cell-input skpd" type="text" inputmode="numeric" name="belanja[0][skpd]" />
+                            <input class="cell-input skpd" type="text" inputmode="numeric" name="belanja[0][skpd]" placeholder="0,00"/>
                         </td>
                         @can('isVerifikator')
                         <td>
-                            <input class="cell-input bud" type="text" inputmode="numeric" name="belanja[0][bud]" />
+                            <input class="cell-input bud" type="text" inputmode="numeric" name="belanja[0][bud]" placeholder="0,00"/>
                         </td>
                         @endcan
                         <td>
-                            <input class="cell-input num selisih" type="text" name="belanja[0][selisih]" />
+                            <input class="cell-input num selisih" type="text" name="belanja[0][selisih]" placeholder="0,00"/>
                         </td>
                         <td class="text-center ket">
                         </td>
@@ -393,7 +393,7 @@
                                 class="cell-input skpd"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="14107456768"
+                                placeholder="0,00"
                                 value="{{$data->berita_acara_sp2dLS_skpd}}"
                             />
                         </td>
@@ -404,7 +404,7 @@
                                 class="cell-input bud"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="14107456768"
+                                placeholder="0,00"
                                 value="{{$data->berita_acara_sp2dLS_bud}}"
                             />
                         </td>
@@ -431,7 +431,7 @@
                                 class="cell-input skpd"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="1372444318"
+                                placeholder="0,00"
                                 value="{{$data->berita_acara_sp2dUP_skpd}}"
                             />
                         </td>
@@ -442,7 +442,7 @@
                                 class="cell-input bud"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="1607284318"
+                                placeholder="0,00"
                                 value="{{$data->berita_acara_sp2dUP_bud}}"
                             />
                         </td>
@@ -469,7 +469,7 @@
                                 class="cell-input skpd"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="-4479062"
+                                placeholder="-0,00"
                                 value="{{$data->berita_acara_sts_skpd}}"
                                 onkeyup="ubahKeMinus(this)"
                             />
@@ -481,7 +481,7 @@
                                 class="cell-input bud"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="-4479062"
+                                placeholder="-0,00"
                                 value="{{$data->berita_acara_sts_bud}}"
                                 onkeyup="ubahKeMinus(this)"
                                
@@ -536,7 +536,7 @@
                     <td class="text-center">1</td>
                     <td>Saldo Awal Bulan Kas di Bendahara Pengeluaran</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="234840000" name="data[berita_acara_saldo_awal_bulan]" value="{{$data->berita_acara_saldo_awal_bulan}}"/>
+                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="0,00" name="data[berita_acara_saldo_awal_bulan]" value="{{$data->berita_acara_saldo_awal_bulan}}"/>
                     </td>
                     <td>Kas Awal Bulan</td>
                 </tr>
@@ -544,7 +544,7 @@
                     <td class="text-center">2</td>
                     <td>Penerimaan SP2D (UP/GU/TU) Periode Ini</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" name="data[berita_acara_penerimaan_sp2d]" value="{{$data->berita_acara_penerimaan_sp2d}}"/>
+                        <input class="cell-input saldo" type="text" inputmode="numeric" name="data[berita_acara_penerimaan_sp2d]" value="{{$data->berita_acara_penerimaan_sp2d}}" placeholder="0,00"/>
                     </td>
                     <td>Pencairan UP/GU/TU</td>
                 </tr>
@@ -552,7 +552,7 @@
                     <td class="text-center">3</td>
                     <td>Pengeluaran BKU (SPJ Belanja UP/GU/TU)</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" name="data[berita_acara_pengeluaran_bku]" value="{{$data->berita_acara_pengeluaran_bku}}"/>
+                        <input class="cell-input saldo" type="text" inputmode="numeric" name="data[berita_acara_pengeluaran_bku]" value="{{$data->berita_acara_pengeluaran_bku}}" placeholder="0,00" onkeyup="ubahKeMinus(this)"/>
                     </td>
                     <td>Realisasi UP/GU/TU</td>
                 </tr>
@@ -560,7 +560,7 @@
                     <td class="text-center">4</td>
                     <td>Pengembalian Sisa UP/GU/TU (STS/S3UP)</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" name="data[berita_acara_pengembalian]" value="{{$data->berita_acara_pengembalian}}"/>
+                        <input class="cell-input saldo" type="text" inputmode="numeric" name="data[berita_acara_pengembalian]" value="{{$data->berita_acara_pengembalian}}" placeholder="0,00"/>
                     </td>
                     <td>Penyetoran Sisa Kas</td>
                 </tr>
@@ -581,8 +581,9 @@
         <div class="row g-3">
             <div class="col-12">
                 <label class="form-label">Catatan Tambahan / Tindak Lanjut</label>
-                <textarea class="form-control form-control-sm" name="data[berita_acara_kesimpulan]" rows="5"
-                    placeholder="Contoh: Terdapat selisih UP/GU/TU sebesar Rp234.840.000,00 yang merupakan sisa uang persediaan di bendahara pengeluaran dan akan disetorkan paling lambat ..."></textarea>
+                <textarea class="form-control form-control-sm" name="data[berita_acara_kesimpulan]" rows="5">Data Penerimaan dan Pengeluaran antara BUD dan SKPD untuk periode ini dinyatakan TELAH SESUAI / COCOK. 
+Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan Keuangan Pemerintah Daerah (LKPD).
+                </textarea>
             </div>
         </div>
 
@@ -751,6 +752,7 @@
 
             // Header dinamis
             const p = document.getElementById("periode").value;
+            console.log(p)
             const t = document.getElementById("tahun").value;
             document.getElementById("lblPeriode").textContent =
                 p || "[BULAN/TRIWULAN]";

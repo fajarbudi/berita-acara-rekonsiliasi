@@ -39,13 +39,11 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label">Nomor BAR (BUD)</label>
-                <input type="text" class="form-control form-control-sm" name="data[berita_acara_no_bud]"
-                    placeholder="900/____/BPKAD/2026" />
+                <input type="text" class="form-control form-control-sm" name="data[berita_acara_no_bud]"/>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Nomor BAR (SKPD)</label>
-                <input type="text" class="form-control form-control-sm" name="data[berita_acara_no_skpd]"
-                    placeholder="900/____/SKPD/2026" />
+                <input type="text" class="form-control form-control-sm" name="data[berita_acara_no_skpd]"/>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Periode Rekonsiliasi</label>
@@ -73,7 +71,7 @@
                     name="data[berita_acara_tahun_anggaran]" value="2026" min="2020" max="2100" />
             </div>
 
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                 <label class="form-label">Hari</label>
                 <select class="form-select form-select-sm" name="data[berita_acara_hari]">
                     <option value="">-- Pilih Hari --</option>
@@ -84,12 +82,12 @@
                     <option>Jumat</option>
                     <option>Sabtu</option>
                 </select>
-            </div>
+            </div> --}}
             <div class="col-md-3">
                 <label class="form-label">Tanggal Berita Acara</label>
                 <input type="date" class="form-control form-control-sm" name="data[berita_acara_tanggal]" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-9">
                 <label class="form-label">Tempat</label>
                 <input type="text" class="form-control form-control-sm" name="data[berita_acara_tempat]"
                     value="Kantor Badan Pengelolaan Keuangan dan Aset Daerah" />
@@ -139,13 +137,13 @@
                         <input class="cell-text" name="rekening[0][rekening_uraian]" />
                     </td>
                     <td>
-                        <input class="cell-input skpd" type="text" inputmode="numeric" name="rekening[0][skpd]" />
+                        <input class="cell-input skpd" type="text" inputmode="numeric" name="rekening[0][skpd]" placeholder="0,00"/>
                     </td>
                     <td>
-                        <input class="cell-input bud" type="text" inputmode="numeric" name="rekening[0][bud]" />
+                        <input class="cell-input bud" type="text" inputmode="numeric" name="rekening[0][bud]" placeholder="0,00"/>
                     </td>
                     <td>
-                        <input class="cell-input num selisih" type="text" name="rekening[0][selisih]" />
+                        <input class="cell-input num selisih" type="text" name="rekening[0][selisih]" placeholder="0,00"/>
                     </td>
                     <td class="text-center ket">
                     </td>
@@ -188,7 +186,7 @@
             <thead>
                 <tr>
                     <th style="width: 38px">No.</th>
-                    <th style="width: 130px">Jenis / Mekanisme Belanja</th>
+                    <th style="width: 130px">Jenis Belanja</th>
                     <th>Uraian</th>
                     <th style="width: 140px">Catatan SKPD (Rp)</th>
                     <th style="width: 140px">Catatan BUD (Rp)</th>
@@ -213,10 +211,10 @@
                             <input class="cell-text" name="belanja[0][belanja_uraian]" />
                         </td>
                         <td>
-                            <input class="cell-input skpd" type="text" inputmode="numeric" name="belanja[0][skpd]" />
+                            <input class="cell-input skpd" type="text" inputmode="numeric" name="belanja[0][skpd]" placeholder="0,00"/>
                         </td>
                         <td>
-                            <input class="cell-input bud" type="text" inputmode="numeric" name="belanja[0][bud]" />
+                            <input class="cell-input bud" type="text" inputmode="numeric" name="belanja[0][bud]" placeholder="0,00"/>
                         </td>
                         <td>
                             <input class="cell-input num selisih" type="text" name="belanja[0][selisih]" />
@@ -284,7 +282,7 @@
                                 class="cell-input skpd"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="14107456768"
+                                placeholder="0,00"
                                
                             />
                         </td>
@@ -294,7 +292,7 @@
                                 class="cell-input bud"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="14107456768"
+                                placeholder="0,00"
                                 
                             />
                         </td>
@@ -320,7 +318,7 @@
                                 class="cell-input skpd"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="1372444318"
+                                placeholder="0,00"
                                
                             />
                         </td>
@@ -330,7 +328,7 @@
                                 class="cell-input bud"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="1607284318"
+                                placeholder="0,00"
                                
                             />
                         </td>
@@ -356,7 +354,7 @@
                                 class="cell-input skpd"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="-4479062"
+                                placeholder="-0,00"
                                 onkeyup="ubahKeMinus(this)"
                             />
                         </td>
@@ -366,7 +364,7 @@
                                 class="cell-input bud"
                                 type="text"
                                 inputmode="numeric"
-                                placeholder="-4479062"
+                                placeholder="-0,00"
                                 onkeyup="ubahKeMinus(this)"
                             />
                         </td>
@@ -414,7 +412,7 @@
                     <td class="text-center">1</td>
                     <td>Saldo Awal Bulan Kas di Bendahara Pengeluaran</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="234840000" name="data[berita_acara_saldo_awal_bulan]"/>
+                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="0,00" name="data[berita_acara_saldo_awal_bulan]"/>
                     </td>
                     <td>Kas Awal Bulan</td>
                 </tr>
@@ -422,7 +420,7 @@
                     <td class="text-center">2</td>
                     <td>Penerimaan SP2D (UP/GU/TU) Periode Ini</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="224026427" name="data[berita_acara_penerimaan_sp2d]"/>
+                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="0,00" name="data[berita_acara_penerimaan_sp2d]"/>
                     </td>
                     <td>Pencairan UP/GU/TU</td>
                 </tr>
@@ -430,7 +428,7 @@
                     <td class="text-center">3</td>
                     <td>Pengeluaran BKU (SPJ Belanja UP/GU/TU)</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="-224026427" name="data[berita_acara_pengeluaran_bku]"/>
+                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="-0,00" name="data[berita_acara_pengeluaran_bku]" onkeyup="ubahKeMinus(this)"/>
                     </td>
                     <td>Realisasi UP/GU/TU</td>
                 </tr>
@@ -438,7 +436,7 @@
                     <td class="text-center">4</td>
                     <td>Pengembalian Sisa UP/GU/TU (STS/S3UP)</td>
                     <td>
-                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="0" name="data[berita_acara_pengembalian]"/>
+                        <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="0,00" name="data[berita_acara_pengembalian]"/>
                     </td>
                     <td>Penyetoran Sisa Kas</td>
                 </tr>

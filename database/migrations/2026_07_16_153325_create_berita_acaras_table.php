@@ -15,12 +15,11 @@ class CreateBeritaAcarasTable extends Migration
     {
         Schema::create('berita_acaras', function (Blueprint $table) {
             $table->id('berita_acara_id');
-            $table->string('berita_acara_no_bud', 100);
-            $table->string('berita_acara_no_skpd', 100);
+            $table->string('berita_acara_no_bud', 100)->nullable();
+            $table->string('berita_acara_no_skpd', 100)->nullable();
             $table->string('berita_acara_tanggal', 100);
             $table->string('berita_acara_tahun_anggaran', 100);
             $table->string('berita_acara_periode', 100);
-            $table->string('berita_acara_hari', 100);
             $table->string('berita_acara_tempat', 100);
             $table->string('berita_acara_file')->nullable();
             $table->longText('berita_acara_kesimpulan')->nullable();

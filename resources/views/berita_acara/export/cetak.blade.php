@@ -64,7 +64,7 @@
     </tr>
     <tr>
         <td></td>
-        <td style="vertical-align:top;" colspan="6">Dalam hal ini bertindak untuk dan atas nama {{ $data->berita_acara_skpd_nama ?? ($data->berita_acara_skpd ?? '[Nama SKPD]') }}, selanjutnya disebut PIHAK KEDUA.</td>
+        <td style="vertical-align:top;" colspan="6">Dalam hal ini bertindak untuk dan atas nama {{ $data->berita_acara_skpd_nama ?? ($data->skpd->skpd_nama ?? '[Nama SKPD]') }}, selanjutnya disebut PIHAK KEDUA.</td>
     </tr>
     <tr><td colspan="7" height="6"></td></tr>
     <tr>

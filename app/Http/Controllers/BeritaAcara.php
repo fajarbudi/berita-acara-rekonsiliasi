@@ -32,7 +32,7 @@ class BeritaAcara extends Controller
             $query->where('skpd_id', $userLogin->skpd_id);
         }
 
-        $load['datas'] = $query->paginate(12);
+        $load['datas'] = $query->with('skpd')->paginate(12);
 
         return view('berita_acara.berita_acara',  $load);
     }
@@ -54,7 +54,7 @@ class BeritaAcara extends Controller
     }
 
     public function kontenDetail($id){
-        $data = berita_acara::findOrFail($id);
+        $data = berita_acara::with('skpd')->findOrFail($id);
 
         $load['halaman_judul'] = "Detail Berita Acara";
         $load['halaman_deskripsi'] = "Detail berita acara";

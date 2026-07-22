@@ -38,7 +38,9 @@
                     <thead>
                         <tr>
                             <th style="width:42px">No.</th>
-                            <th data-col="0">No BUD</th>
+                            <th data-col="0">No SKPKD</th>
+                            <th data-col="0">No SKPD</th>
+                            <th data-col="0">SKPD</th>
                             <th data-col="1">Tanggal</th>
                             <th data-col="2">File</th>
                             <th style="width:120px">Aksi</th>
@@ -49,6 +51,8 @@
                             <tr>
                                 <td>{{ $datas->firstItem() + $index }}</td>
                                 <td>{{ $item->berita_acara_no_skpd }}</td>
+                                <td>{{ $item->berita_acara_no_bud }}</td>
+                                <td>{{ $item->skpd->skpd_nama}}</td>
                                 <td>{{ $item->berita_acara_tanggal }}</td>
                                 <td>
                                     <button class="btn btn-success" title="Hapus" {{ $item->berita_acara_file ? '' : 'disabled'}}
