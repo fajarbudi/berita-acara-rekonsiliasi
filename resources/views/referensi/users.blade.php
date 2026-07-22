@@ -55,10 +55,10 @@
                                 <td>{{ $item->user_role }}</td>
                                 @can('isAdmin')
                                 <td>
-                                    <button class="btn btn-sm btn-outline-info" onclick="bukaEdit({{ $item }})">
+                                    <button class="btn btn-sm btn-info" onclick="bukaEdit({{ $item }})">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <button class="btn-ico danger" title="Hapus"
+                                    <button class="btn btn-sm btn-danger" title="Hapus"
                                         onclick='bukaHapus({{ $item }})'><i class="bi bi-trash"></i></button>
                                 </td>
                                 @endcan

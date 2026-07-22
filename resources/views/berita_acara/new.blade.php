@@ -33,7 +33,7 @@
                 <select class="form-select form-select-sm" id="skpd" name="data[skpd_id]">
                     <option value="" selected>-- Pilih SKPD --</option>
                     @foreach ($ref_skpd as $skpd)
-                        <option value="{{ $skpd->skpd_id }}"
+                        <option value="{{ $skpd->skpd_id }}" onclick="selectedSKPD()"
                             {{ old('data.skpd_id') == $skpd->skpd_id ? 'selected' : '' }}>
                             {{ $skpd->skpd_nama }}
                         </option>
@@ -431,10 +431,10 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                 <div class="fw-bold">PIHAK KEDUA</div>
                 <div>Pejabat Penatausahaan Keuangan (PPK-SKPD)</div>
                 <div class="sign-space"></div>
-                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="ttd_nama_p2"
-                    placeholder="[NAMA PEJABAT/PPK SKPD]" value="{{ old('ttd_nama_p2') }}" />
-                <input type="text" class="form-control form-control-sm text-center" name="ttd_nip_p2"
-                    placeholder="NIP. ..." value="{{ old('ttd_nip_p2') }}" />
+                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_ppk]" id="berita_acara_nama_ppk"
+                    placeholder="[NAMA PEJABAT/PPK SKPD]" value="{{ old('berita_acara_nama_ppk') }}" />
+                <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_ppk]" id="berita_acara_nip_ppk"
+                    placeholder="NIP. ..." value="{{ old('berita_acara_nip_ppk') }}" />
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">PIHAK KESATU</div>
@@ -452,10 +452,10 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                 <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
                 <div>Pengguna Anggaran</div>
                 <div class="sign-space"></div>
-                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="ttd_nama_pa"
-                    placeholder="[NAMA KEPALA SKPD]" value="{{ old('ttd_nama_pa') }}" />
-                <input type="text" class="form-control form-control-sm text-center" name="ttd_nip_pa"
-                    placeholder="NIP. ..." value="{{ old('ttd_nip_pa') }}" />
+                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_pa]" id="berita_acara_nama_pa"
+                    placeholder="[NAMA KEPALA SKPD]" value="{{ old('berita_acara_nama_pa') }}" />
+                <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_pa]" id="berita_acara_nip_pa"
+                    placeholder="NIP. ..." value="{{ old('berita_acara_nip_pa') }}" />
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
@@ -806,6 +806,21 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
 
             const form = document.getElementById("formBAR");
             if (form) form.addEventListener("submit", bersihkanSebelumSubmit);
+        });
+
+        const listSkpd = @json($ref_skpd);
+        document.getElementById('skpd').addEventListener('change', function() {
+            const selectedId = this.value;
+        
+            // Cari data spesifik berdasarkan id yang dipilih dari semua data
+            const selectedData = listSkpd.find(item => item.skpd_id == selectedId);
+        
+            if (selectedData) {
+                document.getElementById('berita_acara_nama_ppk').value = selectedData.skpd_nama_ppk ?? ''
+                document.getElementById('berita_acara_nip_ppk').value = selectedData.skpd_nip_ppk ?? ''
+                document.getElementById('berita_acara_nama_pa').value = selectedData.skpd_nama_pa ?? ''
+                document.getElementById('berita_acara_nip_pa').value = selectedData.skpd_nip_pa ?? ''
+            }
         });
     </script>
 @endpush

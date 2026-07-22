@@ -61,11 +61,17 @@
                                     {{ $item->berita_acara_tanggal }}
                                 </td>
                                 <td>
-                                    <button class="btn btn-success" title="Hapus" {{ $item->berita_acara_file ? '' : 'disabled'}}
+                                    <button class="btn btn-sm btn-success mb-2" title="Hapus" {{ $item->berita_acara_file ? '' : 'disabled'}}
                                         onclick='bukaFile("{{ Storage::url($item->berita_acara_file) }}")'>Show File
                                     </button>
+                                    <form action="{{ route('berita_acara.upFile', ['id'=> $item->berita_acara_id]) }}" enctype="multipart/form-data" id="formFile{{$item->berita_acara_id}}" method="POST">
+                                        @csrf
+                                        <input type="file" class="d-none" id="upFile{{$item->berita_acara_id}}" onchange="document.getElementById('formFile{{$item->berita_acara_id}}').submit()" name="berita_acara_file">
+                                    </form>
+                                    <button class="btn btn-sm text-white" style="background:var(--bar-navy)" onclick="document.getElementById('upFile{{$item->berita_acara_id}}').click()">Upload Berkas</button>
                                 </td>
-                                <td class="d-flex gap-2">
+                                <td>
+                                    <div class="row gap-2 me-2">
                                     <a href="{{ route('berita_acara.edit', ['id' => $item->berita_acara_id]) }}"
                                         class="btn btn-sm btn-info">
                                         <i class="bi bi-pencil"></i>
@@ -85,6 +91,7 @@
                                         onclick='bukaHapus({{ $item }})'><i class="bi bi-trash"></i>
                                     </button>
                                     @endcan
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

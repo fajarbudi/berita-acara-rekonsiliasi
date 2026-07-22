@@ -62,4 +62,5 @@ route::group(['middleware' => ['isLogin']], function () {
     Route::get('/cetak-berita-acara/{id}', function ($id) {
         return view('berita_acara.cetak', compact('id'));
     })->name('berita_acara.cetak');
+    Route::post('/berita-acara/upFile/{id}',[BeritaAcara::class, 'upFile'])->name('berita_acara.upFile');
 });

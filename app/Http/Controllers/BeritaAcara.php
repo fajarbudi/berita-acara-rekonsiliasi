@@ -114,10 +114,11 @@ class BeritaAcara extends Controller
                 $dataPost[$key] = $value;
             }
         }
-        $dataPost['berita_acara_nama_ppk'] = $skpd->skpd_nama_ppk;
-        $dataPost['berita_acara_nip_ppk'] = $skpd->skpd_nip_ppk;
-        $dataPost['berita_acara_nama_pa'] = $skpd->skpd_nama_pa;
-        $dataPost['berita_acara_nip_pa'] = $skpd->skpd_nip_pa;
+        // dd($datas);
+        // $dataPost['berita_acara_nama_ppk'] = $skpd->skpd_nama_ppk;
+        // $dataPost['berita_acara_nip_ppk'] = $skpd->skpd_nip_ppk;
+        // $dataPost['berita_acara_nama_pa'] = $skpd->skpd_nama_pa;
+        // $dataPost['berita_acara_nip_pa'] = $skpd->skpd_nip_pa;
         //hitung selisih
         $dataPost['berita_acara_sts_selisih'] = ($dataPost['berita_acara_sts_bud'] ?? 0)  - ($dataPost['berita_acara_sts_skpd'] ?? 0);
         $dataPost['berita_acara_sts_ket'] = $dataPost['berita_acara_sts_selisih'] == 0 ? 'Cocok' : 'Tidak Cocok';
@@ -128,6 +129,22 @@ class BeritaAcara extends Controller
 
         //simpan aksi database sementara
         DB::beginTransaction();
+
+        //update skpd
+        $skpdPost = [];
+        if(isset($dataPost['berita_acara_nama_ppk']) && $dataPost['berita_acara_nama_ppk']){
+            $skpdPost['skpd_nama_ppk'] = $dataPost['berita_acara_nama_ppk'];
+        }
+        if(isset($dataPost['berita_acara_nip_ppk']) && $dataPost['berita_acara_nip_ppk']){
+            $skpdPost['skpd_nip_ppk'] = $dataPost['berita_acara_nip_ppk'];
+        }
+        if(isset($dataPost['berita_acara_nama_pa']) && $dataPost['berita_acara_nama_pa']){
+            $skpdPost['skpd_nama_pa'] = $dataPost['berita_acara_nama_pa'];
+        }
+        if(isset($dataPost['berita_acara_nip_pa']) && $dataPost['berita_acara_nip_pa']){
+            $skpdPost['skpd_nip_pa'] = $dataPost['berita_acara_nip_pa'];
+        }
+        $skpd->update($skpdPost);
 
         try {
             if (!$berita_acara_id) {
@@ -337,7 +354,29 @@ class BeritaAcara extends Controller
         return Excel::download($export, $export->namaBerkas());
     }
 
+    public function upFile(Request $request, $id){
+        
+        try {
+            $data = berita_acara::find($id);
+            $file = $request->file('berita_acara_file');
+            $namaAsli = $file->getClientOriginalName();
+            DB::beginTransaction();
+                // Simpan file
+            $folderPath = "uploads/berita-acara/{$data->berita_acara_id}";
+            $path = $file->storeAs($folderPath, $namaAsli, 'public');
 
+            $data->update([
+                'berita_acara_file' => $path
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Gagal menghapus: ' . $e->getMessage());
+        }
+
+        return back()->with('success', 'Berkas berhasil disimpan');
+    }
     
     private function angka($nilai): float
     {

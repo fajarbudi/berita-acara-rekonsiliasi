@@ -540,6 +540,7 @@
         </table>
 
         <!-- IV. CATATAN -->
+        @can('isVerifikator')       
         <div class="section-head">IV. CATATAN DAN KESIMPULAN</div>
         <div class="row g-3">
             <div class="col-12">
@@ -548,18 +549,20 @@
 Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan Keuangan Pemerintah Daerah (LKPD).' }}</textarea>
             </div>
         </div>
+        @endcan
 
         <!-- TANDA TANGAN -->
+        @can('isVerifikator')    
         <div class="section-head">V. PENANDATANGANAN</div>
         <div class="row mt-3">
             <div class="col-6 sign-box">
                 <div class="fw-bold">PIHAK KEDUA</div>
                 <div>Pejabat Penatausahaan Keuangan (PPK-SKPD)</div>
                 <div class="sign-space"></div>
-                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="ttd_nama_p2"
-                    placeholder="[NAMA PEJABAT/PPK SKPD]" value="{{ $data->berita_acara_nama_ppk }}" readonly />
-                <input type="text" class="form-control form-control-sm text-center" name="ttd_nip_p2"
-                    placeholder="NIP. ..." value="NIP. {{ $data->berita_acara_nip_ppk }}" readonly />
+                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_ppk]" id="berita_acara_nama_ppk"
+                    placeholder="[NAMA PEJABAT/PPK SKPD]" value="{{ $data->berita_acara_nama_ppk }}"/>
+                <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_ppk]" id="berita_acara_nip_ppk"
+                    placeholder="NIP. ..." value="NIP. {{ $data->berita_acara_nip_ppk }}"/>
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">PIHAK KESATU</div>
@@ -577,10 +580,10 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                 <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
                 <div>Pengguna Anggaran</div>
                 <div class="sign-space"></div>
-                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="ttd_nama_pa"
-                    placeholder="[NAMA KEPALA SKPD]" value="{{ $data->berita_acara_nama_pa }}" readonly />
-                <input type="text" class="form-control form-control-sm text-center" name="ttd_nip_pa"
-                    placeholder="NIP. ..." value="NIP. {{ $data->berita_acara_nip_pa }}" readonly />
+                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_pa]" id="berita_acara_nama_pa"
+                    placeholder="[NAMA KEPALA SKPD]" value="{{ $data->berita_acara_nama_pa }}" />
+                <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_pa]" id="berita_acara_nip_pa"
+                    placeholder="NIP. ..." value="NIP. {{ $data->berita_acara_nip_pa }}" />
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
@@ -592,6 +595,7 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                     value="NIP. 197612262007011010" readonly />
             </div>
         </div>
+        @endcan
 
         <div class="d-flex gap-2 mt-4 no-print justify-content-end mt-5">
             <button type="submit" class="btn btn-primary btn-sm">
@@ -932,6 +936,21 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
 
             const form = document.getElementById("formBAR");
             if (form) form.addEventListener("submit", bersihkanSebelumSubmit);
+        });
+
+        const listSkpd = @json($ref_skpd);
+        document.getElementById('skpd').addEventListener('change', function() {
+            const selectedId = this.value;
+        
+            // Cari data spesifik berdasarkan id yang dipilih dari semua data
+            const selectedData = listSkpd.find(item => item.skpd_id == selectedId);
+        
+            if (selectedData) {
+                document.getElementById('berita_acara_nama_ppk').value = selectedData.skpd_nama_ppk ?? ''
+                document.getElementById('berita_acara_nip_ppk').value = selectedData.skpd_nip_ppk ?? ''
+                document.getElementById('berita_acara_nama_pa').value = selectedData.skpd_nama_pa ?? ''
+                document.getElementById('berita_acara_nip_pa').value = selectedData.skpd_nip_pa ?? ''
+            }
         });
     </script>
 @endpush
