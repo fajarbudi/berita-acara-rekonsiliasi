@@ -7,7 +7,7 @@
             <p>{{ $halaman_deskripsi }}</p>
         </div>
         <div class="ms-auto d-flex gap-2">
-            <a href="{{ route('berita_acara.view') }}" class="btn btn-sm btn-outline-secondary">
+            <a href="{{ route('berita_acara.view') }}" class="btn btn-sm btn-primary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
         </div>

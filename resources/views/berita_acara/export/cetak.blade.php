@@ -27,10 +27,10 @@
 
 <table>
     <tr><td style="font-size:14pt; font-weight:bold;" colspan="7" align="center">BERITA ACARA REKONSILIASI PENERIMAAN DAN PENGELUARAN</td></tr>
-    <tr><td style="font-size:11pt; font-weight:bold;" colspan="7" align="center">ANTARA SKPKD DAN SKPD</td></tr>
+    <tr><td style="font-size:11pt; font-weight:bold;" colspan="7" align="center">ANTARA SKPKD DAN SKPD {{strtoupper($data->skpd->skpd_nama)}}</td></tr>
     <tr><td style="font-size:11pt; font-weight:bold;" colspan="7" align="center">PERIODE {{ strtoupper($data->berita_acara_periode) }} TAHUN ANGGARAN {{ $data->berita_acara_tahun_anggaran }}</td></tr>
     <tr><td colspan="7" height="8"></td></tr>
-    <tr><td style="font-style:italic;" colspan="7" align="center">Nomor BAR (BUD) : {{ $data->berita_acara_no_bud }}</td></tr>
+    <tr><td style="font-style:italic;" colspan="7" align="center">Nomor BAR (SKPKD) : {{ $data->berita_acara_no_bud }}</td></tr>
     <tr><td style="font-style:italic;" colspan="7" align="center">Nomor BAR (SKPD) : {{ $data->berita_acara_no_skpd }}</td></tr>
     <tr><td colspan="7" height="8"></td></tr>
     <tr>

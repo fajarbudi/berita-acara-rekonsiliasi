@@ -42,7 +42,7 @@
                             <th data-col="0">SKPD</th>
                             <th data-col="1">Periode/Tanggal</th>
                             <th data-col="2">File</th>
-                            <th style="width:120px">Aksi</th>
+                            <th style="width:120px" class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="tbody">
@@ -65,17 +65,23 @@
                                         onclick='bukaFile("{{ Storage::url($item->berita_acara_file) }}")'>Show File
                                     </button>
                                 </td>
-                                <td>
+                                <td class="d-flex gap-2">
                                     <a href="{{ route('berita_acara.edit', ['id' => $item->berita_acara_id]) }}"
-                                        class="btn btn-sm btn-outline-info">
+                                        class="btn btn-sm btn-info">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                     <a href="{{ route('berita_acara.detail', ['id' => $item->berita_acara_id]) }}"
-                                        class="btn btn-sm btn-outline-warning">
+                                        class="btn btn-sm btn-warning">
                                         <i class="bi bi-eye"></i>
                                     </a>
+                                     <a href="{{ route('berita_acara.excel', $item->berita_acara_id) }}" class="btn btn-sm btn-success">
+                                        <i class="bi bi-file-earmark-excel"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-secondary" onclick="cetakData({{$item->berita_acara_id}})">
+                                        <i class="bi bi-printer"></i>
+                                    </button>
                                     @can('isVerifikator')
-                                    <button class="btn-ico danger" title="Hapus"
+                                    <button class="btn btn-sm btn-danger" title="Hapus"
                                         onclick='bukaHapus({{ $item }})'><i class="bi bi-trash"></i>
                                     </button>
                                     @endcan
@@ -231,6 +237,18 @@
             iframe.src = path;
 
             new bootstrap.Modal('#mdlFile').show();
+        }
+
+        function cetakData(id = 1) {
+            const iframe = document.getElementById('print-frame');
+    
+            // Pastikan src mengarah ke route cetak Anda
+            iframe.src = `/berita-acara/detailKonten/${id}`;
+    
+            // Tunggu sampai iframe selesai dimuat, lalu cetak
+            iframe.onload = function() {
+                iframe.contentWindow.print();
+            };
         }
     </script>
 @endpush

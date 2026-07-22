@@ -8,13 +8,16 @@
                         {{ $data->berita_acara_tahun_anggaran }}</p>
                 </div>
                 <div class="ms-auto d-flex gap-2 no-print">
-                    <a href="{{ route('berita_acara.view') }}" class="btn btn-sm btn-outline-secondary">
+                    <a href="{{ route('berita_acara.view') }}" class="btn btn-sm btn-primary">
                         <i class="bi bi-arrow-left"></i> Kembali
                     </a>
-                    <button class="btn btn-sm btn-outline-secondary" onclick="cetakData()">
+                    <a href="{{ route('berita_acara.edit', ['id' => $berita_acara_id]) }}" class="btn btn-sm btn-info">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
+                    <button class="btn btn-sm btn-secondary" onclick="cetakData()">
                         <i class="bi bi-printer"></i> Cetak / PDF
                     </button>
-                    <a href="{{ route('berita_acara.excel', $berita_acara_id) }}" class="btn btn-sm btn-outline-success">
+                    <a href="{{ route('berita_acara.excel', $berita_acara_id) }}" class="btn btn-sm btn-success">
                         <i class="bi bi-file-earmark-excel"></i> Ekspor Excel
                     </a>
                     {{-- <button class="btn btn-sm text-white" style="background:var(--bar-navy)">
