@@ -9,12 +9,34 @@ use Illuminate\Support\Facades\Gate;
 
 class SKPDController extends Controller
 {
-    public function View()
+    public function View(Request $request)
     {
         Gate::authorize('isVerifikator');
         $load['halaman_judul'] = "Referensi SKPD";
         $load['halaman_deskripsi'] = "Data skpd yang dapat digunakan dalam aplikasi ini";
-        $load['skpds'] = ref_skpd::orderBy('created_at', 'desc')->paginate(25);
+        $urutanData = $request->urutan_data ?? 'desc';
+        $filter = [];
+
+        $query = ref_skpd::orderBy('created_at', $urutanData);
+        foreach($request->all() as $key => $val){
+            if($val){
+                $filter[$key] = $val;
+            }
+        }
+
+        if($filter){
+            foreach($filter as $key => $val){
+                if($key != 'urutan_data' && $key != 'user_role'){
+                    $query->where($key, 'like', '%' . $val . '%');
+                }
+
+                // if($key == 'skpd_id' || $key == 'user_role'){
+                //     $query->where($key, $val);
+                // }
+            }
+        }
+        $load['skpds'] = $query->paginate(25);
+        $load['filterData'] = $filter;
 
         return view('referensi.skpd',  $load);
     }

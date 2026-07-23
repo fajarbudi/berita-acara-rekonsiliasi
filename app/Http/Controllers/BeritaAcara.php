@@ -22,18 +22,41 @@ use Elibyy\TCPDF\Facades\TCPDF;
 
 class BeritaAcara extends Controller
 {
-    public function view()
+    public function view(Request $request)
     {
         $userLogin = Auth::user();
         $load['halaman_judul'] = "Berita Acara";
         $load['halaman_deskripsi'] = "Data berita acara yang dapat digunakan dalam aplikasi ini";
-        $query = berita_acara::orderBy('created_at', 'desc');
+        $urutanData = $request->urutan_data ?? 'desc';
+        $filter = [];
+
+        foreach($request->all() as $key => $val){
+            if($val){
+                $filter[$key] = $val;
+            }
+        }
+
+        $query = berita_acara::orderBy('created_at', $urutanData);
+
+        if($filter){
+            foreach($filter as $key => $val){
+                if($key != 'urutan_data'){
+                    $query->where($key, 'like', '%' . $val . '%');
+                }
+
+                if($key == 'skpd_id'){
+                    $query->where($key, $val);
+                }
+            }
+        }
 
         if($userLogin->user_role == 'operator'){
             $query->where('skpd_id', $userLogin->skpd_id);
         }
 
         $load['datas'] = $query->with('skpd')->paginate(12);
+        $load['ref_skpd'] = ref_skpd::get();
+        $load['filterData'] = $filter;
 
         return view('berita_acara.berita_acara',  $load);
     }
@@ -414,7 +437,7 @@ class BeritaAcara extends Controller
         $load['data_mekanisme'] = berita_acara_mekanisme::where('berita_acara_id', $id)->get();
         $load['terbilang'] = $this->terbilangTanggal($data->berita_acara_tanggal);
 
-        $html = view('berita_acara.export.cetak',  $load)->render();
+        $html = view('berita_acara.export.cetak_pdf',  $load)->render();
 
         $nomor = str_replace('/', '-', $data->berita_acara_no_bud ?: 'DRAFT');
 
@@ -424,12 +447,24 @@ class BeritaAcara extends Controller
             . '.pdf';
 
         // konfigurasi tcpdf
-        TCPDF::SetTitle($namaFile);
-        TCPDF::SetCreator(PDF_CREATOR);
-        TCPDF::SetAuthor('BPKAD Kutai Timur - Powered By Anauri');
+        // TCPDF::SetTitle($namaFile);
+        // TCPDF::SetCreator(PDF_CREATOR);
+        // TCPDF::SetAuthor('BPKAD Kutai Timur - Powered By Anauri');
 
-        TCPDF::setPrintHeader(false);
-        TCPDF::setPrintFooter(false);
+        // TCPDF::setPrintHeader(false);
+        // TCPDF::setPrintFooter(false);
+
+        // TCPDF::AddPage();
+        // TCPDF::writeHTML($html, true, false, true, false, '');
+
+        TCPDF::setHeaderCallback(function ($pdf) {});   // pengganti setPrintHeader(false)
+        TCPDF::setFooterCallback(function ($pdf) {});   // pengganti setPrintFooter(false)
+
+        TCPDF::SetMargins(15, 12, 12, true);
+        TCPDF::SetAutoPageBreak(true, 15);
+        TCPDF::setCellHeightRatio(1.25);
+        TCPDF::SetCellPadding(0);
+        TCPDF::SetFont('helvetica', '', 8);
 
         TCPDF::AddPage();
         TCPDF::writeHTML($html, true, false, true, false, '');

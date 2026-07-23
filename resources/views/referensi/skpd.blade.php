@@ -22,9 +22,12 @@
         <div class="card-bar">
             <div class="card-top">
                 <div class="ms-auto d-flex gap-2">
-                    {{-- <button class="btn btn-sm btn-outline-secondary" onclick="resetFilter()">
+                    <a href="{{ route('skpd.view') }}" class="btn btn-sm btn-warning">
                         <i class="bi bi-arrow-counterclockwise"></i> Reset
-                    </button> --}}
+                    </a>
+                    <button class="btn btn-sm btn-primary" onclick="bukaFilter()">
+                        <i class="bi bi-search"></i> Search
+                    </button>
                     <button class="btn btn-sm text-white" style="background:var(--bar-navy)" onclick="bukaNew()">
                         <i class="bi bi-plus-lg"></i> Tambah Data
                     </button>
@@ -174,6 +177,51 @@
                                 <i class="bi bi-arrow-right"></i> Simpan Data
                             </button>
                         </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ MODAL: Filter ============ -->
+    <div class="modal fade" id="mdlFilter" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <div class="modal-title"><i class="bi bi-search"></i> <span>Filter Data</span>
+                        </div>
+                        <div class="modal-sub">
+                        </div>
+                    </div>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formFilter" novalidate method="GET" action="{{ route('skpd.view') }}">
+                    <div class="modal-body">
+                        <div class="sec-title">Identitas Dokumen</div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label req">Nama</label>
+                                <input type="text" class="form-control form-control-sm"
+                                    placeholder="Masukkan nama SKPD" required name="skpd_nama"
+                                    id="f_skpd_nama">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Urutan Data</label>
+                                <select class="form-select form-select-sm" id="f_urutan_data" name="urutan_data">
+                                    <option value="desc">Terbaru</option>
+                                    <option value="asc">Terlama</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer mt-4">
+                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-sm text-white" style="background:var(--bar-navy)">
+                                <i class="bi bi-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -208,6 +256,17 @@
             document.getElementById('hapusTarget').value = data.skpd_id;
             document.getElementById('hapusTeks').innerHTML = `Data <b>${data.skpd_nama}</b> akan dihapus.`;
             new bootstrap.Modal('#mdlHapus').show();
+        }
+
+        const dataFilter = @json($filterData);
+        //set filter value
+        Object.entries(dataFilter).forEach(([i, val]) => {
+            if (val !== null && document.getElementById(`f_${i}`)) {
+                document.getElementById(`f_${i}`).value = val;
+            }
+        });
+        const bukaFilter = () =>{
+            new bootstrap.Modal('#mdlFilter').show();
         }
     </script>
 @endpush

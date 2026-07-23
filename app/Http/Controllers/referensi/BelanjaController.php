@@ -9,12 +9,34 @@ use Illuminate\Support\Facades\Gate;
 
 class BelanjaController extends Controller
 {
-    public function View()
+    public function View(Request $request)
     {
         Gate::authorize('isVerifikator');
         $load['halaman_judul'] = "Referensi Belanja";
         $load['halaman_deskripsi'] = "Data belanja yang dapat digunakan dalam aplikasi ini";
-        $load['belanjas'] = ref_belanja::orderBy('belanja_nama', 'desc')->paginate(25);
+        $urutanData = $request->urutan_data ?? 'desc';
+        $filter = [];
+
+        $query = ref_belanja::orderBy('created_at', $urutanData);
+        foreach($request->all() as $key => $val){
+            if($val){
+                $filter[$key] = $val;
+            }
+        }
+
+        if($filter){
+            foreach($filter as $key => $val){
+                if($key != 'urutan_data' && $key != 'user_role'){
+                    $query->where($key, 'like', '%' . $val . '%');
+                }
+
+                // if($key == 'skpd_id' || $key == 'user_role'){
+                //     $query->where($key, $val);
+                // }
+            }
+        }
+        $load['belanjas'] = $query->paginate(25);
+        $load['filterData'] = $filter;
 
         return view('referensi.belanja',  $load);
     }

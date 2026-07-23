@@ -22,9 +22,12 @@
         <div class="card-bar">
             <div class="card-top">
                 <div class="ms-auto d-flex gap-2">
-                    {{-- <button class="btn btn-sm btn-outline-secondary" onclick="resetFilter()">
+                    <a href="{{ route('berita_acara.view') }}" class="btn btn-sm btn-warning">
                         <i class="bi bi-arrow-counterclockwise"></i> Reset
-                    </button> --}}
+                    </a>
+                    <button class="btn btn-sm btn-primary" onclick="bukaFilter()">
+                        <i class="bi bi-search"></i> Search
+                    </button>
                     @can('isVerifikator')
                     <a href="{{ route('berita_acara.new') }}" class="btn btn-sm text-white" style="background:var(--bar-navy)">
                         <i class="bi bi-plus-lg"></i> Tambah Data
@@ -160,48 +163,60 @@
         </div>
     </div>
 
-    <!-- ============ MODAL: BUAT BAR BARU ============ -->
-    <div class="modal fade" id="mdlBaru" tabindex="-1">
+    <!-- ============ MODAL: Filter ============ -->
+    <div class="modal fade" id="mdlFilter" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <div>
-                        <div class="modal-title"><i class="bi bi-file-earmark-plus"></i> <span id="judulModal"></span>
+                        <div class="modal-title"><i class="bi bi-search"></i> <span id="judulModal">Filter Data</span>
                         </div>
                         <div class="modal-sub" id="deskripsiModal">
                         </div>
                     </div>
                     <button class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form id="formBaru" novalidate method="POST" action="{{ route('rekening.simpan') }}">
-                    @csrf
+                <form id="formFilter" novalidate method="GET" action="{{ route('berita_acara.view') }}">
                     <input type="hidden" name="rekening_id" id="rekening_id">
                     <div class="modal-body">
                         <div class="sec-title">Identitas Dokumen</div>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label req">Nama Rekening</label>
+                                <label class="form-label req">No SKPKD</label>
                                 <input type="text" class="form-control form-control-sm"
-                                    placeholder="Masukkan nama rekening" required name="rekening_nama"
-                                    id="rekening_nama">
+                                    placeholder="Masukkan No SKPKD" required name="berita_acara_no_bud"
+                                    id="f_berita_acara_no_bud">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label req">Kode Rekening</label>
+                                <label class="form-label req">No SKPD</label>
                                 <input type="text" class="form-control form-control-sm"
-                                    placeholder="Masukkan kode rekening" required name="rekening_kode"
-                                    id="rekening_kode">
+                                    placeholder="Masukkan No SKPD" required name="berita_acara_no_skpd"
+                                    id="f_berita_acara_no_skpd">
                             </div>
-                            <div class="col-md-12">
-                                <label class="form-label req">Uraian</label>
-                                <textarea class="form-control form-control-sm" placeholder="Masukkan uraian" required name="rekening_uraian"
-                                    id="rekening_uraian"></textarea>
+                            <div class="col-md-6">
+                                <label class="form-label">SKPD</label>
+                                <select class="form-select form-select-sm" id="f_skpd_id" name="skpd_id">
+                                    <option value="" selected>-- Pilih SKPD --</option>
+                                    @foreach ($ref_skpd as $skpd)
+                                        <option value="{{ $skpd->skpd_id }}">
+                                            {{ $skpd->skpd_nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Urutan Data</label>
+                                <select class="form-select form-select-sm" id="f_urutan_data" name="urutan_data">
+                                    <option value="desc">Terbaru</option>
+                                    <option value="asc">Terlama</option>
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer mt-4">
                             <button type="button" class="btn btn-sm btn-outline-secondary"
                                 data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-sm text-white" style="background:var(--bar-navy)">
-                                <i class="bi bi-arrow-right"></i> Simpan Data
+                                <i class="bi bi-search"></i> Search
                             </button>
                         </div>
                 </form>
@@ -247,16 +262,15 @@
             new bootstrap.Modal('#mdlFile').show();
         }
 
-        function cetakData(id = 1) {
-            const iframe = document.getElementById('print-frame');
-    
-            // Pastikan src mengarah ke route cetak Anda
-            iframe.src = `/berita-acara/detailKonten/${id}`;
-    
-            // Tunggu sampai iframe selesai dimuat, lalu cetak
-            iframe.onload = function() {
-                iframe.contentWindow.print();
-            };
+        const dataFilter = @json($filterData);
+        //set filter value
+        Object.entries(dataFilter).forEach(([i, val]) => {
+            if (val !== null && document.getElementById(`f_${i}`)) {
+                document.getElementById(`f_${i}`).value = val;
+            }
+        });
+        const bukaFilter = () =>{
+            new bootstrap.Modal('#mdlFilter').show();
         }
     </script>
 @endpush

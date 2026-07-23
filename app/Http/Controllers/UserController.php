@@ -9,12 +9,35 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function View()
+    public function View(Request $request)
     {
         $load['halaman_judul'] = "Referensi User ";
         $load['halaman_deskripsi'] = "Data user yang dapat mengakses aplikasi ini";
-        $load['users'] = User::orderBy('created_at', 'desc')->paginate(25);
+        $urutanData = $request->urutan_data ?? 'desc';
         $load['ref_skpd'] = ref_skpd::get();
+        $filter = [];
+
+        $query = User::orderBy('created_at', $urutanData);
+        foreach($request->all() as $key => $val){
+            if($val){
+                $filter[$key] = $val;
+            }
+        }
+
+        if($filter){
+            foreach($filter as $key => $val){
+                if($key != 'urutan_data' && $key != 'user_role'){
+                    $query->where($key, 'like', '%' . $val . '%');
+                }
+
+                if($key == 'skpd_id' || $key == 'user_role'){
+                    $query->where($key, $val);
+                }
+            }
+        }
+
+        $load['users'] = $query->paginate(25);
+        $load['filterData'] = $filter;
 
         return view('referensi.users',  $load);
     }
