@@ -460,10 +460,10 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                 <div class="fw-bold">PIHAK KESATU</div>
                 <div>Kepala Sub Bidang Penerimaan dan Belanja</div>
                 <div class="sign-space"></div>
-                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="ttd_nama_p1"
-                    value="Ichtiawan J. Aziz, S.E.I" readonly />
-                <input type="text" class="form-control form-control-sm text-center" name="ttd_nip_p1"
-                    value="NIP. 198506162020121006" readonly />
+                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_kepala_skpkd]"
+                    value="Ichtiawan J. Aziz, S.E.I"/>
+                <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_kepala_skpkd]"
+                    value="198506162020121006"/>
             </div>
         </div>
 
@@ -481,10 +481,10 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                 <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
                 <div>Kepala Bidang Akuntansi</div>
                 <div class="sign-space"></div>
-                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="ttd_nama_ka"
-                    value="M. Adnan, S.E., M.Si." readonly />
-                <input type="text" class="form-control form-control-sm text-center" name="ttd_nip_ka"
-                    value="NIP. 197612262007011010" readonly />
+                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_mengetahui_skpkd]"
+                    value="M. Adnan, S.E., M.Si."/>
+                <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_mengetahui_skpkd]"
+                    value="197612262007011010"/>
             </div>
         </div>
 

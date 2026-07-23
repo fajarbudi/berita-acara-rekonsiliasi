@@ -304,12 +304,12 @@
     <tr>
         <td colspan="3" style="font-weight:bold;" align="center">{{ $data->berita_acara_nama_ppk ?? '[NAMA PEJABAT/PPK SKPD]' }}</td>
         <td></td>
-        <td colspan="3" style="font-weight:bold;" align="center">{{ $data->berita_acara_nama_bud ?? 'Ichtiawan J. Aziz, S.E.I' }}</td>
+        <td colspan="3" style="font-weight:bold;" align="center">{{ $data->berita_acara_nama_kepala_skpkd ?? 'Ichtiawan J. Aziz, S.E.I' }}</td>
     </tr>
     <tr>
         <td colspan="3" align="center">NIP. {{ $data->berita_acara_nip_ppk ?? '[---------------------]' }}</td>
         <td></td>
-        <td colspan="3" align="center">NIP. {{ $data->berita_acara_nip_bud ?? '198506162020121006' }}</td>
+        <td colspan="3" align="center">NIP. {{ $data->berita_acara_nip_kepala_skpkd ?? '198506162020121006' }}</td>
     </tr>
     <tr><td colspan="7" height="20"></td></tr>
     <tr>
@@ -326,12 +326,12 @@
     <tr>
         <td colspan="3" style="font-weight:bold;" align="center">{{ $data->berita_acara_nama_pa ?? '[NAMA KEPALA SKPD]' }}</td>
         <td></td>
-        <td colspan="3" style="font-weight:bold;" align="center">{{ $data->berita_acara_nama_ka ?? 'M. Adnan, S.E., M.Si.' }}</td>
+        <td colspan="3" style="font-weight:bold;" align="center">{{ $data->berita_acara_nama_mengetahui_skpkd ?? 'M. Adnan, S.E., M.Si.' }}</td>
     </tr>
     <tr>
         <td colspan="3" align="center">NIP. {{ $data->berita_acara_nip_pa ?? '[---------------------]' }}</td>
         <td></td>
-        <td colspan="3" align="center">NIP. {{ $data->berita_acara_nip_ka ?? '197612262007011010' }}</td>
+        <td colspan="3" align="center">NIP. {{ $data->berita_acara_nip_mengetahui_skpkd ?? '197612262007011010' }}</td>
     </tr>
 </table>
 
