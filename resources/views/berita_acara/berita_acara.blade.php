@@ -50,9 +50,9 @@
                             <tr>
                                 <td>{{ $datas->firstItem() + $index }}</td>
                                 <td>
-                                    <strong class="me-2">SKPKD : </strong>{{ $item->berita_acara_no_skpd }}
+                                    <strong class="me-2">SKPKD : </strong>{{ $item->berita_acara_no_bud }}
                                     <br>
-                                    <strong class="me-2">SKPD : </strong>{{ $item->berita_acara_no_bud }}
+                                    <strong class="me-2">SKPD : </strong>{{ $item->berita_acara_no_skpd }}
                                 </td>
                                 <td>{{ $item->skpd->skpd_nama}}</td>
                                 <td>

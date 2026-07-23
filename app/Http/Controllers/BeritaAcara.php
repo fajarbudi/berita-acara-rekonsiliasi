@@ -124,6 +124,8 @@ class BeritaAcara extends Controller
         $dataPost['berita_acara_sts_ket'] = $dataPost['berita_acara_sts_selisih'] == 0 ? 'Cocok' : 'Tidak Cocok';
         $dataPost['berita_acara_sp2dLS_selisih'] = ($dataPost['berita_acara_sp2dLS_bud'] ?? 0)  - ($dataPost['berita_acara_sp2dLS_skpd'] ?? 0);
         $dataPost['berita_acara_sp2dLS_ket'] = $dataPost['berita_acara_sp2dLS_selisih'] == 0 ? 'Cocok' : 'Tidak Cocok';
+        $dataPost['berita_acara_sp2BP_selisih'] = ($dataPost['berita_acara_sp2BP_bud'] ?? 0)  - ($dataPost['berita_acara_sp2BP_skpd'] ?? 0);
+        $dataPost['berita_acara_sp2BP_ket'] = $dataPost['berita_acara_sp2BP_selisih'] == 0 ? 'Cocok' : 'Tidak Cocok';
         $dataPost['berita_acara_sp2dUP_selisih'] = ($dataPost['berita_acara_sp2dUP_bud'] ?? 0)  - ($dataPost['berita_acara_sp2dUP_skpd'] ?? 0);
         $dataPost['berita_acara_sp2dUP_ket'] = $dataPost['berita_acara_sp2dUP_selisih'] == 0 ? 'Cocok' : 'Tidak Cocok';
 

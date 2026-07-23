@@ -305,6 +305,26 @@
                     <td class="text-center ket"></td>
                 </tr>
                 <tr>
+                    <td class="text-center no">2</td>
+                    <td>Mekanisme SPB/SP2BP</td>
+                    <td>
+                        <input class="cell-text" value="Pengesahan realisasi anggaran dana" readonly />
+                    </td>
+                    <td>
+                        <input name="data[berita_acara_sp2BP_skpd]" class="cell-input skpd" type="text"
+                            inputmode="numeric" placeholder="0,00"
+                            value="{{ old('data.berita_acara_sp2BP_skpd') }}" />
+                    </td>
+                    <td>
+                        <input name="data[berita_acara_sp2BP_bud]" class="cell-input bud" type="text"
+                            inputmode="numeric" placeholder="0,00"
+                            value="{{ old('data.berita_acara_sp2BP_bud') }}" />
+                    </td>
+                    <td class="num selisih"></td>
+                    <input type="hidden" name="data[berita_acara_sp2BP_selisih]" class="hid-selisih" />
+                    <td class="text-center ket"></td>
+                </tr>
+                <tr>
                     <td class="text-center no">3</td>
                     <td>STS</td>
                     <td>

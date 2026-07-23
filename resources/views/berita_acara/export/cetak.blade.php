@@ -27,7 +27,7 @@
 
 <table>
     <tr><td style="font-size:14pt; font-weight:bold;" colspan="7" align="center">BERITA ACARA REKONSILIASI PENERIMAAN DAN PENGELUARAN</td></tr>
-    <tr><td style="font-size:11pt; font-weight:bold;" colspan="7" align="center">ANTARA SKPKD DAN SKPD {{strtoupper($data->skpd->skpd_nama)}}</td></tr>
+    <tr><td style="font-size:11pt; font-weight:bold;" colspan="7" align="center">ANTARA SKPKD (BPKAD) DAN SKPD ({{strtoupper($data->skpd->skpd_nama)}})</td></tr>
     <tr><td style="font-size:11pt; font-weight:bold;" colspan="7" align="center">PERIODE {{ strtoupper($data->berita_acara_periode) }} TAHUN ANGGARAN {{ $data->berita_acara_tahun_anggaran }}</td></tr>
     <tr><td colspan="7" height="8"></td></tr>
     <tr><td style="font-style:italic;" colspan="7" align="center">Nomor BAR (SKPKD) : {{ $data->berita_acara_no_bud }}</td></tr>
@@ -161,16 +161,19 @@
         $lsB  = (float) ($data->berita_acara_sp2dLS_bud ?? 0);
         $upS  = (float) ($data->berita_acara_sp2dUP_skpd ?? 0);
         $upB  = (float) ($data->berita_acara_sp2dUP_bud ?? 0);
+        $sp2BP_skpd  = (float) ($data->berita_acara_sp2BP_skpd ?? 0);
+        $sp2BP_bud  = (float) ($data->berita_acara_sp2BP_bud ?? 0);
         $stsS = (float) ($data->berita_acara_sts_skpd ?? 0);
         $stsB = (float) ($data->berita_acara_sts_bud ?? 0);
 
         $lsSel  = $lsB - $lsS;
         $upSel  = $upB - $upS;
+        $bpSel  = $sp2BP_bud - $sp2BP_skpd;
         $stsSel = $stsB - $stsS;
 
         // Total mekanisme dijumlahkan manual dari tiga baris di atas
-        $totMekSkpd = $lsS + $upS + $stsS;
-        $totMekBud  = $lsB + $upB + $stsB;
+        $totMekSkpd = $lsS + $upS + $sp2BP_skpd + $stsS;
+        $totMekBud  = $lsB + $upB + $sp2BP_bud + $stsB;
     @endphp
     <tr>
         <td style="{{ $tdGrid }}" align="center">1</td>
@@ -192,6 +195,15 @@
     </tr>
     <tr>
         <td style="{{ $tdGrid }}" align="center">3</td>
+        <td style="{{ $tdGrid }}">Mekanisme SPB/SP2BP</td>
+        <td style="{{ $tdGrid }}">Pengesahan realisasi anggaran dana</td>
+        <td style="{{ $tdGrid }} @if($sp2BP_skpd < 0) color:#FF0000; @endif" align="right">{{ $rp($sp2BP_skpd) }}</td>
+        <td style="{{ $tdGrid }} @if($sp2BP_bud < 0) color:#FF0000; @endif" align="right">{{ $rp($sp2BP_bud) }}</td>
+        <td style="{{ $tdGrid }} @if($bpSel < 0) color:#FF0000; @endif" align="right">{{ $rp($bpSel) }}</td>
+        <td style="{{ $tdGrid }}" align="center">{{ abs($bpSel) < 0.001 ? 'Cocok' : 'Tidak Cocok' }}</td>
+    </tr>
+    <tr>
+        <td style="{{ $tdGrid }}" align="center">4</td>
         <td style="{{ $tdGrid }}">STS</td>
         <td style="{{ $tdGrid }}">{{ $data->berita_acara_sts_uraian ?? 'Pengembalian ke Kasda (-)' }}</td>
         <td style="{{ $tdGrid }} @if($stsS < 0) color:#FF0000; @endif" align="right">{{ $rp($stsS) }}</td>

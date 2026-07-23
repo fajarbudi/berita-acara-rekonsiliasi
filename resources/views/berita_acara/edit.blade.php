@@ -277,17 +277,17 @@
                             </td>
                             <td>
                                 <input class="cell-input skpd" type="text" inputmode="numeric"
-                                    value="{{ $belanja->skpd }}" name="belanja[{{ $index }}][skpd]" />
+                                    value="{{ number_format($belanja->skpd, 0, ',', '') }}" name="belanja[{{ $index }}][skpd]" />
                             </td>
                             @can('isVerifikator')
                             <td>
                                 <input class="cell-input bud" type="text" inputmode="numeric"
-                                    value="{{ $belanja->bud }}" name="belanja[{{ $index }}][bud]" />
+                                    value="{{ number_format($belanja->bud, 0, ',', '') }}" name="belanja[{{ $index }}][bud]" />
                             </td>
                             @endcan
                             <td>
                                 <input class="cell-input num selisih" type="text" readonly
-                                    name="belanja[{{ $index }}][selisih]" value="{{ $belanja->selisih }}" />
+                                    name="belanja[{{ $index }}][selisih]" value="{{ number_format($belanja->selisih, 0, ',', '') }} " />
                             </td>
                             <td class="text-center ket"></td>
                             <td class="text-center row-tools no-print">
@@ -388,17 +388,17 @@
                     <td>
                         <input name="data[berita_acara_sp2dLS_skpd]" class="cell-input skpd" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ $data->berita_acara_sp2dLS_skpd }}" />
+                            value="{{ number_format($data->berita_acara_sp2dLS_skpd, 0, ',', '') }}" />
                     </td>
                     @can('isVerifikator')
                     <td>
                         <input name="data[berita_acara_sp2dLS_bud]" class="cell-input bud" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ $data->berita_acara_sp2dLS_bud }}" />
+                            value="{{ number_format($data->berita_acara_sp2dLS_bud, 0, ',', '') }}" />
                     </td>
                     @endcan
-                    <td class="num selisih">{{ $data->berita_acara_sp2dLS_selisih }}</td>
-                    <input type="hidden" name="data[berita_acara_sp2dLS_selisih]" class="hid-selisih" value="{{ $data->berita_acara_sp2dLS_selisih }}" />
+                    <td class="num selisih">{{ number_format($data->berita_acara_sp2dLS_selisih, 0, ',', '') }}</td>
+                    <input type="hidden" name="data[berita_acara_sp2dLS_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sp2dLS_selisih, 0, ',', '') }}" />
                     <td class="text-center ket"></td>
                 </tr>
                 <tr>
@@ -410,21 +410,43 @@
                     <td>
                         <input name="data[berita_acara_sp2dUP_skpd]" class="cell-input skpd" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ $data->berita_acara_sp2dUP_skpd }}" />
+                            value="{{ number_format($data->berita_acara_sp2dUP_skpd, 0, ',', '') }}" />
                     </td>
                     @can('isVerifikator')
                     <td>
                         <input name="data[berita_acara_sp2dUP_bud]" class="cell-input bud" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ $data->berita_acara_sp2dUP_bud }}" />
+                            value="{{ number_format($data->berita_acara_sp2dUP_bud, 0, ',', '') }}" />
                     </td>
                     @endcan
-                    <td class="num selisih">{{ $data->berita_acara_sp2dUP_selisih }}</td>
-                    <input type="hidden" name="data[berita_acara_sp2dUP_selisih]" class="hid-selisih" value="{{ $data->berita_acara_sp2dUP_selisih }}" />
+                    <td class="num selisih">{{ number_format($data->berita_acara_sp2dUP_selisih, 0, ',', '') }}</td>
+                    <input type="hidden" name="data[berita_acara_sp2dUP_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sp2dUP_selisih, 0, ',', '') }}" />
                     <td class="text-center ket"></td>
                 </tr>
                 <tr>
                     <td class="text-center no">3</td>
+                    <td>Mekanisme SPB/SP2BP</td>
+                    <td>
+                        <input class="cell-text" value="Pengesahan realisasi anggaran dana" readonly />
+                    </td>
+                    <td>
+                        <input name="data[berita_acara_sp2BP_skpd]" class="cell-input skpd" type="text"
+                            inputmode="numeric" placeholder="0,00"
+                            value="{{ number_format($data->berita_acara_sp2BP_skpd, 0, ',', '') }}" />
+                    </td>
+                    @can('isVerifikator')
+                    <td>
+                        <input name="data[berita_acara_sp2BP_bud]" class="cell-input bud" type="text"
+                            inputmode="numeric" placeholder="0,00"
+                            value="{{ number_format($data->berita_acara_sp2BP_bud, 0, ',', '') }}" />
+                    </td>
+                    @endcan
+                    <td class="num selisih">{{ number_format($data->berita_acara_sp2BP_selisih, 0, ',', '') }}</td>
+                    <input type="hidden" name="data[berita_acara_sp2BP_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sp2BP_selisih, 0, ',', '') }}" />
+                    <td class="text-center ket"></td>
+                </tr>
+                <tr>
+                    <td class="text-center no">4</td>
                     <td>STS</td>
                     <td>
                         <input name="data[berita_acara_sts_uraian]" class="cell-text"
@@ -433,17 +455,17 @@
                     <td>
                         <input name="data[berita_acara_sts_skpd]" class="cell-input skpd" type="text"
                             inputmode="numeric" placeholder="-0,00"
-                            value="{{ $data->berita_acara_sts_skpd }}" data-minus="1" />
+                            value="{{ number_format($data->berita_acara_sts_skpd, 0, ',', '') }}" data-minus="1" />
                     </td>
                     @can('isVerifikator')
                     <td>
                         <input name="data[berita_acara_sts_bud]" class="cell-input bud" type="text"
                             inputmode="numeric" placeholder="-0,00"
-                            value="{{ $data->berita_acara_sts_bud }}" data-minus="1" />
+                            value="{{ number_format($data->berita_acara_sts_bud, 0, ',', '') }}" data-minus="1" />
                     </td>
                     @endcan
-                    <td class="num selisih">{{ $data->berita_acara_sts_selisih }}</td>
-                    <input type="hidden" name="data[berita_acara_sts_selisih]" class="hid-selisih" value="{{ $data->berita_acara_sts_selisih }}" />
+                    <td class="num selisih">{{ number_format($data->berita_acara_sts_selisih, 0, ',', '') }}</td>
+                    <input type="hidden" name="data[berita_acara_sts_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sts_selisih, 0, ',', '') }}" />
                     <td class="text-center ket"></td>
                 </tr>
             </tbody>
@@ -562,7 +584,7 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_ppk]" id="berita_acara_nama_ppk"
                     placeholder="[NAMA PEJABAT/PPK SKPD]" value="{{ $data->berita_acara_nama_ppk }}"/>
                 <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_ppk]" id="berita_acara_nip_ppk"
-                    placeholder="NIP. ..." value="NIP. {{ $data->berita_acara_nip_ppk }}"/>
+                    placeholder="NIP. ..." value="{{ $data->berita_acara_nip_ppk }}"/>
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">PIHAK KESATU</div>
@@ -583,7 +605,7 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_pa]" id="berita_acara_nama_pa"
                     placeholder="[NAMA KEPALA SKPD]" value="{{ $data->berita_acara_nama_pa }}" />
                 <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_pa]" id="berita_acara_nip_pa"
-                    placeholder="NIP. ..." value="NIP. {{ $data->berita_acara_nip_pa }}" />
+                    placeholder="NIP. ..." value="{{ $data->berita_acara_nip_pa }}" />
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
@@ -644,20 +666,41 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
             });
 
 
+        // const parse = (v) => {
+        //     let t = String(v ?? "").trim();
+        //     if (t === "") return 0;
+
+        //     const negatif = t.indexOf("-") !== -1;
+
+        //     // buang semua kecuali digit, titik, koma
+        //     t = t.replace(/[^\d.,]/g, "");
+
+        //     if (t.indexOf(",") !== -1) {
+        //         // ada koma -> koma adalah desimal, titik adalah ribuan
+        //         t = t.replace(/\./g, "").replace(",", ".");
+        //     } else {
+        //         // tanpa koma -> titik dianggap pemisah ribuan
+        //         t = t.replace(/\./g, "");
+        //     }
+
+        //     const n = parseFloat(t);
+        //     if (isNaN(n)) return 0;
+        //     return negatif ? -Math.abs(n) : n;
+        // };
+
         const parse = (v) => {
             let t = String(v ?? "").trim();
             if (t === "") return 0;
 
             const negatif = t.indexOf("-") !== -1;
-
-            // buang semua kecuali digit, titik, koma
             t = t.replace(/[^\d.,]/g, "");
 
             if (t.indexOf(",") !== -1) {
-                // ada koma -> koma adalah desimal, titik adalah ribuan
+                // ada koma -> koma desimal, titik ribuan
                 t = t.replace(/\./g, "").replace(",", ".");
+            } else if (/^\d+\.\d{1,2}$/.test(t)) {
+                // biarkan apa adanya
             } else {
-                // tanpa koma -> titik dianggap pemisah ribuan
                 t = t.replace(/\./g, "");
             }
 

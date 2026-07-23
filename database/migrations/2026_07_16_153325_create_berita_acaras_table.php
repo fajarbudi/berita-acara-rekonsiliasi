@@ -15,12 +15,12 @@ class CreateBeritaAcarasTable extends Migration
     {
         Schema::create('berita_acaras', function (Blueprint $table) {
             $table->id('berita_acara_id');
-            $table->string('berita_acara_no_bud', 100)->nullable();
-            $table->string('berita_acara_no_skpd', 100)->nullable();
+            $table->string('berita_acara_no_bud', 255)->nullable();
+            $table->string('berita_acara_no_skpd', 255)->nullable();
             $table->string('berita_acara_tanggal', 100);
             $table->string('berita_acara_tahun_anggaran', 100);
             $table->string('berita_acara_periode', 100);
-            $table->string('berita_acara_tempat', 100);
+            $table->string('berita_acara_tempat', 255);
             $table->string('berita_acara_file')->nullable();
             $table->longText('berita_acara_kesimpulan')->nullable();
             $table->integer('skpd_id');
@@ -36,6 +36,10 @@ class CreateBeritaAcarasTable extends Migration
             $table->string('berita_acara_sp2dUP_bud')->nullable();
             $table->string('berita_acara_sp2dUP_selisih')->nullable();
             $table->string('berita_acara_sp2dUP_ket')->nullable();
+            $table->string('berita_acara_SP2BP_skpd')->nullable();
+            $table->string('berita_acara_SP2BP_bud')->nullable();
+            $table->string('berita_acara_SP2BP_selisih')->nullable();
+            $table->string('berita_acara_SP2BP_ket')->nullable();
             $table->string('berita_acara_sts_skpd')->nullable();
             $table->string('berita_acara_sts_bud')->nullable();
             $table->string('berita_acara_sts_selisih')->nullable();
