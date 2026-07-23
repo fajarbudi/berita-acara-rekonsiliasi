@@ -83,12 +83,13 @@
                                      <a href="{{ route('berita_acara.excel', $item->berita_acara_id) }}" class="btn btn-sm btn-success">
                                         <i class="bi bi-file-earmark-excel"></i>
                                     </a>
-                                    <button class="btn btn-sm btn-secondary" onclick="cetakData({{$item->berita_acara_id}})">
+                                    <a class="btn btn-sm btn-secondary" href="{{ route('berita_acara.cetakPDF', $item->berita_acara_id) }}">
                                         <i class="bi bi-printer"></i>
-                                    </button>
+                                    </a>
                                     @can('isVerifikator')
                                     <button class="btn btn-sm btn-danger" title="Hapus"
-                                        onclick='bukaHapus({{ $item }})'><i class="bi bi-trash"></i>
+                                        onclick='bukaHapus({{ $item }})' @if ($item->berita_acara_kunci_data == 'ya') disabled @endif >
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                     @endcan
                                     </div>

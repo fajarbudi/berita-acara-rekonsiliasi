@@ -52,6 +52,7 @@ class berita_acara extends Model
         'berita_acara_penerimaan_sp2d',
         'berita_acara_pengeluaran_bku',
         'berita_acara_pengembalian',
+        'berita_acara_kunci_data'
     ];
 
     public function skpd()

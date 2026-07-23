@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
+use Elibyy\TCPDF\Facades\TCPDF;
 
 class BeritaAcara extends Controller
 {
@@ -378,6 +379,77 @@ class BeritaAcara extends Controller
         }
 
         return back()->with('success', 'Berkas berhasil disimpan');
+    }
+
+    public function kunciData($id){
+
+        try {
+            $data = berita_acara::find($id);
+            $status = $data->berita_acara_kunci_data == 'ya' ? 'tidak' : 'ya';
+
+            $data->update([
+                'berita_acara_kunci_data' => $status
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Gagal menghapus: ' . $e->getMessage());
+        }
+
+        $pesan = 'Data Berita acara berhasil ' . ($status == 'ya' ? 'Terkunci' : 'Dibuka');
+
+        return back()->with('success', $pesan);
+    }
+
+    public function createPDF($id){
+        $data = berita_acara::with('skpd')->findOrFail($id);
+
+        $load['halaman_judul'] = "Detail Berita Acara";
+        $load['halaman_deskripsi'] = "Detail berita acara";
+        $load['berita_acara_id'] = $id;
+        $load['data'] = $data;
+        $load['data_pendapatan'] = berita_acara_pendapatan::where('berita_acara_id', $id)->get();
+        $load['data_belanja'] = berita_acara_belanja::where('berita_acara_id', $id)->get();
+        $load['data_mekanisme'] = berita_acara_mekanisme::where('berita_acara_id', $id)->get();
+        $load['terbilang'] = $this->terbilangTanggal($data->berita_acara_tanggal);
+
+        $html = view('berita_acara.export.cetak',  $load)->render();
+
+        $nomor = str_replace('/', '-', $data->berita_acara_no_bud ?: 'DRAFT');
+
+        $namaFile = 'BAR_' . $nomor
+            . '_' . $data->berita_acara_periode
+            . '_' . $data->berita_acara_tahun_anggaran
+            . '.pdf';
+
+        // konfigurasi tcpdf
+        TCPDF::SetTitle($namaFile);
+        TCPDF::SetCreator(PDF_CREATOR);
+        TCPDF::SetAuthor('BPKAD Kutai Timur - Powered By Anauri');
+
+        TCPDF::setPrintHeader(false);
+        TCPDF::setPrintFooter(false);
+
+        TCPDF::AddPage();
+        TCPDF::writeHTML($html, true, false, true, false, '');
+
+        return TCPDF::Output($namaFile, 'D');
+
+        // // konfigurasi tcpdf
+        // PDF::SetTitle('Laporan Berita Acara');
+        // PDF::SetCreator(PDF_CREATOR);
+        // PDF::SetAuthor('Sistem');   
+        // //setting header / footer
+        // PDF::setPrintHeader(false);
+        // PDF::setPrintFooter(false);
+        // //menambahkan halaman
+        // PDF::AddPage();
+        // // load html
+        // PDF::writeHTML($html, true, false, true, false, '');
+
+        // // download pdf
+        // PDF::Output($namaFile, 'D');
     }
     
     private function angka($nilai): float

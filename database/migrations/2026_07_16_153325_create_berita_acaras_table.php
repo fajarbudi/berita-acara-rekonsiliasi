@@ -54,6 +54,7 @@ class CreateBeritaAcarasTable extends Migration
             $table->string('berita_acara_penerimaan_sp2d')->nullable();
             $table->string('berita_acara_pengeluaran_bku')->nullable();
             $table->string('berita_acara_pengembalian')->nullable();
+            $table->enum('berita_acara_kunci_data', ['ya', 'tidak'])->default('tidak');
             $table->timestamps();
         });
     }

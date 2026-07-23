@@ -1,6 +1,10 @@
 @extends('layout.base_layout')
 
 @section('content')
+
+    @php
+        $isReadOnly = $data->berita_acara_kunci_data == 'ya' ? true : false;
+    @endphp
     <div class="page-head d-flex align-items-center gap-3 flex-wrap mb-4">
         <div>
             <h1>{{ $halaman_judul }}</h1>
@@ -32,7 +36,7 @@
         <div class="row g-3">
             <div class="col-md-12">
                 <label class="form-label">SKPD</label>
-                <select class="form-select form-select-sm" id="skpd" name="data[skpd_id]">
+                <select class="form-select form-select-sm" id="skpd" name="data[skpd_id]" @if ($isReadOnly)disabled @endif>
                     <option value="" selected>-- Pilih SKPD --</option>
                     @foreach ($ref_skpd as $skpd)
                         <option value="{{ $skpd->skpd_id }}" {{ $skpd->skpd_id == $data->skpd_id ? 'selected' : '' }}>
@@ -53,7 +57,7 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label">Periode Rekonsiliasi</label>
-                <select class="form-select form-select-sm" id="periode" name="data[berita_acara_periode]">
+                <select class="form-select form-select-sm" id="periode" name="data[berita_acara_periode]" @if ($isReadOnly)disabled @endif>
                     <option value="" selected>-- Pilih Periode --</option>
                     <optgroup label="Bulanan">
                         <option value="Januari" {{ $data->berita_acara_periode === 'Januari' ? 'selected' : '' }}>Januari</option>
@@ -75,22 +79,22 @@
                 <label class="form-label">Tahun Anggaran</label>
                 <input type="number" class="form-control form-control-sm" id="tahun"
                     name="data[berita_acara_tahun_anggaran]" value="{{ $data->berita_acara_tahun_anggaran ?? 2026 }}"
-                    min="2020" max="2100" />
+                    min="2020" max="2100" @if ($isReadOnly) readonly @endif/>
             </div>
 
             <div class="col-md-3">
                 <label class="form-label">Tanggal Berita Acara</label>
                 <input type="date" class="form-control form-control-sm" name="data[berita_acara_tanggal]"
-                    value="{{ $data->berita_acara_tanggal }}" />
+                    value="{{ $data->berita_acara_tanggal }}" @if ($isReadOnly) readonly @endif/>
             </div>
             <div class="col-md-9">
                 <label class="form-label">Tempat</label>
                 <input type="text" class="form-control form-control-sm" name="data[berita_acara_tempat]"
-                    value="{{ $data->berita_acara_tempat ?? 'Kantor Badan Pengelolaan Keuangan dan Aset Daerah' }}" />
+                    value="{{ $data->berita_acara_tempat ?? 'Kantor Badan Pengelolaan Keuangan dan Aset Daerah' }}" @if ($isReadOnly) readonly @endif/>
             </div>
             <div class="col-md-6">
                 <label class="form-label">File</label>
-                <input type="file" class="form-control form-control-sm" name="berita_acara_file" />
+                <input type="file" class="form-control form-control-sm" name="berita_acara_file" @if ($isReadOnly)disabled @endif/>
             </div>
         </div>
         @endcan
@@ -140,28 +144,28 @@
                             </td>
                             <td>
                                 <input class="cell-text uraian" name="rekening[{{ $index }}][rekening_uraian]"
-                                    value="{{ $pendapatan->rekening_uraian }}" />
+                                    value="{{ $pendapatan->rekening_uraian }}" @if ($isReadOnly) readonly @endif/>
                             </td>
                             <td>
                                 <input class="cell-input skpd" type="text" inputmode="numeric"
                                     name="rekening[{{ $index }}][skpd]"
-                                    value="{{ number_format($pendapatan->skpd, 0, ',', '') }}" />
+                                    value="{{ number_format($pendapatan->skpd, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                             </td>
                             @can('isVerifikator')
                             <td>
                                 <input class="cell-input bud" type="text" inputmode="numeric"
                                     name="rekening[{{ $index }}][bud]"
-                                    value="{{ number_format($pendapatan->bud, 0, ',', '') }}" />
+                                    value="{{ number_format($pendapatan->bud, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                             </td>
                             @endcan
                             <td>
                                 <input class="cell-input num selisih" type="text" readonly
                                     name="rekening[{{ $index }}][selisih]"
-                                    value="{{ number_format($pendapatan->selisih, 0, ',', '') }}" />
+                                    value="{{ number_format($pendapatan->selisih, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                             </td>
                             <td class="text-center ket"></td>
                             <td class="text-center row-tools no-print">
-                                <button type="button" onclick="hapusBaris(this)">
+                                <button type="button" onclick="hapusBaris(this)" @if ($isReadOnly)disabled @endif>
                                     <i class="bi bi-x-circle"></i>
                                 </button>
                             </td>
@@ -183,25 +187,25 @@
                             </select>
                         </td>
                         <td>
-                            <input class="cell-text uraian" name="rekening[0][rekening_uraian]" />
+                            <input class="cell-text uraian" name="rekening[0][rekening_uraian]" @if ($isReadOnly) readonly @endif/>
                         </td>
                         <td>
                             <input class="cell-input skpd" type="text" inputmode="numeric"
-                                name="rekening[0][skpd]" placeholder="0,00" />
+                                name="rekening[0][skpd]" placeholder="0,00" @if ($isReadOnly) readonly @endif/>
                         </td>
                         @can('isVerifikator')
                         <td>
                             <input class="cell-input bud" type="text" inputmode="numeric"
-                                name="rekening[0][bud]" placeholder="0,00" />
+                                name="rekening[0][bud]" placeholder="0,00" @if ($isReadOnly) readonly @endif/>
                         </td>
                         @endcan
                         <td>
                             <input class="cell-input num selisih" type="text" readonly
-                                name="rekening[0][selisih]" />
+                                name="rekening[0][selisih]" @if ($isReadOnly) readonly @endif/>
                         </td>
                         <td class="text-center ket"></td>
                         <td class="text-center row-tools no-print">
-                            <button type="button" onclick="hapusBaris(this)">
+                            <button type="button" onclick="hapusBaris(this)" @if ($isReadOnly)disabled @endif>
                                 <i class="bi bi-x-circle"></i>
                             </button>
                         </td>
@@ -222,7 +226,7 @@
             </tfoot>
         </table>
         <button type="button" class="btn btn-sm btn-outline-primary mt-2 no-print"
-            onclick="tambahBaris('tblPendapatan', 'rekening')">
+            onclick="tambahBaris('tblPendapatan', 'rekening')" @if ($isReadOnly)disabled @endif>
             <i class="bi bi-plus-lg"></i> Tambah Baris Pendapatan
         </button>
 
@@ -273,25 +277,25 @@
                             </td>
                             <td>
                                 <input class="cell-text uraian" value="{{ $belanja->belanja_uraian }}"
-                                    name="belanja[{{ $index }}][belanja_uraian]" />
+                                    name="belanja[{{ $index }}][belanja_uraian]" @if ($isReadOnly) readonly @endif/>
                             </td>
                             <td>
                                 <input class="cell-input skpd" type="text" inputmode="numeric"
-                                    value="{{ number_format($belanja->skpd, 0, ',', '') }}" name="belanja[{{ $index }}][skpd]" />
+                                    value="{{ number_format($belanja->skpd, 0, ',', '') }}" name="belanja[{{ $index }}][skpd]" @if ($isReadOnly) readonly @endif/>
                             </td>
                             @can('isVerifikator')
                             <td>
                                 <input class="cell-input bud" type="text" inputmode="numeric"
-                                    value="{{ number_format($belanja->bud, 0, ',', '') }}" name="belanja[{{ $index }}][bud]" />
+                                    value="{{ number_format($belanja->bud, 0, ',', '') }}" name="belanja[{{ $index }}][bud]" @if ($isReadOnly) readonly @endif/>
                             </td>
                             @endcan
                             <td>
                                 <input class="cell-input num selisih" type="text" readonly
-                                    name="belanja[{{ $index }}][selisih]" value="{{ number_format($belanja->selisih, 0, ',', '') }} " />
+                                    name="belanja[{{ $index }}][selisih]" value="{{ number_format($belanja->selisih, 0, ',', '') }} " @if ($isReadOnly) readonly @endif/>
                             </td>
                             <td class="text-center ket"></td>
                             <td class="text-center row-tools no-print">
-                                <button type="button" onclick="hapusBaris(this)">
+                                <button type="button" onclick="hapusBaris(this)" @if ($isReadOnly)disabled @endif>
                                     <i class="bi bi-x-circle"></i>
                                 </button>
                             </td>
@@ -313,25 +317,25 @@
                             </select>
                         </td>
                         <td>
-                            <input class="cell-text uraian" name="belanja[0][belanja_uraian]" />
+                            <input class="cell-text uraian" name="belanja[0][belanja_uraian]" @if ($isReadOnly) readonly @endif/>
                         </td>
                         <td>
                             <input class="cell-input skpd" type="text" inputmode="numeric"
-                                name="belanja[0][skpd]" placeholder="0,00" />
+                                name="belanja[0][skpd]" placeholder="0,00" @if ($isReadOnly) readonly @endif/>
                         </td>
                         @can('isVerifikator')
                         <td>
                             <input class="cell-input bud" type="text" inputmode="numeric"
-                                name="belanja[0][bud]" placeholder="0,00" />
+                                name="belanja[0][bud]" placeholder="0,00" @if ($isReadOnly) readonly @endif/>
                         </td>
                         @endcan
                         <td>
                             <input class="cell-input num selisih" type="text" readonly
-                                name="belanja[0][selisih]" placeholder="0,00" />
+                                name="belanja[0][selisih]" placeholder="0,00" @if ($isReadOnly) readonly @endif/>
                         </td>
                         <td class="text-center ket"></td>
                         <td class="text-center row-tools no-print">
-                            <button type="button" onclick="hapusBaris(this)">
+                            <button type="button" onclick="hapusBaris(this)" @if ($isReadOnly)disabled @endif>
                                 <i class="bi bi-x-circle"></i>
                             </button>
                         </td>
@@ -354,7 +358,7 @@
             </tfoot>
         </table>
         <button type="button" class="btn btn-sm btn-outline-primary mt-2 no-print"
-            onclick="tambahBaris('tblJenis', 'belanja')">
+            onclick="tambahBaris('tblJenis', 'belanja')" @if ($isReadOnly)disabled @endif>
             <i class="bi bi-plus-lg"></i> Tambah Baris Jenis Belanja
         </button>
 
@@ -388,17 +392,17 @@
                     <td>
                         <input name="data[berita_acara_sp2dLS_skpd]" class="cell-input skpd" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ number_format($data->berita_acara_sp2dLS_skpd, 0, ',', '') }}" />
+                            value="{{ number_format($data->berita_acara_sp2dLS_skpd, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     </td>
                     @can('isVerifikator')
                     <td>
                         <input name="data[berita_acara_sp2dLS_bud]" class="cell-input bud" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ number_format($data->berita_acara_sp2dLS_bud, 0, ',', '') }}" />
+                            value="{{ number_format($data->berita_acara_sp2dLS_bud, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     </td>
                     @endcan
                     <td class="num selisih">{{ number_format($data->berita_acara_sp2dLS_selisih, 0, ',', '') }}</td>
-                    <input type="hidden" name="data[berita_acara_sp2dLS_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sp2dLS_selisih, 0, ',', '') }}" />
+                    <input type="hidden" name="data[berita_acara_sp2dLS_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sp2dLS_selisih, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     <td class="text-center ket"></td>
                 </tr>
                 <tr>
@@ -410,17 +414,17 @@
                     <td>
                         <input name="data[berita_acara_sp2dUP_skpd]" class="cell-input skpd" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ number_format($data->berita_acara_sp2dUP_skpd, 0, ',', '') }}" />
+                            value="{{ number_format($data->berita_acara_sp2dUP_skpd, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     </td>
                     @can('isVerifikator')
                     <td>
                         <input name="data[berita_acara_sp2dUP_bud]" class="cell-input bud" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ number_format($data->berita_acara_sp2dUP_bud, 0, ',', '') }}" />
+                            value="{{ number_format($data->berita_acara_sp2dUP_bud, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     </td>
                     @endcan
                     <td class="num selisih">{{ number_format($data->berita_acara_sp2dUP_selisih, 0, ',', '') }}</td>
-                    <input type="hidden" name="data[berita_acara_sp2dUP_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sp2dUP_selisih, 0, ',', '') }}" />
+                    <input type="hidden" name="data[berita_acara_sp2dUP_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sp2dUP_selisih, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     <td class="text-center ket"></td>
                 </tr>
                 <tr>
@@ -432,17 +436,17 @@
                     <td>
                         <input name="data[berita_acara_sp2BP_skpd]" class="cell-input skpd" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ number_format($data->berita_acara_sp2BP_skpd, 0, ',', '') }}" />
+                            value="{{ number_format($data->berita_acara_sp2BP_skpd, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     </td>
                     @can('isVerifikator')
                     <td>
                         <input name="data[berita_acara_sp2BP_bud]" class="cell-input bud" type="text"
                             inputmode="numeric" placeholder="0,00"
-                            value="{{ number_format($data->berita_acara_sp2BP_bud, 0, ',', '') }}" />
+                            value="{{ number_format($data->berita_acara_sp2BP_bud, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     </td>
                     @endcan
                     <td class="num selisih">{{ number_format($data->berita_acara_sp2BP_selisih, 0, ',', '') }}</td>
-                    <input type="hidden" name="data[berita_acara_sp2BP_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sp2BP_selisih, 0, ',', '') }}" />
+                    <input type="hidden" name="data[berita_acara_sp2BP_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sp2BP_selisih, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     <td class="text-center ket"></td>
                 </tr>
                 <tr>
@@ -455,17 +459,17 @@
                     <td>
                         <input name="data[berita_acara_sts_skpd]" class="cell-input skpd" type="text"
                             inputmode="numeric" placeholder="-0,00"
-                            value="{{ number_format($data->berita_acara_sts_skpd, 0, ',', '') }}" data-minus="1" />
+                            value="{{ number_format($data->berita_acara_sts_skpd, 0, ',', '') }}" data-minus="1" @if ($isReadOnly) readonly @endif/>
                     </td>
                     @can('isVerifikator')
                     <td>
                         <input name="data[berita_acara_sts_bud]" class="cell-input bud" type="text"
                             inputmode="numeric" placeholder="-0,00"
-                            value="{{ number_format($data->berita_acara_sts_bud, 0, ',', '') }}" data-minus="1" />
+                            value="{{ number_format($data->berita_acara_sts_bud, 0, ',', '') }}" data-minus="1" @if ($isReadOnly) readonly @endif/>
                     </td>
                     @endcan
                     <td class="num selisih">{{ number_format($data->berita_acara_sts_selisih, 0, ',', '') }}</td>
-                    <input type="hidden" name="data[berita_acara_sts_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sts_selisih, 0, ',', '') }}" />
+                    <input type="hidden" name="data[berita_acara_sts_selisih]" class="hid-selisih" value="{{ number_format($data->berita_acara_sts_selisih, 0, ',', '') }}" @if ($isReadOnly) readonly @endif/>
                     <td class="text-center ket"></td>
                 </tr>
             </tbody>
@@ -515,7 +519,7 @@
                     <td>
                         <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="0,00"
                             name="data[berita_acara_saldo_awal_bulan]"
-                            value="{{ $data->berita_acara_saldo_awal_bulan }}" />
+                            value="{{ $data->berita_acara_saldo_awal_bulan }}" @if ($isReadOnly) readonly @endif/>
                     </td>
                     <td>Kas Awal Bulan</td>
                 </tr>
@@ -525,7 +529,7 @@
                     <td>
                         <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="0,00"
                             name="data[berita_acara_penerimaan_sp2d]"
-                            value="{{ $data->berita_acara_penerimaan_sp2d }}" />
+                            value="{{ $data->berita_acara_penerimaan_sp2d }}" @if ($isReadOnly) readonly @endif/>
                     </td>
                     <td>Pencairan UP/GU/TU</td>
                 </tr>
@@ -535,7 +539,7 @@
                     <td>
                         <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="0,00"
                             name="data[berita_acara_pengeluaran_bku]"
-                            value="{{ $data->berita_acara_pengeluaran_bku }}" data-minus="1" />
+                            value="{{ $data->berita_acara_pengeluaran_bku }}" data-minus="1" @if ($isReadOnly) readonly @endif/>
                     </td>
                     <td>Realisasi UP/GU/TU</td>
                 </tr>
@@ -545,7 +549,7 @@
                     <td>
                         <input class="cell-input saldo" type="text" inputmode="numeric" placeholder="0,00"
                             name="data[berita_acara_pengembalian]"
-                            value="{{ $data->berita_acara_pengembalian }}" />
+                            value="{{ $data->berita_acara_pengembalian }}" @if ($isReadOnly) readonly @endif/>
                     </td>
                     <td>Penyetoran Sisa Kas</td>
                 </tr>
@@ -567,7 +571,7 @@
         <div class="row g-3">
             <div class="col-12">
                 <label class="form-label">Catatan Tambahan / Tindak Lanjut</label>
-                <textarea class="form-control form-control-sm" name="data[berita_acara_kesimpulan]" rows="5">{{ $data->berita_acara_kesimpulan ?? 'Data Penerimaan dan Pengeluaran antara BUD dan SKPD untuk periode ini dinyatakan TELAH SESUAI/COCOK.
+                <textarea class="form-control form-control-sm" name="data[berita_acara_kesimpulan]" rows="5" @if ($isReadOnly) readonly @endif>{{ $data->berita_acara_kesimpulan ?? 'Data Penerimaan dan Pengeluaran antara BUD dan SKPD untuk periode ini dinyatakan TELAH SESUAI/COCOK.
 Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan Keuangan Pemerintah Daerah (LKPD).' }}</textarea>
             </div>
         </div>
@@ -582,22 +586,22 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                 <div>Pejabat Penatausahaan Keuangan (PPK-SKPD)</div>
                 <div class="sign-space"></div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_ppk]" id="berita_acara_nama_ppk"
-                    placeholder="[NAMA PEJABAT/PPK SKPD]" value="{{ $data->berita_acara_nama_ppk }}"/>
+                    placeholder="[NAMA PEJABAT/PPK SKPD]" value="{{ $data->berita_acara_nama_ppk }}" @if ($isReadOnly) readonly @endif/>
                 <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_ppk]" id="berita_acara_nip_ppk"
-                    placeholder="NIP. ..." value="{{ $data->berita_acara_nip_ppk }}"/>
+                    placeholder="NIP. ..." value="{{ $data->berita_acara_nip_ppk }}" @if ($isReadOnly) readonly @endif/>
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">PIHAK KESATU</div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_jabatan_kepala_skpkd]"
                     placeholder="Kepala Sub Bidang Penerimaan dan Belanja"
-                    value="{{$data->berita_acara_jabatan_kepala_skpkd}}"/>
+                    value="{{$data->berita_acara_jabatan_kepala_skpkd}}" @if ($isReadOnly) readonly @endif/>
                 <div class="sign-space"></div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_kepala_skpkd]"
                     placeholder="Ichtiawan J. Aziz, S.E.I"
-                    value="{{$data->berita_acara_nama_kepala_skpkd}}"/>
+                    value="{{$data->berita_acara_nama_kepala_skpkd}}" @if ($isReadOnly) readonly @endif/>
                 <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_kepala_skpkd]"
                     placeholder="NIP. 198506162020121006"
-                    value="{{$data->berita_acara_nip_kepala_skpkd}}"/>
+                    value="{{$data->berita_acara_nip_kepala_skpkd}}" @if ($isReadOnly) readonly @endif/>
             </div>
         </div>
 
@@ -607,27 +611,32 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
                 <div>Pengguna Anggaran</div>
                 <div class="sign-space"></div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_pa]" id="berita_acara_nama_pa"
-                    placeholder="[NAMA KEPALA SKPD]" value="{{ $data->berita_acara_nama_pa }}" />
+                    placeholder="[NAMA KEPALA SKPD]" value="{{ $data->berita_acara_nama_pa }}" @if ($isReadOnly) readonly @endif/>
                 <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_pa]" id="berita_acara_nip_pa"
-                    placeholder="NIP. ..." value="{{ $data->berita_acara_nip_pa }}" />
+                    placeholder="NIP. ..." value="{{ $data->berita_acara_nip_pa }}" @if ($isReadOnly) readonly @endif/>
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
                  <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_jabatan_mengetahui_skpkd]"
                     placeholder="Kepala Bidang Akuntansi"
-                    value="{{$data->berita_acara_jabatan_mengetahui_skpkd}}"/>
+                    value="{{$data->berita_acara_jabatan_mengetahui_skpkd}}" @if ($isReadOnly) readonly @endif/>
                 <div class="sign-space"></div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_mengetahui_skpkd]"
                     placeholder="M. Adnan, S.E., M.Si."
-                    value="{{$data->berita_acara_nama_mengetahui_skpkd}}"/>
+                    value="{{$data->berita_acara_nama_mengetahui_skpkd}}" @if ($isReadOnly) readonly @endif/>
                 <input type="text" class="form-control form-control-sm text-center" name="data[berita_acara_nip_mengetahui_skpkd]"
                     placeholder="197612262007011010"
-                    value="{{$data->berita_acara_nip_mengetahui_skpkd}}"/>
+                    value="{{$data->berita_acara_nip_mengetahui_skpkd}}" @if ($isReadOnly) readonly @endif/>
             </div>
         </div>
         @endcan
 
         <div class="d-flex gap-2 mt-4 no-print justify-content-end mt-5">
+            @can('isVerifikator')
+            <a href="{{ route('berita_acara.kunciData', ['id'=> $berita_acara_id]) }}" type="submit" class="btn btn-sm {{$data->berita_acara_kunci_data == 'ya' ? 'btn-danger' : 'btn-success'}}">
+                <i class="bi bi-key-fill"></i> {{$data->berita_acara_kunci_data == 'ya' ? 'Buka Kunci Data' : 'Kunci Data'}}
+            </a>
+            @endcan
             <button type="submit" class="btn btn-primary btn-sm">
                 <i class="bi bi-download"></i> Simpan Data
             </button>

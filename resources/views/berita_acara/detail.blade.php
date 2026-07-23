@@ -14,9 +14,9 @@
                     <a href="{{ route('berita_acara.edit', ['id' => $berita_acara_id]) }}" class="btn btn-sm btn-info">
                         <i class="bi bi-pencil"></i> Edit
                     </a>
-                    <button class="btn btn-sm btn-secondary" onclick="cetakData({{$berita_acara_id}})">
-                        <i class="bi bi-printer"></i> Cetak / PDF
-                    </button>
+                    <a href="{{ route('berita_acara.cetakPDF', $berita_acara_id) }}" class="btn btn-sm btn-secondary">
+                        <i class="bi bi-printer"></i> Cetak PDF
+                    </a>
                     <a href="{{ route('berita_acara.excel', $berita_acara_id) }}" class="btn btn-sm btn-success">
                         <i class="bi bi-file-earmark-excel"></i> Ekspor Excel
                     </a>
