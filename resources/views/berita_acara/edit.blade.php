@@ -14,6 +14,9 @@
             <a href="{{ route('berita_acara.view') }}" class="btn btn-sm btn-primary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
+            <a class="btn btn-sm btn-warning" href="{{ route('berita_acara.detail', ['id' => $berita_acara_id]) }}">
+				<i class="bi bi-eye me-1"></i> Detail
+			</a>
         </div>
     </div>
 

@@ -74,25 +74,25 @@
                                     <button class="btn btn-sm text-white" style="background:var(--bar-navy)" onclick="document.getElementById('upFile{{$item->berita_acara_id}}').click()">Upload Berkas</button>
                                 </td>
                                 <td>
-                                    <div class="row gap-2 me-2">
+                                    <div class="row gap-2 me-1">
                                     <a href="{{ route('berita_acara.edit', ['id' => $item->berita_acara_id]) }}"
-                                        class="btn btn-sm btn-info">
-                                        <i class="bi bi-pencil"></i>
+                                        class="btn btn-sm btn-info text-start">
+                                        <i class="bi bi-pencil mx-1"></i> Update
                                     </a>
                                     <a href="{{ route('berita_acara.detail', ['id' => $item->berita_acara_id]) }}"
-                                        class="btn btn-sm btn-warning">
-                                        <i class="bi bi-eye"></i>
+                                        class="btn btn-sm btn-warning text-start">
+                                        <i class="bi bi-eye mx-1"></i> Detail
                                     </a>
-                                     <a href="{{ route('berita_acara.excel', $item->berita_acara_id) }}" class="btn btn-sm btn-success">
-                                        <i class="bi bi-file-earmark-excel"></i>
+                                    <a class="btn btn-sm btn-secondary text-start" href="{{ route('berita_acara.cetakPDF', $item->berita_acara_id) }}">
+                                        <i class="bi bi-printer mx-1"></i> Pdf
                                     </a>
-                                    <a class="btn btn-sm btn-secondary" href="{{ route('berita_acara.cetakPDF', $item->berita_acara_id) }}">
-                                        <i class="bi bi-printer"></i>
+                                     <a href="{{ route('berita_acara.excel', $item->berita_acara_id) }}" class="btn btn-sm btn-success text-start">
+                                        <i class="bi bi-file-earmark-excel mx-1"></i> Excel
                                     </a>
                                     @can('isVerifikator')
-                                    <button class="btn btn-sm btn-danger" title="Hapus"
+                                    <button class="btn btn-sm btn-danger text-start" title="Hapus"
                                         onclick='bukaHapus({{ $item }})' @if ($item->berita_acara_kunci_data == 'ya') disabled @endif >
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash mx-1"></i> Hapus
                                     </button>
                                     @endcan
                                     </div>
