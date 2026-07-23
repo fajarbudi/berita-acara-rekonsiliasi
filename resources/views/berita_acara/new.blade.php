@@ -458,7 +458,8 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">PIHAK KESATU</div>
-                <div>Kepala Sub Bidang Penerimaan dan Belanja</div>
+                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_jabatan_kepala_skpkd]"
+                    value="Kepala Sub Bidang Penerimaan dan Belanja"/>
                 <div class="sign-space"></div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_kepala_skpkd]"
                     value="Ichtiawan J. Aziz, S.E.I"/>
@@ -479,7 +480,8 @@ Berita Acara ini dibuat dalam rangkap 2 (dua) sebagai bahan penyusunan Laporan K
             </div>
             <div class="col-6 sign-box">
                 <div class="fw-bold">MENGETAHUI / MENYETUJUI:</div>
-                <div>Kepala Bidang Akuntansi</div>
+                <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_jabatan_mengetahui_skpkd]"
+                    value="Kepala Bidang Akuntansi"/>
                 <div class="sign-space"></div>
                 <input type="text" class="form-control form-control-sm text-center fw-bold mb-1" name="data[berita_acara_nama_mengetahui_skpkd]"
                     value="M. Adnan, S.E., M.Si."/>

@@ -30,8 +30,10 @@ class CreateBeritaAcarasTable extends Migration
             $table->string('berita_acara_nip_pa')->nullable();
             $table->string('berita_acara_nama_kepala_skpkd')->nullable();
             $table->string('berita_acara_nip_kepala_skpkd')->nullable();
+            $table->string('berita_acara_jabatan_kepala_skpkd')->nullable();
             $table->string('berita_acara_nama_mengetahui_skpkd')->nullable();
             $table->string('berita_acara_nip_mengetahui_skpkd')->nullable();
+            $table->string('berita_acara_jabatan_mengetahui_skpkd')->nullable();
             $table->string('berita_acara_sp2dLS_skpd')->nullable();
             $table->string('berita_acara_sp2dLS_bud')->nullable();
             $table->string('berita_acara_sp2dLS_selisih')->nullable();

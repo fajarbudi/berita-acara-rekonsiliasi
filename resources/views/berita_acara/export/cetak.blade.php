@@ -298,7 +298,7 @@
     <tr>
         <td colspan="3" align="center">Pejabat Penatausahaan Keuangan (PPK-SKPD)</td>
         <td></td>
-        <td colspan="3" align="center">Kepala Sub Bidang Penerimaan dan Belanja</td>
+        <td colspan="3" align="center">{{$data->berita_acara_jabatan_kepala_skpkd}}</td>
     </tr>
     <tr><td colspan="7" height="72"></td></tr>
     <tr>
@@ -320,7 +320,7 @@
     <tr>
         <td colspan="3" align="center">Pengguna Anggaran</td>
         <td></td>
-        <td colspan="3" align="center">Kepala Bidang Akuntansi</td>
+        <td colspan="3" align="center">{{$data->berita_acara_jabatan_mengetahui_skpkd}}</td>
     </tr>
     <tr><td colspan="7" height="72"></td></tr>
     <tr>
